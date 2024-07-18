@@ -7,7 +7,9 @@ public class WonMobileJoystick : MonoBehaviour
     [SerializeField] private RectTransform _joystickKnob;
 
     [Header("Setting")]
+    [SerializeField] private float _moveFactor;
     private Vector3 _touchedOnScreenPos;
+    private Vector3 _move;
     private bool _canControl;
 
     private void Start()
@@ -39,6 +41,8 @@ public class WonMobileJoystick : MonoBehaviour
     {
         _joystickOutline.gameObject.SetActive(false);
         _canControl = false;
+
+        _move = Vector3.zero;
     }
 
     private void ControlJoystick()
@@ -46,6 +50,31 @@ public class WonMobileJoystick : MonoBehaviour
         Vector3 currentTouchedPos = Input.mousePosition;
         Vector3 moveDir = currentTouchedPos - _touchedOnScreenPos;
 
-        _joystickKnob.position = _joystickOutline.position + moveDir;
+        float canvasScale = GetComponentInParent<Canvas>().GetComponent<RectTransform>().localScale.x;
+
+        float moveMagnitude = moveDir.magnitude * _moveFactor * canvasScale;
+
+        float absoluteWidth = _joystickOutline.rect.width / 2;
+
+        float realWidth = absoluteWidth * canvasScale;
+
+        moveMagnitude = Mathf.Min(moveMagnitude, realWidth);
+
+        _move = moveDir.normalized * moveMagnitude;
+
+        Vector3 targetPosition = _touchedOnScreenPos + _move;
+
+        _joystickKnob.position = targetPosition;
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            HideJoyStick();
+        }
+    }
+
+    public Vector3 GetMoveVector()
+    {
+        float canvasScale = GetComponentInParent<Canvas>().GetComponent<RectTransform>().localScale.x;
+        return _move / canvasScale;
     }
 }
