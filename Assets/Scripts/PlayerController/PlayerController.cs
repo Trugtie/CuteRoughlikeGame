@@ -3,7 +3,10 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlayerController : MonoBehaviour
 {
+    [Header("Elements")]
     [SerializeField] private WonMobileJoystick _joystick;
+
+    [Header("Settings")]
     [SerializeField] private float _moveSpeed;
 
     private Rigidbody2D _playerRb;
