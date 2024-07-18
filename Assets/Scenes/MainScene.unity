@@ -569,6 +569,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _joystickOutline: {fileID: 1919310995}
+  _joystickKnob: {fileID: 285620937}
 --- !u!1 &1790665173
 GameObject:
   m_ObjectHideFlags: 0
