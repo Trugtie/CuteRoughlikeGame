@@ -17,7 +17,7 @@ public class CameraController : MonoBehaviour
         targetPos.z = _zOffset;
 
         targetPos.x = Mathf.Clamp(targetPos.x, -_clampMinMaxXY.x, _clampMinMaxXY.x);
-        targetPos.y = Mathf.Clamp(targetPos.x, -_clampMinMaxXY.y, _clampMinMaxXY.y);
+        targetPos.y = Mathf.Clamp(targetPos.y, -_clampMinMaxXY.y, _clampMinMaxXY.y);
 
         transform.position = targetPos;
     }
