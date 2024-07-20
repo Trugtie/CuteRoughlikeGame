@@ -10665,7 +10665,15 @@ PrefabInstance:
       value: Enemy
       objectReference: {fileID: 0}
     - target: {fileID: 8565076108701964156, guid: 641b843fb4ca0e64bb9020ecd9e8b1d3, type: 3}
+      propertyPath: _gizmos
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8565076108701964156, guid: 641b843fb4ca0e64bb9020ecd9e8b1d3, type: 3}
       propertyPath: _moveSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8565076108701964156, guid: 641b843fb4ca0e64bb9020ecd9e8b1d3, type: 3}
+      propertyPath: _playerDetectionRadius
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9160009124832264457, guid: 641b843fb4ca0e64bb9020ecd9e8b1d3, type: 3}

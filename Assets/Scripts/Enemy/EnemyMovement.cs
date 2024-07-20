@@ -9,6 +9,10 @@ public class EnemyMovement : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _playerDetectionRadius;
+
+    [Header("Debug")]
+    [SerializeField] private bool _gizmos;
 
     private void Start()
     {
@@ -24,10 +28,33 @@ public class EnemyMovement : MonoBehaviour
     private void Update()
     {
         FollowPlayer();
+        TryAttack();
     }
 
     private void FollowPlayer()
     {
         transform.position = Vector2.MoveTowards(transform.position, _player.transform.position, _moveSpeed * Time.deltaTime);
+    }
+
+    private void TryAttack()
+    {
+        float canAttackDistance = Vector2.Distance(transform.position, _player.transform.position);
+
+        bool canAttack = canAttackDistance <= _playerDetectionRadius ? true : false;
+
+        if (canAttack)
+        {
+            Destroy(gameObject);
+        }
+
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (!_gizmos)
+            return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, _playerDetectionRadius);
     }
 }
