@@ -7,6 +7,10 @@ public class EnemyMovement : MonoBehaviour
     [Header("Elements")]
     private Player _player;
 
+    [Header("Spawn Indicator")]
+    [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private SpriteRenderer _spawnIndicatorRenderer;
+
     [Header("Settings")]
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _playerDetectionRadius;
@@ -26,6 +30,9 @@ public class EnemyMovement : MonoBehaviour
             Debug.LogWarning("No player in game !");
             Destroy(gameObject);
         }
+
+        _spriteRenderer.enabled = false;
+        _spawnIndicatorRenderer.enabled = true;
     }
 
     private void Update()
