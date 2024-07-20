@@ -31,6 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6905128499312565683}
+  - {fileID: 2508948614761516307}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8565076108701964156
@@ -46,6 +47,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 1
+  _playerDetectionRadius: 0
+  _deadVFX: {fileID: 3340538354842492566}
+  _gizmos: 0
 --- !u!1 &8356427493004748853
 GameObject:
   m_ObjectHideFlags: 0
@@ -130,3 +134,70 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 1
+--- !u!1001 &2339217197918248359
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 9160009124832264457}
+    m_Modifications:
+    - target: {fileID: 191124657547989172, guid: 2ab79acff7cfa9a4a92069bd124b852d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 191124657547989172, guid: 2ab79acff7cfa9a4a92069bd124b852d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 191124657547989172, guid: 2ab79acff7cfa9a4a92069bd124b852d, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 191124657547989172, guid: 2ab79acff7cfa9a4a92069bd124b852d, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 191124657547989172, guid: 2ab79acff7cfa9a4a92069bd124b852d, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 191124657547989172, guid: 2ab79acff7cfa9a4a92069bd124b852d, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 191124657547989172, guid: 2ab79acff7cfa9a4a92069bd124b852d, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 191124657547989172, guid: 2ab79acff7cfa9a4a92069bd124b852d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 191124657547989172, guid: 2ab79acff7cfa9a4a92069bd124b852d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 191124657547989172, guid: 2ab79acff7cfa9a4a92069bd124b852d, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6640307918510442616, guid: 2ab79acff7cfa9a4a92069bd124b852d, type: 3}
+      propertyPath: m_Name
+      value: Enemy Dead VFX
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2ab79acff7cfa9a4a92069bd124b852d, type: 3}
+--- !u!4 &2508948614761516307 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 191124657547989172, guid: 2ab79acff7cfa9a4a92069bd124b852d, type: 3}
+  m_PrefabInstance: {fileID: 2339217197918248359}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &3340538354842492566 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 1021587360079577905, guid: 2ab79acff7cfa9a4a92069bd124b852d, type: 3}
+  m_PrefabInstance: {fileID: 2339217197918248359}
+  m_PrefabAsset: {fileID: 0}

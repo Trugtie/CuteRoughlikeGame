@@ -11,6 +11,9 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _playerDetectionRadius;
 
+    [Header("Effects")]
+    [SerializeField] private ParticleSystem _deadVFX;
+
     [Header("Debug")]
     [SerializeField] private bool _gizmos;
 
@@ -44,9 +47,16 @@ public class EnemyMovement : MonoBehaviour
 
         if (canAttack)
         {
-            Destroy(gameObject);
+            EnemyDeadHandle();
         }
 
+    }
+
+    private void EnemyDeadHandle()
+    {
+        _deadVFX.Play();
+        _deadVFX.transform.SetParent(null);
+        Destroy(gameObject);
     }
 
     private void OnDrawGizmos()
