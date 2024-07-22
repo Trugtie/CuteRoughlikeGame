@@ -134,7 +134,9 @@ MonoBehaviour:
   _spriteRenderer: {fileID: 5601449670865341390}
   _spawnIndicatorRenderer: {fileID: 8651642783699180578}
   _moveSpeed: 1
-  _playerDetectionRadius: 0
+  _playerDetectionRadius: 1
+  _attackDamge: 10
+  _attackFrequence: 2
   _deadVFX: {fileID: 3340538354842492566}
   _gizmos: 0
 --- !u!1 &8356427493004748853
