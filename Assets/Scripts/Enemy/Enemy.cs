@@ -28,10 +28,14 @@ public class Enemy : MonoBehaviour
     [Header("Debug")]
     [SerializeField] private bool _gizmos;
 
+    private void Awake()
+    {
+        _enemyMovement = GetComponent<EnemyMovement>();
+    }
+
     void Start()
     {
         _player = FindFirstObjectByType<Player>();
-        _enemyMovement = GetComponent<EnemyMovement>();
 
         if (_player == null)
         {
@@ -88,7 +92,7 @@ public class Enemy : MonoBehaviour
     }
     private void Attack()
     {
-        Debug.Log($"Attack {_attackDamge} damge to player");
+        _player.TakeDamge(_attackDamge);
         _attackTimer = 0f;
     }
 

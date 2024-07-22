@@ -95,8 +95,9 @@ GameObject:
   - component: {fileID: 1836719194604984789}
   - component: {fileID: 2966321428337444254}
   - component: {fileID: 7453539942786265171}
-  - component: {fileID: 8703702029132635045}
   - component: {fileID: -5301810855878252559}
+  - component: {fileID: 8703702029132635045}
+  - component: {fileID: -7548143835909894940}
   m_Layer: 0
   m_Name: Dave
   m_TagString: Untagged
@@ -182,6 +183,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0.53}
   serializedVersion: 2
   m_Radius: 0.54
+--- !u!114 &-5301810855878252559
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7544225966072847608}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13097a0b8e7d7f040bdb4c0aa1fb74e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &8703702029132635045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -196,7 +209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _joystick: {fileID: 0}
   _moveSpeed: 3
---- !u!114 &-5301810855878252559
+--- !u!114 &-7548143835909894940
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -205,6 +218,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7544225966072847608}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13097a0b8e7d7f040bdb4c0aa1fb74e3, type: 3}
+  m_Script: {fileID: 11500000, guid: 57c3edeb6718ca746b24d8e43f295882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _health: 10
