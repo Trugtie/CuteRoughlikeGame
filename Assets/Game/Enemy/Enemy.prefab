@@ -93,6 +93,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9160009124832264457}
+  - component: {fileID: 8823967575884725261}
   - component: {fileID: 8565076108701964156}
   m_Layer: 0
   m_Name: Enemy
@@ -119,6 +120,25 @@ Transform:
   - {fileID: 2508948614761516307}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8823967575884725261
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4673443629682434060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e755088fd44b21b45ade8c8faa2e9463, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerDetectionRadius: 0.5
+  _spriteRenderer: {fileID: 5601449670865341390}
+  _spawnIndicatorRenderer: {fileID: 8651642783699180578}
+  _attackDamge: 1
+  _attackFrequence: 1
+  _deadVFX: {fileID: 3340538354842492566}
+  _gizmos: 1
 --- !u!114 &8565076108701964156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,14 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5bea2f21d799b344a2cdab4b4ce1347, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spriteRenderer: {fileID: 5601449670865341390}
-  _spawnIndicatorRenderer: {fileID: 8651642783699180578}
   _moveSpeed: 1
-  _playerDetectionRadius: 1
-  _attackDamge: 10
-  _attackFrequence: 2
-  _deadVFX: {fileID: 3340538354842492566}
-  _gizmos: 0
 --- !u!1 &8356427493004748853
 GameObject:
   m_ObjectHideFlags: 0
