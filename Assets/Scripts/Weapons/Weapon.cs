@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Sockets;
@@ -7,9 +8,10 @@ using UnityEngine;
 public class Weapon : MonoBehaviour
 {
     [Header("Elements")]
-    [SerializeField] private Transform _originPos;
+    [SerializeField] private Transform _hitPosition;
 
     [Header("Settings")]
+    [SerializeField] private float _hitRange;
     [SerializeField] private float _weaponRange;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private LayerMask _enemyLayer;
@@ -25,6 +27,7 @@ public class Weapon : MonoBehaviour
     private void Update()
     {
         AutoAimTarget();
+        Attack();
     }
 
     private void AutoAimTarget()
@@ -41,7 +44,7 @@ public class Weapon : MonoBehaviour
 
     private void GetEnemyClosest()
     {
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(_originPos.position, _weaponRange, _enemyLayer);
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, _weaponRange, _enemyLayer);
 
         if (enemies.Length <= 0)
         {
@@ -53,12 +56,22 @@ public class Weapon : MonoBehaviour
         {
             Enemy enemyChecked = enemies[i].GetComponent<Enemy>();
 
-            float distanceToEnemy = Vector2.Distance(_originPos.position, enemyChecked.transform.position);
+            float distanceToEnemy = Vector2.Distance(transform.position, enemyChecked.transform.position);
 
             if (distanceToEnemy < _minDistance)
             {
                 SetEnemyClosetWithMinDistance(distanceToEnemy, enemyChecked);
             }
+        }
+    }
+
+    private void Attack()
+    {
+        Collider2D[] enemies = Physics2D.OverlapCircleAll(_hitPosition.position, _hitRange, _enemyLayer);
+
+        for (int i = 0; i < enemies.Length; i++)
+        {
+            Destroy(enemies[i].gameObject);
         }
     }
 
@@ -70,13 +83,10 @@ public class Weapon : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (_originPos == null)
-        {
-            Debug.Log("Not set origin position yet");
-            return;
-        }
-
         Gizmos.color = Color.magenta;
-        Gizmos.DrawWireSphere(_originPos.position, _weaponRange);
+        Gizmos.DrawWireSphere(transform.position, _weaponRange);
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(_hitPosition.position, _hitRange);
     }
 }
