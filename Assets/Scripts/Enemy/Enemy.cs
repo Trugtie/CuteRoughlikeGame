@@ -1,14 +1,18 @@
+using System;
 using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
 public class Enemy : MonoBehaviour
 {
+    public static Action<Vector2, int> OnAnyHit;
+
     [Header("Components")]
     private EnemyMovement _enemyMovement;
 
     [Header("Elements")]
     [SerializeField] private TextMeshProUGUI _healthText;
+    [SerializeField] private Transform _damgeTextSpawnPosition;
     private Player _player;
 
     [Header("Settings")]
@@ -109,6 +113,8 @@ public class Enemy : MonoBehaviour
         _health -= realDamge;
 
         _healthText.text = _health.ToString();
+
+        OnAnyHit?.Invoke(_damgeTextSpawnPosition.position, damge);
 
         if (_health <= 0)
         {

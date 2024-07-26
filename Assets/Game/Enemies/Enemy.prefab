@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &737654720456395255
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3219877163731667482}
+  m_Layer: 3
+  m_Name: DamgeTextSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3219877163731667482
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737654720456395255}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 9160009124832264457}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2001131492075831703
 GameObject:
   m_ObjectHideFlags: 0
@@ -102,7 +133,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5928584787478117471
 RectTransform:
   m_ObjectHideFlags: 0
@@ -222,6 +253,7 @@ Transform:
   - {fileID: 3476027218608291923}
   - {fileID: 2508948614761516307}
   - {fileID: 5928584787478117471}
+  - {fileID: 3219877163731667482}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8823967575884725261
@@ -237,6 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _healthText: {fileID: 3631148968743136759}
+  _damgeTextSpawnPosition: {fileID: 3219877163731667482}
   _playerDetectionRadius: 0.5
   _maxHealth: 10
   _spriteRenderer: {fileID: 5601449670865341390}
