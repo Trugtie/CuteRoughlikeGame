@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
@@ -7,10 +8,13 @@ public class Enemy : MonoBehaviour
     private EnemyMovement _enemyMovement;
 
     [Header("Elements")]
+    [SerializeField] private TextMeshProUGUI _healthText;
     private Player _player;
 
     [Header("Settings")]
     [SerializeField] private float _playerDetectionRadius;
+    [SerializeField] private int _maxHealth;
+    private int _health;
 
     [Header("Spawn Indicator")]
     [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -31,6 +35,8 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         _enemyMovement = GetComponent<EnemyMovement>();
+        _health = _maxHealth;
+        _healthText.text = _health.ToString();
     }
 
     void Start()
@@ -96,7 +102,21 @@ public class Enemy : MonoBehaviour
         _attackTimer = 0f;
     }
 
-    private void EnemyDeadHandle()
+    public void TakeDamge(int damge)
+    {
+        int realDamge = Mathf.Min(damge, _health);
+
+        _health -= realDamge;
+
+        _healthText.text = _health.ToString();
+
+        if (_health <= 0)
+        {
+            PassAway();
+        }
+    }
+
+    private void PassAway()
     {
         _deadVFX.Play();
         _deadVFX.transform.SetParent(null);

@@ -7,27 +7,93 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
+    private enum WeaponState
+    {
+        Idle,
+        Attack
+    }
+
+    [Serializable]
+    private struct HitPoint
+    {
+        public Transform hitTransform;
+        public float hitRange;
+    }
+
     [Header("Elements")]
-    [SerializeField] private Transform _hitPosition;
+    [SerializeField] private HitPoint[] _hitPositions;
+    private Animator _animator;
+    private List<Enemy> _enemiesAttackedList;
 
     [Header("Settings")]
-    [SerializeField] private float _hitRange;
+    [SerializeField] private int _weaponDamge;
     [SerializeField] private float _weaponRange;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] private LayerMask _enemyLayer;
+    [SerializeField] private float _attackDelay;
 
+    private WeaponState _weaponState;
     private Enemy _enemyCloset;
     private float _minDistance;
 
+    private float _attackTimer;
+
     private void Awake()
     {
+        _enemiesAttackedList = new List<Enemy>();
+        _animator = GetComponent<Animator>();
+        _weaponState = WeaponState.Idle;
         SetEnemyClosetWithMinDistance(_weaponRange);
     }
 
     private void Update()
     {
-        AutoAimTarget();
+        switch (_weaponState)
+        {
+            case WeaponState.Idle:
+                AutoAimTarget();
+                break;
+            case WeaponState.Attack:
+                Attacking();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void ManageAttack()
+    {
+        if (_attackTimer >= _attackDelay)
+        {
+            _attackTimer = 0f;
+            StartAttack();
+        }
+    }
+
+    private void IncreaseAttackTimer()
+    {
+        _attackTimer += Time.deltaTime;
+    }
+
+    [NaughtyAttributes.Button]
+    private void StartAttack()
+    {
+        _animator.Play("Attack");
+        _weaponState = WeaponState.Attack;
+        _attackTimer = 0f;
+        _enemiesAttackedList.Clear();
+        _animator.speed = 1f / _attackDelay;
+    }
+
+    private void Attacking()
+    {
         Attack();
+    }
+
+    private void StopAttack()
+    {
+        _weaponState = WeaponState.Idle;
+        _enemiesAttackedList.Clear();
     }
 
     private void AutoAimTarget()
@@ -37,9 +103,14 @@ public class Weapon : MonoBehaviour
         GetEnemyClosest();
 
         if (_enemyCloset != null)
+        {
             lookAtDirection = (_enemyCloset.transform.position - transform.position).normalized;
+            ManageAttack();
+        }
 
         transform.up = Vector3.Lerp(transform.up, lookAtDirection, _rotationSpeed * Time.deltaTime);
+
+        IncreaseAttackTimer();
     }
 
     private void GetEnemyClosest()
@@ -67,11 +138,20 @@ public class Weapon : MonoBehaviour
 
     private void Attack()
     {
-        Collider2D[] enemies = Physics2D.OverlapCircleAll(_hitPosition.position, _hitRange, _enemyLayer);
-
-        for (int i = 0; i < enemies.Length; i++)
+        foreach (HitPoint hitpoint in _hitPositions)
         {
-            Destroy(enemies[i].gameObject);
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(hitpoint.hitTransform.position, hitpoint.hitRange, _enemyLayer);
+
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                Enemy enemyTargetAttack = enemies[i].GetComponent<Enemy>();
+
+                if (_enemiesAttackedList.Contains(enemyTargetAttack))
+                    continue;
+
+                enemyTargetAttack.TakeDamge(_weaponDamge);
+                _enemiesAttackedList.Add(enemyTargetAttack);
+            }
         }
     }
 
@@ -87,6 +167,9 @@ public class Weapon : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, _weaponRange);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(_hitPosition.position, _hitRange);
+        foreach (HitPoint hitpoint in _hitPositions)
+        {
+            Gizmos.DrawWireSphere(hitpoint.hitTransform.position, hitpoint.hitRange);
+        }
     }
 }

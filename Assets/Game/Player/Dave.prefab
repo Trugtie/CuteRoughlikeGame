@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: -5301810855878252559}
   - component: {fileID: 8703702029132635045}
   - component: {fileID: -7548143835909894940}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Dave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -221,4 +221,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 57c3edeb6718ca746b24d8e43f295882, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 10
+  _healthBar: {fileID: 0}
+  _healthText: {fileID: 0}
+  _maxHealth: 0
