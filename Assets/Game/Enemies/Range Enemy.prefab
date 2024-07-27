@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _damgeTextSpawnPosition: {fileID: 3311640308546958494}
-  _playerDetectionRadius: 4
+  _playerDetectionRadius: 5
   _maxHealth: 10
   _spriteRenderer: {fileID: 6304486651144887112}
   _spawnIndicatorRenderer: {fileID: 5718243437448307836}
@@ -86,6 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shootingPoint: {fileID: 1211347332484193431}
+  _enemyBullet: {fileID: 5957766979299267043, guid: 16bee512ff41346489e3233bece70aa0, type: 3}
   _attackDamge: 1
   _attackFrequence: 1
 --- !u!58 &1024886523451468936

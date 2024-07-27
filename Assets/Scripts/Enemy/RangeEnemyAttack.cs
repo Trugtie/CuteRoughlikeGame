@@ -6,6 +6,7 @@ public class RangeEnemyAttack : MonoBehaviour
 {
     [Header("Elements")]
     [SerializeField] private Transform _shootingPoint;
+    [SerializeField] private EnemyBullet _enemyBullet;
     private Player _player;
 
     [Header("Settings")]
@@ -37,23 +38,15 @@ public class RangeEnemyAttack : MonoBehaviour
         }
     }
 
-    private Vector2 gizmodsDirection;
-
     private void Shoot()
     {
         Vector2 toPlayerDirection = (_player.GetCenterPoint() - _shootingPoint.position).normalized;
-        gizmodsDirection = toPlayerDirection;
+        EnemyBullet enemyBullet = Instantiate(_enemyBullet, _shootingPoint.position, Quaternion.identity);
+        enemyBullet.Configue(toPlayerDirection, _attackDamge);
     }
 
     public void Configue(Player player)
     {
         _player = player;
     }
-
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawLine(_shootingPoint.position, _shootingPoint.position + (Vector3)gizmodsDirection * 5);
-    }
-
 }
