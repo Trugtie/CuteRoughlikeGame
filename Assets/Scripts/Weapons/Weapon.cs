@@ -105,6 +105,7 @@ public class Weapon : MonoBehaviour
         if (_enemyCloset != null)
         {
             lookAtDirection = (_enemyCloset.transform.position - transform.position).normalized;
+            transform.up = lookAtDirection;
             ManageAttack();
         }
 

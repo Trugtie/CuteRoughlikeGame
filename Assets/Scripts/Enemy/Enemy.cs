@@ -14,6 +14,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _healthText;
     [SerializeField] private Transform _damgeTextSpawnPosition;
     private Player _player;
+    private CircleCollider2D _enemyCollider;
 
     [Header("Settings")]
     [SerializeField] private float _playerDetectionRadius;
@@ -39,6 +40,7 @@ public class Enemy : MonoBehaviour
     private void Awake()
     {
         _enemyMovement = GetComponent<EnemyMovement>();
+        _enemyCollider = GetComponent<CircleCollider2D>();
         _health = _maxHealth;
         _healthText.text = _health.ToString();
     }
@@ -84,6 +86,7 @@ public class Enemy : MonoBehaviour
 
     private void SpawnSequenceCompleted()
     {
+        _enemyCollider.enabled = true;
         SpawnIndicatorRenderToggle(false);
         _enemyMovement.SetPlayer(_player);
     }
