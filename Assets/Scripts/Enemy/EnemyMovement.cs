@@ -10,8 +10,8 @@ public class EnemyMovement : MonoBehaviour
 
     private void Update()
     {
-        if (_player != null)
-            FollowPlayer();
+        //if (_player != null)
+        //    FollowPlayer();
     }
 
     public void SetPlayer(Player player)
@@ -19,8 +19,9 @@ public class EnemyMovement : MonoBehaviour
         _player = player;
     }
 
-    private void FollowPlayer()
+    public void FollowPlayer()
     {
-        transform.position = Vector2.MoveTowards(transform.position, _player.transform.position, _moveSpeed * Time.deltaTime);
+        if (_player != null)
+            transform.position = Vector2.MoveTowards(transform.position, _player.transform.position, _moveSpeed * Time.deltaTime);
     }
 }

@@ -1,9 +1,11 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyMovement))]
-public class Enemy : MonoBehaviour
+[RequireComponent(typeof(EnemyMovement), typeof(RangeEnemyAttack))]
+public class RangeEnemy : MonoBehaviour
 {
     public static Action<Vector2, int> OnAnyHit;
 
@@ -14,6 +16,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Transform _damgeTextSpawnPosition;
     private Player _player;
     private CircleCollider2D _enemyCollider;
+    private RangeEnemyAttack _rangeEnemyAttack;
 
     [Header("Settings")]
     [SerializeField] private float _playerDetectionRadius;
@@ -23,12 +26,6 @@ public class Enemy : MonoBehaviour
     [Header("Spawn Indicator")]
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private SpriteRenderer _spawnIndicatorRenderer;
-
-    [Header("Attack")]
-    [SerializeField] private int _attackDamge;
-    [SerializeField] private int _attackFrequence;
-    private float _attackDelay;
-    private float _attackTimer;
 
     [Header("Effects")]
     [SerializeField] private ParticleSystem _deadVFX;
@@ -40,6 +37,7 @@ public class Enemy : MonoBehaviour
     {
         _enemyMovement = GetComponent<EnemyMovement>();
         _enemyCollider = GetComponent<CircleCollider2D>();
+        _rangeEnemyAttack = GetComponent<RangeEnemyAttack>();
         _health = _maxHealth;
     }
 
@@ -53,14 +51,14 @@ public class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
 
+        _rangeEnemyAttack.Configue(_player);
+
         SpawnIndicatorRenderToggle(true);
 
         Vector3 targetIndicatorScale = _spawnIndicatorRenderer.transform.localScale * 1.2f;
         LeanTween.scale(_spawnIndicatorRenderer.gameObject, targetIndicatorScale, .3f)
             .setLoopPingPong(4)
             .setOnComplete(SpawnSequenceCompleted);
-
-        _attackDelay = 1f / _attackFrequence;
     }
 
     private void SpawnIndicatorRenderToggle(bool isShow)
@@ -69,20 +67,28 @@ public class Enemy : MonoBehaviour
         _spawnIndicatorRenderer.enabled = isShow;
     }
 
-    void Update()
+    private void Update()
     {
         if (!_spriteRenderer.enabled)
             return;
 
-        if (_attackTimer > _attackDelay)
-            TryAttack();
-        else
-            WaitAttackDelay();
+        ManageAttack();
+
+
     }
 
-    private void WaitAttackDelay()
+    private void ManageAttack()
     {
-        _attackTimer += Time.deltaTime;
+        float distanceToPlayer = Vector2.Distance(transform.position, _player.transform.position);
+
+        if (distanceToPlayer >= _playerDetectionRadius)
+        {
+            _enemyMovement.FollowPlayer();
+        }
+        else
+        {
+            TryAttack();
+        }
     }
 
     private void SpawnSequenceCompleted()
@@ -94,22 +100,7 @@ public class Enemy : MonoBehaviour
 
     private void TryAttack()
     {
-        float canAttackDistance = Vector2.Distance(transform.position, _player.transform.position);
-
-        bool canAttack = canAttackDistance <= _playerDetectionRadius ? true : false;
-
-        if (canAttack)
-        {
-            Attack();
-        }
-
-        _enemyMovement.FollowPlayer();
-
-    }
-    private void Attack()
-    {
-        _player.TakeDamge(_attackDamge);
-        _attackTimer = 0f;
+        _rangeEnemyAttack.AutoAim();
     }
 
     public void TakeDamge(int damge)
