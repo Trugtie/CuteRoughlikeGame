@@ -271,7 +271,7 @@ MonoBehaviour:
   _healthText: {fileID: 3631148968743136759}
   _damgeTextSpawnPosition: {fileID: 3219877163731667482}
   _playerDetectionRadius: 0.5
-  _maxHealth: 10
+  _maxHealth: 50
   _spriteRenderer: {fileID: 5601449670865341390}
   _spawnIndicatorRenderer: {fileID: 8651642783699180578}
   _attackDamge: 1

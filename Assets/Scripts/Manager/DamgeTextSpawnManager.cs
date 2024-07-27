@@ -16,6 +16,17 @@ public class DamgeTextSpawnManager : MonoBehaviour
         _damgeTextPool = new ObjectPool<DamgeText>(CreateDamgeText, OnGetDamgeText, OnRealeaseDamgeText, OnDestroyDamgeText);
     }
 
+    private void Start()
+    {
+        Enemy.OnAnyHit += HitCallpack;
+    }
+
+    private void OnDestroy()
+    {
+        Enemy.OnAnyHit -= HitCallpack;
+    }
+
+
     private DamgeText CreateDamgeText()
     {
         return Instantiate(_damgeText, transform);
@@ -35,11 +46,6 @@ public class DamgeTextSpawnManager : MonoBehaviour
     private void OnDestroyDamgeText(DamgeText damgeText)
     {
         Destroy(damgeText.gameObject);
-    }
-
-    private void Start()
-    {
-        Enemy.OnAnyHit += HitCallpack;
     }
 
     private void HitCallpack(Vector2 targetPosition, int damge)
