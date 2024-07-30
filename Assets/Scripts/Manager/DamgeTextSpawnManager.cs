@@ -18,12 +18,12 @@ public class DamgeTextSpawnManager : MonoBehaviour
 
     private void Start()
     {
-        Enemy.OnAnyHit += HitCallpack;
+        MeleeEnemy.OnAnyHit += HitCallpack;
     }
 
     private void OnDestroy()
     {
-        Enemy.OnAnyHit -= HitCallpack;
+        MeleeEnemy.OnAnyHit -= HitCallpack;
     }
 
 

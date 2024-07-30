@@ -1,22 +1,21 @@
 using System;
-using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(EnemyMovement))]
-public class Enemy : MonoBehaviour
+public abstract class Enemy : MonoBehaviour
 {
     public static Action<Vector2, int> OnAnyHit;
 
     [Header("Components")]
-    private EnemyMovement _enemyMovement;
+    protected EnemyMovement _enemyMovement;
 
     [Header("Elements")]
     [SerializeField] private Transform _damgeTextSpawnPosition;
-    private Player _player;
+    protected Player _player;
     private CircleCollider2D _enemyCollider;
 
     [Header("Settings")]
-    [SerializeField] private float _playerDetectionRadius;
+    [SerializeField] protected float _playerDetectionRadius;
     [SerializeField] private int _maxHealth;
     private int _health;
 
@@ -24,26 +23,20 @@ public class Enemy : MonoBehaviour
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private SpriteRenderer _spawnIndicatorRenderer;
 
-    [Header("Attack")]
-    [SerializeField] private int _attackDamge;
-    [SerializeField] private int _attackFrequence;
-    private float _attackDelay;
-    private float _attackTimer;
-
     [Header("Effects")]
     [SerializeField] private ParticleSystem _deadVFX;
 
     [Header("Debug")]
     [SerializeField] private bool _gizmos;
 
-    private void Awake()
+    protected virtual void Awake()
     {
         _enemyMovement = GetComponent<EnemyMovement>();
         _enemyCollider = GetComponent<CircleCollider2D>();
         _health = _maxHealth;
     }
 
-    void Start()
+    protected virtual void Start()
     {
         _player = FindFirstObjectByType<Player>();
 
@@ -59,30 +52,18 @@ public class Enemy : MonoBehaviour
         LeanTween.scale(_spawnIndicatorRenderer.gameObject, targetIndicatorScale, .3f)
             .setLoopPingPong(4)
             .setOnComplete(SpawnSequenceCompleted);
+    }
 
-        _attackDelay = 1f / _attackFrequence;
+    protected virtual void Update()
+    {
+        if (!_spriteRenderer.enabled)
+            return;
     }
 
     private void SpawnIndicatorRenderToggle(bool isShow)
     {
         _spriteRenderer.enabled = !isShow;
         _spawnIndicatorRenderer.enabled = isShow;
-    }
-
-    void Update()
-    {
-        if (!_spriteRenderer.enabled)
-            return;
-
-        if (_attackTimer > _attackDelay)
-            TryAttack();
-        else
-            WaitAttackDelay();
-    }
-
-    private void WaitAttackDelay()
-    {
-        _attackTimer += Time.deltaTime;
     }
 
     private void SpawnSequenceCompleted()
@@ -92,24 +73,11 @@ public class Enemy : MonoBehaviour
         _enemyMovement.SetPlayer(_player);
     }
 
-    private void TryAttack()
+    protected void PassAway()
     {
-        float canAttackDistance = Vector2.Distance(transform.position, _player.transform.position);
-
-        bool canAttack = canAttackDistance <= _playerDetectionRadius ? true : false;
-
-        if (canAttack)
-        {
-            Attack();
-        }
-
-        _enemyMovement.FollowPlayer();
-
-    }
-    private void Attack()
-    {
-        _player.TakeDamge(_attackDamge);
-        _attackTimer = 0f;
+        _deadVFX.Play();
+        _deadVFX.transform.SetParent(null);
+        Destroy(gameObject);
     }
 
     public void TakeDamge(int damge)
@@ -126,13 +94,6 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    private void PassAway()
-    {
-        _deadVFX.Play();
-        _deadVFX.transform.SetParent(null);
-        Destroy(gameObject);
-    }
-
     private void OnDrawGizmos()
     {
         if (!_gizmos)
@@ -141,4 +102,10 @@ public class Enemy : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _playerDetectionRadius);
     }
+
+    protected virtual void TryAttack()
+    {
+
+    }
+
 }
