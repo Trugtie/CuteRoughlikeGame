@@ -17,11 +17,14 @@ public class RangeEnemy : Enemy
         _rangeEnemyAttack.Configue(_player);
     }
 
-    protected override void Update()
+    private void Update()
     {
-        base.Update();
+        if (!IsRenderedEnable())
+            return;
 
         ManageAttack();
+
+        transform.localScale = _player.transform.position.x > transform.position.x ? Vector3.one : new Vector3(-1, 1, 1);
     }
 
     private void ManageAttack()

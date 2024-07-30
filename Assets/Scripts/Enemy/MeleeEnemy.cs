@@ -14,9 +14,10 @@ public class MeleeEnemy : Enemy
         _attackDelay = 1f / _attackFrequence;
     }
 
-    protected override void Update()
+    private void Update()
     {
-        base.Update();
+        if (!IsRenderedEnable())
+            return;
 
         if (_attackTimer > _attackDelay)
             TryAttack();

@@ -54,10 +54,9 @@ public abstract class Enemy : MonoBehaviour
             .setOnComplete(SpawnSequenceCompleted);
     }
 
-    protected virtual void Update()
+    protected virtual bool IsRenderedEnable()
     {
-        if (!_spriteRenderer.enabled)
-            return;
+        return _spriteRenderer.enabled;
     }
 
     private void SpawnIndicatorRenderToggle(bool isShow)
