@@ -8,13 +8,17 @@ public class RangeEnemyAttack : MonoBehaviour
 {
     [Header("Elements")]
     [SerializeField] private Transform _shootingPoint;
-    [SerializeField] private EnemyBullet _enemyBullet;
+    [SerializeField] private Bullet _enemyBullet;
+    [SerializeField] private Transform _bulletPoolContainer;
+
     private Player _player;
-    private ObjectPool<EnemyBullet> _enemyPulletPool;
+    private ObjectPool<Bullet> _enemyBulletPool;
+
 
     [Header("Settings")]
     [SerializeField] private int _attackDamge;
     [SerializeField] private int _attackFrequence;
+
     private float _attackDelay;
     private float _attackTimer;
 
@@ -22,27 +26,30 @@ public class RangeEnemyAttack : MonoBehaviour
     {
         _attackDelay = 1f / _attackFrequence;
         _attackTimer = _attackDelay;
-        _enemyPulletPool = new ObjectPool<EnemyBullet>(ActionCreateBullet, ActionGetBullet, ActionRealeaseBullet, ActionDestroyBullet);
+        _enemyBulletPool = new ObjectPool<Bullet>(ActionOnCreateBullet, ActionOnGet, ActionOnReLease, ActionOnDestroy, false, 10);
     }
 
-    private EnemyBullet ActionCreateBullet()
+    private void ActionOnDestroy(Bullet bullet)
     {
-        return Instantiate(_enemyBullet, _shootingPoint);
+        Destroy(bullet.gameObject);
     }
-    private void ActionGetBullet(EnemyBullet bullet)
-    {
-        bullet.Reload();
-        bullet.transform.position = _shootingPoint.position;
-        bullet.gameObject.SetActive(true);
-    }
-    private void ActionRealeaseBullet(EnemyBullet bullet)
+
+    private void ActionOnReLease(Bullet bullet)
     {
         bullet.gameObject.SetActive(false);
     }
 
-    private void ActionDestroyBullet(EnemyBullet bullet)
+    private void ActionOnGet(Bullet bullet)
     {
-        Destroy(bullet);
+        bullet.Reload();
+        bullet.gameObject.SetActive(true);
+    }
+
+    private Bullet ActionOnCreateBullet()
+    {
+        Bullet bullet = Instantiate(_enemyBullet, _bulletPoolContainer);
+        bullet.Configue(_shootingPoint, _attackDamge, _enemyBulletPool);
+        return bullet;
     }
 
     public void AutoAim()
@@ -65,18 +72,13 @@ public class RangeEnemyAttack : MonoBehaviour
     private void Shoot()
     {
         Vector2 toPlayerDirection = (_player.GetCenterPoint() - _shootingPoint.position).normalized;
-
-        EnemyBullet enemyBullet = _enemyPulletPool.Get();
-        enemyBullet.Configue(toPlayerDirection, _attackDamge, this);
+        Bullet enemyBullet = _enemyBulletPool.Get();
+        enemyBullet.Configue(_shootingPoint, _attackDamge, _enemyBulletPool);
+        enemyBullet.SetTargetDirection(toPlayerDirection);
     }
 
     public void Configue(Player player)
     {
         _player = player;
-    }
-
-    public void RealeaseBullet(EnemyBullet enemyBullet)
-    {
-        _enemyPulletPool.Release(enemyBullet);
     }
 }

@@ -1,0 +1,46 @@
+using System;
+using UnityEngine;
+
+public class MeleeWeapon : Weapon
+{
+
+    [Serializable]
+    private struct HitPoint
+    {
+        public Transform hitTransform;
+        public float hitRange;
+    }
+
+    [Header("Elements")]
+    [SerializeField] private HitPoint[] _hitPositions;
+
+    protected override void Attack()
+    {
+        foreach (HitPoint hitpoint in _hitPositions)
+        {
+            Collider2D[] enemies = Physics2D.OverlapCircleAll(hitpoint.hitTransform.position, hitpoint.hitRange, _enemyLayer);
+
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                Enemy enemyTargetAttack = enemies[i].GetComponent<Enemy>();
+
+                if (_enemiesAttackedList.Contains(enemyTargetAttack))
+                    continue;
+
+                enemyTargetAttack.TakeDamge(_weaponDamge);
+                _enemiesAttackedList.Add(enemyTargetAttack);
+            }
+        }
+    }
+
+    protected override void OnDrawGizmos()
+    {
+        base.OnDrawGizmos();
+
+        Gizmos.color = Color.red;
+        foreach (HitPoint hitpoint in _hitPositions)
+        {
+            Gizmos.DrawWireSphere(hitpoint.hitTransform.position, hitpoint.hitRange);
+        }
+    }
+}

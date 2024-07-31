@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerHealth))]
-public class Player : MonoBehaviour
+public class Player : MonoBehaviour, IDamgedable
 {
     [Header("Components")]
     private PlayerHealth _playerHealth;

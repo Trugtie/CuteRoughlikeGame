@@ -86,7 +86,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _shootingPoint: {fileID: 1211347332484193431}
-  _enemyBullet: {fileID: 5957766979299267043, guid: 16bee512ff41346489e3233bece70aa0, type: 3}
+  _enemyBullet: {fileID: 8998998720642782215, guid: 16bee512ff41346489e3233bece70aa0, type: 3}
   _attackDamge: 1
   _attackFrequence: 1
 --- !u!58 &1024886523451468936
