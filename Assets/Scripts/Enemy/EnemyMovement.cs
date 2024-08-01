@@ -8,12 +8,6 @@ public class EnemyMovement : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float _moveSpeed;
 
-    private void Update()
-    {
-        //if (_player != null)
-        //    FollowPlayer();
-    }
-
     public void SetPlayer(Player player)
     {
         _player = player;

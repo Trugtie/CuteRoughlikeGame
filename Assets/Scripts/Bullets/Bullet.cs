@@ -13,6 +13,7 @@ public class Bullet : MonoBehaviour
     private Rigidbody2D _bulletRb;
     private Collider2D _collider;
     private ObjectPool<Bullet> _bulletPool;
+    private IDamgedable _iDamgedable;
 
     [Header("Settings")]
     [SerializeField] private float _flySpeed;
@@ -29,21 +30,26 @@ public class Bullet : MonoBehaviour
         LeanTween.delayedCall(gameObject, 5f, () => { _bulletPool.Release(this); });
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         MoveToTarget();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (_iDamgedable != null)
+            return;
+
         if (!IsDamgedableLayer(other.gameObject.layer, _canDamgeLayer))
             return;
+
+        _iDamgedable = other.GetComponent<IDamgedable>();
 
         LeanTween.cancel(gameObject);
 
         _collider.enabled = false;
-        IDamgedable iDamgedable = other.GetComponent<IDamgedable>();
-        iDamgedable.TakeDamge(_damge);
+        _iDamgedable.TakeDamge(_damge);
+
         DestroyBullet();
     }
 
@@ -56,6 +62,7 @@ public class Bullet : MonoBehaviour
 
     public void Reload()
     {
+        _iDamgedable = null;
         _collider.enabled = true;
         transform.position = _shootingPosition.position;
         _bulletRb.velocity = Vector2.zero;
