@@ -162,4 +162,18 @@ public abstract class Weapon : MonoBehaviour
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, _weaponRange);
     }
+
+    protected int GetCriticalWeaponDamge(out bool isCritical)
+    {
+        isCritical = false;
+        int randomPercent = Random.Range(0, 101);
+
+        if (randomPercent <= 50)
+        {
+            isCritical = true;
+            return _weaponDamge * 2;
+        }
+
+        return _weaponDamge;
+    }
 }

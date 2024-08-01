@@ -18,6 +18,7 @@ public class Bullet : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private float _flySpeed;
     private int _damge;
+    private bool _isCriticalHit;
 
     private void Awake()
     {
@@ -48,7 +49,7 @@ public class Bullet : MonoBehaviour
         LeanTween.cancel(gameObject);
 
         _collider.enabled = false;
-        _iDamgedable.TakeDamge(_damge);
+        _iDamgedable.TakeDamge(_damge, _isCriticalHit);
 
         DestroyBullet();
     }
@@ -68,10 +69,11 @@ public class Bullet : MonoBehaviour
         _bulletRb.velocity = Vector2.zero;
     }
 
-    public void Configue(Transform shootingPosition, int damge, ObjectPool<Bullet> pool)
+    public void Configue(Transform shootingPosition, int damge, bool isCriticalHit, ObjectPool<Bullet> pool)
     {
         _shootingPosition = shootingPosition;
         _damge = damge;
+        _isCriticalHit = isCriticalHit;
         _bulletPool = pool;
         transform.position = shootingPosition.position;
     }

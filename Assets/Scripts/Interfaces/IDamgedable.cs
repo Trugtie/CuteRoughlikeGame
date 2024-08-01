@@ -1,4 +1,4 @@
 public interface IDamgedable
 {
-    public void TakeDamge(int damge);
+    public void TakeDamge(int damge, bool isCriticalHit);
 }

@@ -14,7 +14,7 @@ public class Player : MonoBehaviour, IDamgedable
         _playerHealth = GetComponent<PlayerHealth>();
     }
 
-    public void TakeDamge(int damge)
+    public void TakeDamge(int damge, bool isCriticalHit = false)
     {
         _playerHealth.TakeDamge(damge);
     }

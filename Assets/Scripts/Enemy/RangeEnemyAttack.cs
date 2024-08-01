@@ -48,7 +48,7 @@ public class RangeEnemyAttack : MonoBehaviour
     private Bullet ActionOnCreateBullet()
     {
         Bullet bullet = Instantiate(_enemyBullet, _bulletPoolContainer);
-        bullet.Configue(_shootingPoint, _attackDamge, _enemyBulletPool);
+        bullet.Configue(_shootingPoint, _attackDamge, false, _enemyBulletPool);
         return bullet;
     }
 
@@ -73,7 +73,7 @@ public class RangeEnemyAttack : MonoBehaviour
     {
         Vector2 toPlayerDirection = (_player.GetCenterPoint() - _shootingPoint.position).normalized;
         Bullet enemyBullet = _enemyBulletPool.Get();
-        enemyBullet.Configue(_shootingPoint, _attackDamge, _enemyBulletPool);
+        enemyBullet.Configue(_shootingPoint, _attackDamge, false, _enemyBulletPool);
         enemyBullet.SetTargetDirection(toPlayerDirection);
     }
 

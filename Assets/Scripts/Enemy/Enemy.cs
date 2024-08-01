@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyMovement))]
 public abstract class Enemy : MonoBehaviour, IDamgedable
 {
-    public static Action<Vector2, int> OnAnyHit;
+    public static Action<Vector2, int, bool> OnAnyHit;
 
     [Header("Components")]
     protected EnemyMovement _enemyMovement;
@@ -79,13 +79,13 @@ public abstract class Enemy : MonoBehaviour, IDamgedable
         Destroy(gameObject);
     }
 
-    public void TakeDamge(int damge)
+    public void TakeDamge(int damge, bool isCriticalHit)
     {
         int realDamge = Mathf.Min(damge, _health);
 
         _health -= realDamge;
 
-        OnAnyHit?.Invoke(_damgeTextSpawnPosition.position, damge);
+        OnAnyHit?.Invoke(_damgeTextSpawnPosition.position, damge, isCriticalHit);
 
         if (_health <= 0)
         {

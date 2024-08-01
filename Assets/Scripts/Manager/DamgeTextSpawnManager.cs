@@ -18,12 +18,12 @@ public class DamgeTextSpawnManager : MonoBehaviour
 
     private void Start()
     {
-        MeleeEnemy.OnAnyHit += HitCallpack;
+        Enemy.OnAnyHit += HitCallpack;
     }
 
     private void OnDestroy()
     {
-        MeleeEnemy.OnAnyHit -= HitCallpack;
+        Enemy.OnAnyHit -= HitCallpack;
     }
 
 
@@ -48,11 +48,11 @@ public class DamgeTextSpawnManager : MonoBehaviour
         Destroy(damgeText.gameObject);
     }
 
-    private void HitCallpack(Vector2 targetPosition, int damge)
+    private void HitCallpack(Vector2 targetPosition, int damge, bool isCriticalHit)
     {
         DamgeText damgeTextInstance = _damgeTextPool.Get();
         damgeTextInstance.transform.position = targetPosition;
-        damgeTextInstance.PlayAnim(damge);
+        damgeTextInstance.PlayAnim(damge, isCriticalHit);
         LeanTween.delayedCall(1f, () => { _damgeTextPool.Release(damgeTextInstance); });
     }
 }

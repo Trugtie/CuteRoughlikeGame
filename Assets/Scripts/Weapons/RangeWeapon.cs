@@ -38,7 +38,10 @@ public class RangeWeapon : Weapon
     private Bullet ActionOnCreateBullet()
     {
         Bullet bullet = Instantiate(_bullet, _bulletPoolContainer);
-        bullet.Configue(_shootStartPosition, _weaponDamge, _rangeBulletPool);
+
+        int damge = GetCriticalWeaponDamge(out bool isCritical);
+
+        bullet.Configue(_shootStartPosition, damge, isCritical, _rangeBulletPool);
         return bullet;
     }
 

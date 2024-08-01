@@ -27,7 +27,9 @@ public class MeleeWeapon : Weapon
                 if (_enemiesAttackedList.Contains(enemyTargetAttack))
                     continue;
 
-                enemyTargetAttack.TakeDamge(_weaponDamge);
+                int damge = GetCriticalWeaponDamge(out bool isCritical);
+
+                enemyTargetAttack.TakeDamge(damge, isCritical);
                 _enemiesAttackedList.Add(enemyTargetAttack);
             }
         }
