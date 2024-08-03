@@ -5,6 +5,7 @@ using UnityEngine;
 public abstract class Enemy : MonoBehaviour, IDamgedable
 {
     public static Action<Vector2, int, bool> OnAnyHit;
+    public static Action<Vector2> OnAnyPassAway;
 
     [Header("Components")]
     protected EnemyMovement _enemyMovement;
@@ -74,6 +75,7 @@ public abstract class Enemy : MonoBehaviour, IDamgedable
 
     protected void PassAway()
     {
+        OnAnyPassAway?.Invoke(transform.position);
         _deadVFX.Play();
         _deadVFX.transform.SetParent(null);
         Destroy(gameObject);
