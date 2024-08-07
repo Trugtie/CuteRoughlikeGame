@@ -5,12 +5,19 @@ using UnityEngine;
 [RequireComponent(typeof(Player))]
 public class PlayerDetection : MonoBehaviour
 {
+    [Header("Elements")]
+    [SerializeField] private CircleCollider2D _detectCollider;
+
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.GetComponent<Candy>() == null)
+        if (!collision.IsTouching(_detectCollider))
             return;
 
-        Candy candy = collision.GetComponent<Candy>();
-        candy.Collet(GetComponent<Player>());
+        if (collision.GetComponent<ICollectable>() == null)
+            return;
+
+        ICollectable collectable = collision.GetComponent<ICollectable>();
+        collectable.Collect(GetComponent<Player>());
     }
 }

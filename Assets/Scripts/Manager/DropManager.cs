@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class DropManager : MonoBehaviour
 {
     [Header("Elements")]
     [SerializeField] private Candy _candyPrefab;
+    [SerializeField] private Cash _cashPrefab;
 
     private void Start()
     {
@@ -21,6 +18,10 @@ public class DropManager : MonoBehaviour
 
     private void EnemyPassAwayCallBack(Vector2 vector)
     {
-        Instantiate(_candyPrefab, vector, Quaternion.identity, transform);
+        int random = Random.Range(0, 101);
+
+        CurrencyDrop collectablePrefab = random < 50 ? _cashPrefab : _candyPrefab;
+
+        Instantiate(collectablePrefab, vector, Quaternion.identity, transform);
     }
 }
