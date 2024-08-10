@@ -229,6 +229,7 @@ GameObject:
   - component: {fileID: 8823967575884725261}
   - component: {fileID: 8565076108701964156}
   - component: {fileID: 3439738753506907381}
+  - component: {fileID: 8092578097720215336}
   m_Layer: 3
   m_Name: Melee Enemy
   m_TagString: Untagged
@@ -325,6 +326,33 @@ CircleCollider2D:
   m_Offset: {x: -0.025258899, y: 0.3}
   serializedVersion: 2
   m_Radius: 0.38024265
+--- !u!50 &8092578097720215336
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4673443629682434060}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &7110810543884448200
 GameObject:
   m_ObjectHideFlags: 0

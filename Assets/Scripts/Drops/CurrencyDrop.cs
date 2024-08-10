@@ -6,6 +6,11 @@ public abstract class CurrencyDrop : MonoBehaviour, ICollectable
     [Header("Settings")]
     private bool _isCollected;
 
+    private void OnEnable()
+    {
+        _isCollected = false;
+    }
+
     public void Collect(Player player)
     {
         if (_isCollected)
@@ -34,8 +39,5 @@ public abstract class CurrencyDrop : MonoBehaviour, ICollectable
 
     }
 
-    private void Collected()
-    {
-        gameObject.SetActive(false);
-    }
+    protected abstract void Collected();
 }
