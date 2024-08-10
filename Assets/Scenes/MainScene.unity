@@ -1823,7 +1823,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 7
+  orthographic size: 9
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2039,6 +2039,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _candyPrefab: {fileID: 1856679643171936046, guid: 35caf6f9b327c134f92531f9d9b9eaea, type: 3}
   _cashPrefab: {fileID: 8307327397290719974, guid: 4c557b48d9eee3b42ba7edb9c1b4a04c, type: 3}
+  _chestPrefab: {fileID: 7512427858769627701, guid: 169858eb03d795840a249c848046562e, type: 3}
+  _cashDropChance: 30
+  _chestDropChance: 10
 --- !u!1001 &565991444
 PrefabInstance:
   m_ObjectHideFlags: 0

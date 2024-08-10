@@ -4,14 +4,14 @@ using UnityEngine;
 public abstract class CurrencyDrop : MonoBehaviour, ICollectable
 {
     [Header("Settings")]
-    private bool _isCollected;
+    protected bool _isCollected;
 
     private void OnEnable()
     {
         _isCollected = false;
     }
 
-    public void Collect(Player player)
+    public virtual void Collect(Player player)
     {
         if (_isCollected)
             return;

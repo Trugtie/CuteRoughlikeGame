@@ -6,13 +6,21 @@ public class DropManager : MonoBehaviour
     [Header("Elements")]
     [SerializeField] private Candy _candyPrefab;
     [SerializeField] private Cash _cashPrefab;
+    [SerializeField] private Chest _chestPrefab;
+
     private ObjectPool<Candy> _candyPool;
     private ObjectPool<Cash> _cashPool;
+    private ObjectPool<Chest> _chestPool;
+
+    [Header("Setting")]
+    [SerializeField][Range(0, 100)] private int _cashDropChance;
+    [SerializeField][Range(0, 100)] private int _chestDropChance;
 
     private void Awake()
     {
         _candyPool = new ObjectPool<Candy>(CreateCandyAction, GetCandyAction, ReleaseCandyAction, DestroyCandyAction);
         _cashPool = new ObjectPool<Cash>(CreateCashAction, GetCashAction, ReleaseCashAction, DestroyCashAction);
+        _chestPool = new ObjectPool<Chest>(CreateChestAction, GetChestAction, ReleaseChestAction, DestroyChestAction);
     }
 
     private void DestroyCandyAction(Candy candy) => Destroy(candy.gameObject);
@@ -25,11 +33,17 @@ public class DropManager : MonoBehaviour
     private void GetCashAction(Cash cash) => cash.gameObject.SetActive(true);
     private Cash CreateCashAction() => Instantiate(_cashPrefab, transform);
 
+    private void DestroyChestAction(Chest chest) => Destroy(chest.gameObject);
+    private void ReleaseChestAction(Chest chest) => chest.gameObject.SetActive(false);
+    private void GetChestAction(Chest chest) => chest.gameObject.SetActive(true);
+    private Chest CreateChestAction() => Instantiate(_chestPrefab, transform);
+
     private void Start()
     {
         Enemy.OnAnyPassAway += EnemyPassAwayCallBack;
         Cash.OnAnyCashCollected += CashReleaseCallback;
         Candy.OnAnyCandyCollected += CandyReleaseCallback;
+        Chest.OnAnyChestCollected += ChestReleaseCallback;
     }
 
     private void OnDestroy()
@@ -37,24 +51,50 @@ public class DropManager : MonoBehaviour
         Enemy.OnAnyPassAway -= EnemyPassAwayCallBack;
         Cash.OnAnyCashCollected -= CashReleaseCallback;
         Candy.OnAnyCandyCollected -= CandyReleaseCallback;
+        Chest.OnAnyChestCollected -= ChestReleaseCallback;
     }
 
-    private void EnemyPassAwayCallBack(Vector2 vector)
+    private void ChestReleaseCallback(Chest chest)
+    {
+        _chestPool.Release(chest);
+    }
+
+    private void EnemyPassAwayCallBack(Vector2 dropPosition)
     {
         int random = Random.Range(0, 101);
 
-        bool isCash = random < 50 ? true : false;
+        bool isDropCast = random < _cashDropChance;
 
-        if (isCash)
+        bool isDropedChest = TryGetChest(dropPosition);
+
+        if (isDropedChest)
+            return;
+
+        if (isDropCast)
         {
             Cash cash = _cashPool.Get();
-            cash.transform.position = vector;
+            cash.transform.position = dropPosition;
         }
         else
         {
             Candy candy = _candyPool.Get();
-            candy.transform.position = vector;
+            candy.transform.position = dropPosition;
         }
+    }
+
+    private bool TryGetChest(Vector2 dropPosition)
+    {
+        int random = Random.Range(0, 101);
+
+        bool isDropChest = random < _chestDropChance;
+
+        if (!isDropChest)
+            return false;
+
+        Chest chest = _chestPool.Get();
+        chest.transform.position = dropPosition;
+
+        return true;
     }
 
     private void CandyReleaseCallback(Candy candy)
