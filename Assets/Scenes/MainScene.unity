@@ -3119,17 +3119,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f758a6ab7316e0240a5fe82ecc30342c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _waveDuration: 30
   _waves:
   - name: Wave 01
     segments:
-    - enemyPrefabs: {fileID: 4673443629682434060, guid: 641b843fb4ca0e64bb9020ecd9e8b1d3, type: 3}
+    - tStartEndPercent: {x: 0, y: 30}
+      spawnFrequence: 1
+      enemyPrefabs: {fileID: 4673443629682434060, guid: 641b843fb4ca0e64bb9020ecd9e8b1d3, type: 3}
   - name: Wave 02
     segments:
-    - enemyPrefabs: {fileID: 487360873942781287, guid: c4d38767490ec914c975464d6da6ea38, type: 3}
+    - tStartEndPercent: {x: 0, y: 30}
+      spawnFrequence: 2
+      enemyPrefabs: {fileID: 487360873942781287, guid: c4d38767490ec914c975464d6da6ea38, type: 3}
   - name: Wave 03
     segments:
-    - enemyPrefabs: {fileID: 4673443629682434060, guid: 641b843fb4ca0e64bb9020ecd9e8b1d3, type: 3}
-    - enemyPrefabs: {fileID: 487360873942781287, guid: c4d38767490ec914c975464d6da6ea38, type: 3}
+    - tStartEndPercent: {x: 0, y: 30}
+      spawnFrequence: 3
+      enemyPrefabs: {fileID: 4673443629682434060, guid: 641b843fb4ca0e64bb9020ecd9e8b1d3, type: 3}
+    - tStartEndPercent: {x: 30, y: 40}
+      spawnFrequence: 1
+      enemyPrefabs: {fileID: 487360873942781287, guid: c4d38767490ec914c975464d6da6ea38, type: 3}
 --- !u!1 &1041074337
 GameObject:
   m_ObjectHideFlags: 0
