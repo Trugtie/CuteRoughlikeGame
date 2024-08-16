@@ -3119,12 +3119,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f758a6ab7316e0240a5fe82ecc30342c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _player: {fileID: 1523450296}
   _waveDuration: 30
   _waves:
   - name: Wave 01
     segments:
     - tStartEndPercent: {x: 0, y: 34}
-      spawnFrequence: 1
+      spawnFrequence: 5
       enemyPrefab: {fileID: 4673443629682434060, guid: 641b843fb4ca0e64bb9020ecd9e8b1d3, type: 3}
 --- !u!1 &1041074337
 GameObject:
@@ -4364,6 +4365,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _requiredExp: 5
+--- !u!114 &1523450296 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -5301810855878252559, guid: d1cbbb1fa93115d4b917c7a86ba2f909, type: 3}
+  m_PrefabInstance: {fileID: 3375243719660658730}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776496958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13097a0b8e7d7f040bdb4c0aa1fb74e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1524901392
 PrefabInstance:
   m_ObjectHideFlags: 0

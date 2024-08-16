@@ -1,11 +1,13 @@
 using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
-using System.Threading;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
+    [Header(" Elements ")]
+    [SerializeField] private Player _player;
+
     [Header(" Settings ")]
     [SerializeField] private int _waveDuration;
     private float _timer;
@@ -43,16 +45,28 @@ public class WaveManager : MonoBehaviour
 
             float timeSinceSegmentStart = _timer - tStart;
 
-            float spawmDelay = 1 / currentSegment.spawnFrequence;
+            float spawnDelay = 1.0f / currentSegment.spawnFrequence;
 
-            if (timeSinceSegmentStart / spawmDelay > _localCounters[i])
+            if (timeSinceSegmentStart / spawnDelay > _localCounters[i])
             {
-                Instantiate(currentSegment.enemyPrefab, Vector3.zero, Quaternion.identity, transform);
+                Instantiate(currentSegment.enemyPrefab, GetSpawnPosition(), Quaternion.identity, transform);
                 _localCounters[i]++;
             }
         }
 
         _timer += Time.deltaTime;
+    }
+
+    private Vector2 GetSpawnPosition()
+    {
+        Vector2 spawnDirection = UnityEngine.Random.onUnitSphere;
+        Vector2 offset = spawnDirection.normalized * UnityEngine.Random.Range(6, 10);
+        Vector2 targetPosition = (Vector2)_player.transform.position + offset;
+
+        targetPosition.x = Mathf.Clamp(targetPosition.x, -19, 19);
+        targetPosition.y = Mathf.Clamp(targetPosition.y, -9, 16);
+
+        return targetPosition;
     }
 }
 
