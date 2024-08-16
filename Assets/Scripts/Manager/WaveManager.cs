@@ -12,19 +12,33 @@ public class WaveManager : MonoBehaviour
     [SerializeField] private int _waveDuration;
     private float _timer;
     private List<float> _localCounters = new List<float>();
+    private bool _isTimerOn;
 
     [Header(" Waves ")]
     [SerializeField] private Wave[] _waves;
 
     private void Start()
     {
-        _localCounters.Add(1);
+        StartWave(0);
     }
 
     private void Update()
     {
+        if (!_isTimerOn) return;
+
         if (_timer < _waveDuration)
             ManageCurrentWave();
+    }
+
+    private void StartWave(int waveIndex)
+    {
+        _localCounters.Clear();
+        _timer = 0;
+
+        for (int i = 0; i < _waves[waveIndex].segments.Count; i++)
+            _localCounters.Add(1);
+
+        _isTimerOn = true;
     }
 
     private void ManageCurrentWave()
