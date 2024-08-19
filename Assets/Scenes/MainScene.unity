@@ -3130,6 +3130,14 @@ MonoBehaviour:
     - tStartEndPercent: {x: 34, y: 50}
       spawnFrequence: 5
       enemyPrefab: {fileID: 487360873942781287, guid: c4d38767490ec914c975464d6da6ea38, type: 3}
+  - name: Wave 02
+    segments:
+    - tStartEndPercent: {x: 0, y: 16}
+      spawnFrequence: 5
+      enemyPrefab: {fileID: 487360873942781287, guid: c4d38767490ec914c975464d6da6ea38, type: 3}
+    - tStartEndPercent: {x: 19.618528, y: 53.61853}
+      spawnFrequence: 5
+      enemyPrefab: {fileID: 4673443629682434060, guid: 641b843fb4ca0e64bb9020ecd9e8b1d3, type: 3}
 --- !u!1 &1041074337
 GameObject:
   m_ObjectHideFlags: 0

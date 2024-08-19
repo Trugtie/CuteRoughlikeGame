@@ -1,10 +1,15 @@
 using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
+    public Action<int, int> OnStartWave;
+    public Action<int> OnTimerCountDown;
+    public Action OnWaveComplete;
+
     [Header(" Elements ")]
     [SerializeField] private Player _player;
 
@@ -13,13 +18,14 @@ public class WaveManager : MonoBehaviour
     private float _timer;
     private List<float> _localCounters = new List<float>();
     private bool _isTimerOn;
+    private int _currentWaveIndex;
 
     [Header(" Waves ")]
     [SerializeField] private Wave[] _waves;
 
     private void Start()
     {
-        StartWave(0);
+        StartWave(_currentWaveIndex);
     }
 
     private void Update()
@@ -27,11 +33,20 @@ public class WaveManager : MonoBehaviour
         if (!_isTimerOn) return;
 
         if (_timer < _waveDuration)
+        {
             ManageCurrentWave();
+
+            int countDownTimer = (int)(_waveDuration - _timer);
+            OnTimerCountDown(countDownTimer);
+        }
+        else
+            StartWaveTransition();
     }
 
     private void StartWave(int waveIndex)
     {
+        Debug.Log("Starting Wave " + waveIndex);
+
         _localCounters.Clear();
         _timer = 0;
 
@@ -39,11 +54,13 @@ public class WaveManager : MonoBehaviour
             _localCounters.Add(1);
 
         _isTimerOn = true;
+
+        OnStartWave?.Invoke(waveIndex, _waves.Length);
     }
 
     private void ManageCurrentWave()
     {
-        Wave wave = _waves[0];
+        Wave wave = _waves[_currentWaveIndex];
 
         for (int i = 0; i < wave.segments.Count; i++)
         {
@@ -69,6 +86,30 @@ public class WaveManager : MonoBehaviour
         }
 
         _timer += Time.deltaTime;
+    }
+
+    private void StartWaveTransition()
+    {
+        _isTimerOn = false;
+
+        DestroyAllEnemies();
+
+        _currentWaveIndex++;
+        if (_currentWaveIndex >= _waves.Length)
+        {
+            Debug.Log("Wave Complete!");
+            OnWaveComplete?.Invoke();
+        }
+        else
+            StartWave(_currentWaveIndex);
+    }
+
+    private void DestroyAllEnemies()
+    {
+        foreach (Transform child in transform)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     private Vector2 GetSpawnPosition()
