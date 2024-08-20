@@ -101,7 +101,7 @@ public class WaveManager : MonoBehaviour
             OnWaveComplete?.Invoke();
         }
         else
-            StartWave(_currentWaveIndex);
+            GameManager.Instance.WaveTransitionCallback();
     }
 
     private void DestroyAllEnemies()

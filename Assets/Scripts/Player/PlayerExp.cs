@@ -13,6 +13,7 @@ public class PlayerExp : MonoBehaviour
     [SerializeField] private int _requiredExp;
     private int _currentExp;
     private int _level = 1;
+    private int _levelsGainedThisWave;
 
     private void Start()
     {
@@ -46,7 +47,7 @@ public class PlayerExp : MonoBehaviour
     {
         _currentExp = 0;
         _level++;
-
+        _levelsGainedThisWave++;
         OnLevelUp?.Invoke();
     }
 
@@ -58,5 +59,16 @@ public class PlayerExp : MonoBehaviour
     public int GetCurrentLevel()
     {
         return _level;
+    }
+
+    public bool HasLevelUp()
+    {
+        if (_levelsGainedThisWave > 0)
+        {
+            _levelsGainedThisWave--;
+            return true;
+        }
+
+        return false;
     }
 }
