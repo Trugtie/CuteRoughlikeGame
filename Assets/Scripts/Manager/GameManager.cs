@@ -41,6 +41,10 @@ public class GameManager : MonoBehaviour
         {
             gameStateListener.GameStateChangedCallback(gameState);
         }
+    }
 
+    public void StartGame()
+    {
+        SetGameState(GameStates.GAMEPLAY);
     }
 }

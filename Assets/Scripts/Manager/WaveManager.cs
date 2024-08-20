@@ -23,11 +23,6 @@ public class WaveManager : MonoBehaviour, IGameStateListener
     [Header(" Waves ")]
     [SerializeField] private Wave[] _waves;
 
-    private void Start()
-    {
-        StartWave(_currentWaveIndex);
-    }
-
     private void Update()
     {
         if (!_isTimerOn) return;
@@ -37,7 +32,7 @@ public class WaveManager : MonoBehaviour, IGameStateListener
             ManageCurrentWave();
 
             int countDownTimer = (int)(_waveDuration - _timer);
-            OnTimerCountDown(countDownTimer);
+            OnTimerCountDown?.Invoke(countDownTimer);
         }
         else
             StartWaveTransition();
@@ -104,6 +99,11 @@ public class WaveManager : MonoBehaviour, IGameStateListener
             GameManager.Instance.WaveTransitionCallback();
     }
 
+    private void StartNextWave()
+    {
+        StartWave(_currentWaveIndex);
+    }
+
     private void DestroyAllEnemies()
     {
         foreach (Transform child in transform)
@@ -127,6 +127,12 @@ public class WaveManager : MonoBehaviour, IGameStateListener
     public void GameStateChangedCallback(GameStates gameState)
     {
         Debug.Log(gameState.ToString());
+        switch (gameState)
+        {
+            case GameStates.GAMEPLAY:
+                StartNextWave();
+                break;
+        }
     }
 }
 
