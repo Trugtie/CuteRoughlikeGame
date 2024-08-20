@@ -26,7 +26,7 @@ public class WaveUI : MonoBehaviour
 
     private void UpdateWave(int waveIndex, int waveMaxLenght)
     {
-        _waveText.text = $"Wave {waveIndex + 1}}";
+        _waveText.text = $"Wave {waveIndex + 1}";
     }
 
     private void WaveComplete()
