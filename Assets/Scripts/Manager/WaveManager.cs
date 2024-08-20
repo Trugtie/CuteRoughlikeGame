@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
 
-public class WaveManager : MonoBehaviour
+public class WaveManager : MonoBehaviour, IGameStateListener
 {
     public Action<int, int> OnStartWave;
     public Action<int> OnTimerCountDown;
@@ -122,6 +122,11 @@ public class WaveManager : MonoBehaviour
         targetPosition.y = Mathf.Clamp(targetPosition.y, -9, 16);
 
         return targetPosition;
+    }
+
+    public void GameStateChangedCallback(GameStates gameState)
+    {
+        Debug.Log(gameState.ToString());
     }
 }
 

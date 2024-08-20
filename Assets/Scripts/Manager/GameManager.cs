@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -17,17 +18,29 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         Application.targetFrameRate = 60;
+        SetGameState(GameStates.MENU);
     }
 
     public void WaveTransitionCallback()
     {
         if (Player.Instance.HasLevelUp())
         {
-            Debug.Log("Display transition panel");
+            SetGameState(GameStates.WAVETRANSITION);
         }
         else
         {
-            Debug.Log("Display Shop");
+            SetGameState(GameStates.SHOP);
         }
+    }
+
+    private void SetGameState(GameStates gameState)
+    {
+        IEnumerable<IGameStateListener> gameStateListeners = FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IGameStateListener>();
+
+        foreach (IGameStateListener gameStateListener in gameStateListeners)
+        {
+            gameStateListener.GameStateChangedCallback(gameState);
+        }
+
     }
 }
