@@ -1,7 +1,7 @@
-using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine;
 
-public class MenuUI : MonoBehaviour
+public class ShopUI : MonoBehaviour
 {
     [Header(" Elements ")]
     [SerializeField] private Button _startGameBtn;
@@ -10,7 +10,7 @@ public class MenuUI : MonoBehaviour
     {
         _startGameBtn.onClick.AddListener(() =>
         {
-            GameManager.Instance.SetState(GameStates.WEAPONSELECTION);
+            GameManager.Instance.SetState(GameStates.GAMEPLAY);
         });
     }
 }

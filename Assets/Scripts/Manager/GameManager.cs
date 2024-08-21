@@ -1,7 +1,7 @@
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -43,8 +43,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void StartGame()
+    public void SetState(GameStates gameState)
     {
-        SetGameState(GameStates.GAMEPLAY);
+        SetGameState(gameState);
+    }
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene(0);
     }
 }

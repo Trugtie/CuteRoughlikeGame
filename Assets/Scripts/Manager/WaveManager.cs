@@ -93,6 +93,7 @@ public class WaveManager : MonoBehaviour, IGameStateListener
         if (_currentWaveIndex >= _waves.Length)
         {
             Debug.Log("Wave Complete!");
+            GameManager.Instance.SetState(GameStates.STAGECOMPLETE);
             OnWaveComplete?.Invoke();
         }
         else
@@ -131,6 +132,10 @@ public class WaveManager : MonoBehaviour, IGameStateListener
         {
             case GameStates.GAMEPLAY:
                 StartNextWave();
+                break;
+            case GameStates.GAMEOVER:
+                _isTimerOn = false;
+                DestroyAllEnemies();
                 break;
         }
     }
