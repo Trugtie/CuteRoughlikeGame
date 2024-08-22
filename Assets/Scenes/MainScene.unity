@@ -7521,9 +7521,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Stats
-
-'
+  m_text: ' Luck'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b91ef018a79142646a22113f8ee254a6, type: 2}
   m_sharedMaterial: {fileID: 182430771217219802, guid: b91ef018a79142646a22113f8ee254a6, type: 2}
@@ -8623,9 +8621,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Stats
-
-'
+  m_text: ' Health Recovery Speed'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b91ef018a79142646a22113f8ee254a6, type: 2}
   m_sharedMaterial: {fileID: 182430771217219802, guid: b91ef018a79142646a22113f8ee254a6, type: 2}
@@ -9007,9 +9003,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Stats
-
-'
+  m_text: ' Max Health'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b91ef018a79142646a22113f8ee254a6, type: 2}
   m_sharedMaterial: {fileID: 182430771217219802, guid: b91ef018a79142646a22113f8ee254a6, type: 2}
