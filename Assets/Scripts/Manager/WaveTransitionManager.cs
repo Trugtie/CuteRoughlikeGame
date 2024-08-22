@@ -1,8 +1,11 @@
+using NaughtyAttributes;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class WaveTransitionManager : MonoBehaviour, IGameStateListener
 {
@@ -19,11 +22,17 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
         }
     }
 
+    [Button]
     private void ConfigueUpgradeButtons()
     {
         for (int i = 0; i < _upgradeButtons.Length; i++)
         {
-            _upgradeButtons[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = "Upgrade " + i;
+            int randomIndex = Random.Range(0, Enum.GetValues(typeof(Stats)).Length);
+            Stats stat = (Stats)Enum.GetValues(typeof(Stats)).GetValue(randomIndex);
+
+            string randomStatString = stat.ToString();
+
+            _upgradeButtons[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = randomStatString;
         }
     }
 }
