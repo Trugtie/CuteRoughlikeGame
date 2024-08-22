@@ -15,6 +15,9 @@ public class PlayerExp : MonoBehaviour
     private int _level = 1;
     private int _levelsGainedThisWave;
 
+    [Header(" Debug ")]
+    [SerializeField] private bool _isAlwayLevelUp;
+
     private void Start()
     {
         Candy.OnAnyCandyCollected += CandyCollectedCallback;
@@ -63,6 +66,9 @@ public class PlayerExp : MonoBehaviour
 
     public bool HasLevelUp()
     {
+        if (_isAlwayLevelUp)
+            return true;
+
         if (_levelsGainedThisWave > 0)
         {
             _levelsGainedThisWave--;
