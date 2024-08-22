@@ -33,6 +33,11 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
             string randomStatString = Enums.FormatEnumString(stat);
 
             _upgradeButtons[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = randomStatString;
+
+            _upgradeButtons[i].onClick.RemoveAllListeners();
+
+            _upgradeButtons[i].onClick.AddListener(() => Debug.Log(randomStatString));
+
         }
     }
 }
