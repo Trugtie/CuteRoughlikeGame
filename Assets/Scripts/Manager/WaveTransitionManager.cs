@@ -10,7 +10,7 @@ using Random = UnityEngine.Random;
 public class WaveTransitionManager : MonoBehaviour, IGameStateListener
 {
     [Header(" Elements ")]
-    [SerializeField] private Button[] _upgradeButtons;
+    [SerializeField] private UpgradeButtonUI[] _upgradeButtons;
 
     public void GameStateChangedCallback(GameStates gameState)
     {
@@ -32,11 +32,11 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
 
             string randomStatString = Enums.FormatEnumString(stat);
 
-            _upgradeButtons[i].transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = randomStatString;
+            _upgradeButtons[i].ConfigueUpgradeButton(null, randomStatString, Random.Range(0, 100));
 
-            _upgradeButtons[i].onClick.RemoveAllListeners();
+            _upgradeButtons[i].Button.onClick.RemoveAllListeners();
 
-            _upgradeButtons[i].onClick.AddListener(() => Debug.Log(randomStatString));
+            _upgradeButtons[i].Button.onClick.AddListener(() => Debug.Log(randomStatString));
 
         }
     }
