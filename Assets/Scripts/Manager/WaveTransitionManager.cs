@@ -100,6 +100,7 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
                 return () => Debug.Log("Invalid Action");
 
         }
-        return () => { Debug.Log("Action Perform"); };
+
+        return () => PlayerStatsManager.Instance.AddStat(stat, randomValue);
     }
 }
