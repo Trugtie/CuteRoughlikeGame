@@ -32,28 +32,74 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
 
             string randomStatString = Enums.FormatEnumString(stat);
 
-            _upgradeButtons[i].ConfigueUpgradeButton(null, randomStatString, Random.Range(0, 100));
+            string buttonString;
+            Action action = GetPerformActionFromStat(stat, out buttonString);
+
+            _upgradeButtons[i].ConfigueUpgradeButton(null, randomStatString, buttonString);
 
             _upgradeButtons[i].Button.onClick.RemoveAllListeners();
 
-            Action action = GetPerformActionFromStat(stat);
-
             _upgradeButtons[i].Button.onClick.AddListener(() => action?.Invoke());
+            _upgradeButtons[i].Button.onClick.AddListener(() => BonusUpgradeCallback());
 
         }
     }
 
-    private Action GetPerformActionFromStat(Stats stat)
+    private void BonusUpgradeCallback()
     {
+        GameManager.Instance.WaveTransitionCallback();
+    }
+
+    private Action GetPerformActionFromStat(Stats stat, out string buttonString)
+    {
+        float randomValue = Random.Range(1, 10);
+        buttonString = $"+{randomValue}%";
+
         switch (stat)
         {
             case Stats.Attack:
-                return () => Debug.Log("Applied Attack");
+                randomValue = Random.Range(1, 10);
+                break;
             case Stats.AttackSpeed:
-                return () => Debug.Log("Applied Attack Speed");
+                randomValue = Random.Range(1, 10);
+                break;
+            case Stats.CriticalChance:
+                randomValue = Random.Range(1, 10);
+                break;
+            case Stats.CriticalPercent:
+                randomValue = Random.Range(1f, 2f);
+                buttonString = $"+{randomValue.ToString("F2")}x";
+                break;
+            case Stats.MoveSpeed:
+                randomValue = Random.Range(1, 10);
+                break;
+            case Stats.MaxHealth:
+                randomValue = Random.Range(1, 5);
+                buttonString = $"+{randomValue}";
+                break;
+            case Stats.Range:
+                randomValue = Random.Range(1f, 5f);
+                buttonString = $"+{randomValue.ToString("F2")}";
+                break;
+            case Stats.HealthRecoverySpeed:
+                randomValue = Random.Range(1, 10);
+                break;
+            case Stats.Armor:
+                randomValue = Random.Range(1, 10);
+                break;
+            case Stats.Luck:
+                randomValue = Random.Range(1, 10);
+                break;
+            case Stats.Dodge:
+                randomValue = Random.Range(1, 10);
+                break;
+            case Stats.Lifesteal:
+                randomValue = Random.Range(1, 10);
+                break;
             default:
                 return () => Debug.Log("Invalid Action");
 
         }
+        return () => { Debug.Log("Action Perform"); };
     }
 }

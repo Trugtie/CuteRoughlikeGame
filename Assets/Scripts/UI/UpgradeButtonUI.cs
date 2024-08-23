@@ -12,10 +12,10 @@ public class UpgradeButtonUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _valueText;
     [field: SerializeField] public Button Button { get; private set; }
 
-    public void ConfigueUpgradeButton(Sprite icon, string upgradeStatName, int value)
+    public void ConfigueUpgradeButton(Sprite icon, string upgradeStatName, string valueString)
     {
         _icon.sprite = icon;
         _upgradeStatText.SetText(upgradeStatName);
-        _valueText.SetText(value.ToString());
+        _valueText.SetText(valueString);
     }
 }
