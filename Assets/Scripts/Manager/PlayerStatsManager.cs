@@ -11,10 +11,16 @@ public class PlayerStatsManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null)
+        if (Instance == null)
             Instance = this;
         else
             Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        _addends[Stats.MaxHealth] = 10f;
+        UpdatePlayerStats();
     }
 
     public void AddStat(Stats stat, float value)
@@ -25,6 +31,11 @@ public class PlayerStatsManager : MonoBehaviour
             Debug.LogError("Not valid stat data");
 
         UpdatePlayerStats();
+    }
+
+    public float GetAddendStatValue(Stats stat)
+    {
+        return _addends[stat];
     }
 
     private void UpdatePlayerStats()

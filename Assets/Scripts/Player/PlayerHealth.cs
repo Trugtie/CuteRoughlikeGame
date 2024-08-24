@@ -1,23 +1,19 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PlayerHealth : MonoBehaviour
+public class PlayerHealth : MonoBehaviour, IPlayerStatsDependency
 {
     [Header("Elements")]
     [SerializeField] private Slider _healthBar;
     [SerializeField] private TextMeshProUGUI _healthText;
 
     [Header("Settings")]
-    [SerializeField] private int _maxHealth;
+    [SerializeField] private int _baseMaxHealth;
+    private int _maxHealth;
     private int _health;
-
-    private void Awake()
-    {
-        _health = _maxHealth;
-        UpdateVisual();
-    }
 
     public void TakeDamge(int damge)
     {
@@ -46,5 +42,15 @@ public class PlayerHealth : MonoBehaviour
         _healthBar.value = healthValue;
 
         _healthText.SetText($"{_health} / {_maxHealth}");
+    }
+
+    public void UpdatePlayerStats(PlayerStatsManager playerStatsManager)
+    {
+        float addendHealth = playerStatsManager.GetAddendStatValue(Stats.MaxHealth);
+        _maxHealth = _baseMaxHealth + (int)addendHealth;
+        _maxHealth = Mathf.Max(_maxHealth, 1);
+
+        _health = _maxHealth;
+        UpdateVisual();
     }
 }
