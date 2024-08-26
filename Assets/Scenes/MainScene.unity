@@ -15720,6 +15720,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: -7548143835909894940, guid: d1cbbb1fa93115d4b917c7a86ba2f909, type: 3}
+      propertyPath: _minHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -7548143835909894940, guid: d1cbbb1fa93115d4b917c7a86ba2f909, type: 3}
       propertyPath: _healthText
       value: 
       objectReference: {fileID: 166779596}
@@ -15799,6 +15803,14 @@ PrefabInstance:
       propertyPath: _joystick
       value: 
       objectReference: {fileID: 1617206048}
+    - target: {fileID: 8703702029132635045, guid: d1cbbb1fa93115d4b917c7a86ba2f909, type: 3}
+      propertyPath: _minSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8703702029132635045, guid: d1cbbb1fa93115d4b917c7a86ba2f909, type: 3}
+      propertyPath: _baseMoveSpeed
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:

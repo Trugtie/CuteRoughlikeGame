@@ -52,19 +52,22 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
 
     private Action GetPerformActionFromStat(Stats stat, out string buttonString)
     {
-        float randomValue = Random.Range(1, 10);
-        buttonString = $"+{randomValue}%";
+        float randomValue;
+        buttonString = null;
 
         switch (stat)
         {
             case Stats.Attack:
                 randomValue = Random.Range(1, 10);
+                buttonString = $"+{randomValue}%";
                 break;
             case Stats.AttackSpeed:
                 randomValue = Random.Range(1, 10);
+                buttonString = $"+{randomValue}%";
                 break;
             case Stats.CriticalChance:
                 randomValue = Random.Range(1, 10);
+                buttonString = $"+{randomValue}%";
                 break;
             case Stats.CriticalPercent:
                 randomValue = Random.Range(1f, 2f);
@@ -72,6 +75,7 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
                 break;
             case Stats.MoveSpeed:
                 randomValue = Random.Range(1, 10);
+                buttonString = $"+{randomValue}%";
                 break;
             case Stats.MaxHealth:
                 randomValue = Random.Range(1, 5);
@@ -83,18 +87,23 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
                 break;
             case Stats.HealthRecoverySpeed:
                 randomValue = Random.Range(1, 10);
+                buttonString = $"+{randomValue}%";
                 break;
             case Stats.Armor:
                 randomValue = Random.Range(1, 10);
+                buttonString = $"+{randomValue}%";
                 break;
             case Stats.Luck:
                 randomValue = Random.Range(1, 10);
+                buttonString = $"+{randomValue}%";
                 break;
             case Stats.Dodge:
                 randomValue = Random.Range(1, 10);
+                buttonString = $"+{randomValue}%";
                 break;
             case Stats.Lifesteal:
                 randomValue = Random.Range(1, 10);
+                buttonString = $"+{randomValue}%";
                 break;
             default:
                 return () => Debug.Log("Invalid Action");
