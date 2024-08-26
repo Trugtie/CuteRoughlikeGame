@@ -5,9 +5,13 @@ using UnityEngine;
 
 public class PlayerStatsManager : MonoBehaviour
 {
+    [Header("Data")]
+    [SerializeField] private CharacterDataSO _characterDataSO;
+
     public static PlayerStatsManager Instance { get; private set; }
 
     private Dictionary<Stats, float> _addends = new Dictionary<Stats, float>();
+    private Dictionary<Stats, float> _baseStats;
 
     private void Awake()
     {
@@ -15,12 +19,23 @@ public class PlayerStatsManager : MonoBehaviour
             Instance = this;
         else
             Destroy(gameObject);
+
+        InitData();
     }
 
     private void Start()
     {
-        _addends[Stats.MaxHealth] = 10f;
         UpdatePlayerStats();
+    }
+
+    private void InitData()
+    {
+        _baseStats = _characterDataSO.BaseStats;
+
+        foreach (KeyValuePair<Stats, float> keyValuePair in _baseStats)
+        {
+            _addends.Add(keyValuePair.Key, 0);
+        }
     }
 
     public void AddStat(Stats stat, float value)
@@ -33,9 +48,9 @@ public class PlayerStatsManager : MonoBehaviour
         UpdatePlayerStats();
     }
 
-    public float GetAddendStatValue(Stats stat)
+    public float GetStatValue(Stats stat)
     {
-        return _addends[stat];
+        return _baseStats[stat] + _addends[stat];
     }
 
     private void UpdatePlayerStats()

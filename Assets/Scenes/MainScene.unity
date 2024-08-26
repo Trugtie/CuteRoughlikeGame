@@ -6022,6 +6022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c64ff6699d38a94cb85a7fe80aae861, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _characterDataSO: {fileID: 11400000, guid: ff608983a781e634a99a904ee46272a0, type: 2}
 --- !u!1001 &1374906962
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15724,7 +15725,7 @@ PrefabInstance:
       objectReference: {fileID: 166779596}
     - target: {fileID: -7548143835909894940, guid: d1cbbb1fa93115d4b917c7a86ba2f909, type: 3}
       propertyPath: _baseMaxHealth
-      value: 10
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 273216544206194462, guid: d1cbbb1fa93115d4b917c7a86ba2f909, type: 3}
       propertyPath: m_IsActive

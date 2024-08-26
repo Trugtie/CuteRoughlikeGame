@@ -11,7 +11,6 @@ public class PlayerHealth : MonoBehaviour, IPlayerStatsDependency
     [SerializeField] private TextMeshProUGUI _healthText;
 
     [Header("Settings")]
-    [SerializeField] private int _baseMaxHealth;
     private int _maxHealth;
     private int _health;
 
@@ -46,8 +45,8 @@ public class PlayerHealth : MonoBehaviour, IPlayerStatsDependency
 
     public void UpdatePlayerStats(PlayerStatsManager playerStatsManager)
     {
-        float addendHealth = playerStatsManager.GetAddendStatValue(Stats.MaxHealth);
-        _maxHealth = _baseMaxHealth + (int)addendHealth;
+        float healthStatValue = playerStatsManager.GetStatValue(Stats.MaxHealth);
+        _maxHealth = (int)healthStatValue;
         _maxHealth = Mathf.Max(_maxHealth, 1);
 
         _health = _maxHealth;
