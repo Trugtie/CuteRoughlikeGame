@@ -19,13 +19,14 @@ public class DamgeTextSpawnManager : MonoBehaviour
     private void Start()
     {
         Enemy.OnAnyHit += HitCallpack;
+        PlayerHealth.OnDodged += DogdedCallback;
     }
 
     private void OnDestroy()
     {
         Enemy.OnAnyHit -= HitCallpack;
+        PlayerHealth.OnDodged -= DogdedCallback;
     }
-
 
     private DamgeText CreateDamgeText()
     {
@@ -52,7 +53,15 @@ public class DamgeTextSpawnManager : MonoBehaviour
     {
         DamgeText damgeTextInstance = _damgeTextPool.Get();
         damgeTextInstance.transform.position = targetPosition;
-        damgeTextInstance.PlayAnim(damge, isCriticalHit);
+        damgeTextInstance.PlayAnim(damge.ToString(), isCriticalHit);
+        LeanTween.delayedCall(1f, () => { _damgeTextPool.Release(damgeTextInstance); });
+    }
+
+    private void DogdedCallback(Vector3 dogedPosition)
+    {
+        DamgeText damgeTextInstance = _damgeTextPool.Get();
+        damgeTextInstance.transform.position = dogedPosition;
+        damgeTextInstance.PlayAnim("Dodged", false);
         LeanTween.delayedCall(1f, () => { _damgeTextPool.Release(damgeTextInstance); });
     }
 }

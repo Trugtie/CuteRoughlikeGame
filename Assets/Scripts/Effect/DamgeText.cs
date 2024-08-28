@@ -13,10 +13,10 @@ public class DamgeText : MonoBehaviour
     }
 
     [NaughtyAttributes.Button]
-    public void PlayAnim(int damge, bool isCriticalHit)
+    public void PlayAnim(string damgeText, bool isCriticalHit)
     {
         _damgeText.color = isCriticalHit ? Color.yellow : Color.white;
-        _damgeText.SetText(damge.ToString());
+        _damgeText.SetText(damgeText);
         _animator.Play("DamgeTextFloatUp");
     }
 }
