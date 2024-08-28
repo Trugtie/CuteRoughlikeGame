@@ -99,7 +99,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39f40455f5d5f584fa5d83ef28765769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponDamge: 5
+  _weaponDataSO: {fileID: 11400000, guid: dded283f91eb1014d8734b27820b8741, type: 2}
+  _weaponBaseDamge: 10
   _weaponRange: 8
   _rotationSpeed: 10
   _enemyLayer:

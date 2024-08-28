@@ -53,4 +53,9 @@ public class RangeWeapon : Weapon
         Bullet bullet = _rangeBulletPool.Get();
         bullet.SetTargetDirection(toEnemyCLosestDirection);
     }
+
+    public override void UpdatePlayerStats(PlayerStatsManager playerStatsManager)
+    {
+        _weaponDamge = Mathf.RoundToInt(_weaponBaseDamge * (1 + (_weaponDataSO.BaseStats[Stats.Attack] / 100) + playerStatsManager.GetStatValue(Stats.Attack) / 100));
+    }
 }

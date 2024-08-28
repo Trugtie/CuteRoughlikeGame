@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Weapon : MonoBehaviour
+public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
 {
     private enum WeaponState
     {
@@ -9,12 +9,16 @@ public abstract class Weapon : MonoBehaviour
         Attack
     }
 
+    [Header("Data")]
+    [SerializeField] protected WeaponDataSO _weaponDataSO;
+
     [Header("Elements")]
     private Animator _animator;
     protected List<Enemy> _enemiesAttackedList;
 
     [Header("Settings")]
-    [SerializeField] protected int _weaponDamge;
+    [SerializeField] protected int _weaponBaseDamge;
+    protected int _weaponDamge;
     [SerializeField] private float _weaponRange;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] protected LayerMask _enemyLayer;
@@ -176,4 +180,6 @@ public abstract class Weapon : MonoBehaviour
 
         return _weaponDamge;
     }
+
+    public abstract void UpdatePlayerStats(PlayerStatsManager playerStatsManager);
 }

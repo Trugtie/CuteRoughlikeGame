@@ -45,4 +45,9 @@ public class MeleeWeapon : Weapon
             Gizmos.DrawWireSphere(hitpoint.hitTransform.position, hitpoint.hitRange);
         }
     }
+
+    public override void UpdatePlayerStats(PlayerStatsManager playerStatsManager)
+    {
+        _weaponDamge = Mathf.RoundToInt(_weaponBaseDamge * (1 + (_weaponDataSO.BaseStats[Stats.Attack] / 100) + playerStatsManager.GetStatValue(Stats.Attack) / 100));
+    }
 }
