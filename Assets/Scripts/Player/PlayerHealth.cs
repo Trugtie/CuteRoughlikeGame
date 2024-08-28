@@ -1,5 +1,6 @@
 using System;
 using TMPro;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -11,13 +12,18 @@ public class PlayerHealth : MonoBehaviour, IPlayerStatsDependency
     [SerializeField] private TextMeshProUGUI _healthText;
 
     [Header("Settings")]
-    [SerializeField] private int _minHealth;
-    private int _maxHealth;
-    private int _health;
+    [SerializeField] private float _minHealth;
+    private float _maxHealth;
+    private float _health;
+    private float _armor;
 
     public void TakeDamge(int damge)
     {
-        int realDamge = Mathf.Min(damge, _health);
+        float realDamge = damge * Mathf.Clamp(1 - (_armor / 100), 0, 10000);
+
+        realDamge = Mathf.Min(realDamge, _health);
+
+        Debug.Log("Real damge: " + realDamge);
 
         _health -= realDamge;
 
@@ -38,7 +44,7 @@ public class PlayerHealth : MonoBehaviour, IPlayerStatsDependency
     private void UpdateVisual()
     {
 
-        float healthValue = (float)_health / _maxHealth;
+        float healthValue = _health / _maxHealth;
         _healthBar.value = healthValue;
 
         _healthText.SetText($"{_health} / {_maxHealth}");
@@ -51,6 +57,8 @@ public class PlayerHealth : MonoBehaviour, IPlayerStatsDependency
         _maxHealth = Mathf.Max(_maxHealth, _minHealth);
 
         _health = _maxHealth;
+        _armor = playerStatsManager.GetStatValue(Stats.Armor);
+
         UpdateVisual();
     }
 }

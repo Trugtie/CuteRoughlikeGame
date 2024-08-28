@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour, IPlayerStatsDependency
     {
         float moveSpeedStatValue = playerStatsManager.GetStatValue(Stats.MoveSpeed) / 100;
 
-        _moveSpeed = _baseMoveSpeed + _baseMoveSpeed * moveSpeedStatValue;
+        _moveSpeed = _baseMoveSpeed * (1 + moveSpeedStatValue);
 
         _moveSpeed = Mathf.Max(_moveSpeed, _minSpeed);
     }
