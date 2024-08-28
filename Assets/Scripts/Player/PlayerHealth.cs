@@ -1,6 +1,8 @@
 using System;
+using System.Threading;
 using TMPro;
 using Unity.Mathematics;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -21,15 +23,41 @@ public class PlayerHealth : MonoBehaviour, IPlayerStatsDependency
     private float _armor;
     private float _lifeSteal;
     private float _dodge;
+    private float _healthRecoveryDuration;
+    private float _healthRecoveryTimer;
+    private float _healthRecoverySpeed;
 
     private void Start()
     {
         Enemy.OnAnyHit += EnemyHitCallBack;
     }
 
+
     private void OnDestroy()
     {
         Enemy.OnAnyHit -= EnemyHitCallBack;
+    }
+
+    private void Update()
+    {
+        if (_health > _maxHealth)
+            return;
+
+        RecoveryHealth();
+    }
+
+    private void RecoveryHealth()
+    {
+        _healthRecoveryTimer += Time.deltaTime;
+
+        if (_healthRecoveryTimer > _healthRecoveryDuration)
+        {
+            _healthRecoveryTimer = 0;
+
+            float healthRecoveryValue = Mathf.Min(0.1f, _maxHealth - _health);
+            _health += healthRecoveryValue;
+            UpdateVisual();
+        }
     }
 
     private void EnemyHitCallBack(Vector2 positionDamgeText, int damge, bool isCriticalHit)
@@ -95,6 +123,8 @@ public class PlayerHealth : MonoBehaviour, IPlayerStatsDependency
         _armor = playerStatsManager.GetStatValue(Stats.Armor);
         _lifeSteal = playerStatsManager.GetStatValue(Stats.Lifesteal);
         _dodge = playerStatsManager.GetStatValue(Stats.Dodge);
+        _healthRecoverySpeed = Mathf.Max(0.0001f, playerStatsManager.GetStatValue(Stats.HealthRecoverySpeed));
+        _healthRecoveryDuration = 1f / _healthRecoverySpeed;
 
         UpdateVisual();
     }

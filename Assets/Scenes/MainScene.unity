@@ -4838,7 +4838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1523450296}
-  _waveDuration: 30
+  _waveDuration: 300
   _waves:
   - name: Wave 01
     segments:
@@ -15733,7 +15733,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 273216544206194462, guid: d1cbbb1fa93115d4b917c7a86ba2f909, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1433820441882707210, guid: d1cbbb1fa93115d4b917c7a86ba2f909, type: 3}
       propertyPath: _bulletPoolContainer
