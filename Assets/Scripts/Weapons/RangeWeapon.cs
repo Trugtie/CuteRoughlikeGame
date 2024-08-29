@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -58,5 +59,10 @@ public class RangeWeapon : Weapon
     {
         ConfigueDamge();
         _weaponDamge = Mathf.RoundToInt(_weaponDamge * (1 + playerStatsManager.GetStatValue(Stats.Attack) / 100));
+        _attackDelay /= 1 + (playerStatsManager.GetStatValue(Stats.AttackSpeed) / 100);
+
+        _criticalChance = Mathf.RoundToInt(_criticalChance * (1 + playerStatsManager.GetStatValue(Stats.CriticalChance) / 100));
+        _criticalPercent += playerStatsManager.GetStatValue(Stats.CriticalPercent);
+        _weaponRange += playerStatsManager.GetStatValue(Stats.Range) / 10;
     }
 }

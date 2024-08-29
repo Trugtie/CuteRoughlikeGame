@@ -15,8 +15,9 @@ MonoBehaviour:
   <WeaponName>k__BackingField: LePew
   <WeaponSprite>k__BackingField: {fileID: -2774315149639988039, guid: 6ba2bdba88302454a9f673c897dc6631, type: 3}
   <PurchasePrice>k__BackingField: 100
-  <Prefab>k__BackingField: {fileID: 0}
+  <Prefab>k__BackingField: {fileID: 3899446513222876428, guid: f2dcecfae4d36ad4d92be5559e179971, type: 3}
   attack: 5
-  attackSpeed: 0
-  criticalChance: 0
-  criticalPercent: 0
+  attackSpeed: 1
+  criticalChance: 5
+  criticalPercent: 1
+  range: 5

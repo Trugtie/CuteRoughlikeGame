@@ -51,5 +51,9 @@ public class MeleeWeapon : Weapon
         ConfigueDamge();
 
         _weaponDamge = Mathf.RoundToInt(_weaponDamge * (1 + playerStatsManager.GetStatValue(Stats.Attack) / 100));
+        _attackDelay /= 1 + (playerStatsManager.GetStatValue(Stats.AttackSpeed) / 100);
+
+        _criticalChance = Mathf.RoundToInt(_criticalChance * (1 + playerStatsManager.GetStatValue(Stats.CriticalChance) / 100));
+        _criticalPercent += playerStatsManager.GetStatValue(Stats.CriticalPercent);
     }
 }

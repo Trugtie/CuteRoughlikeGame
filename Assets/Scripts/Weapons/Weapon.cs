@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
 {
@@ -18,10 +20,12 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
 
     [Header("Settings")]
     protected int _weaponDamge;
-    [SerializeField] private float _weaponRange;
+    [SerializeField] protected float _weaponRange;
     [SerializeField] private float _rotationSpeed;
     [SerializeField] protected LayerMask _enemyLayer;
-    [SerializeField] private float _attackDelay;
+    [SerializeField] protected float _attackDelay;
+    protected float _criticalPercent;
+    protected int _criticalChance;
 
     private WeaponState _weaponState;
     protected Enemy _enemyClosest;
@@ -173,10 +177,10 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
         isCritical = false;
         int randomPercent = Random.Range(0, 101);
 
-        if (randomPercent <= 50)
+        if (randomPercent <= _criticalChance)
         {
             isCritical = true;
-            return _weaponDamge * 2;
+            return Mathf.RoundToInt(_weaponDamge * _criticalPercent);
         }
 
         return _weaponDamge;
@@ -186,6 +190,14 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
     {
         float multiplier = 1 + (float)Level / 3;
         _weaponDamge = Mathf.RoundToInt(_weaponDataSO.GetStatValue(Stats.Attack) * multiplier);
+        _attackDelay = 1 / (_weaponDataSO.GetStatValue(Stats.AttackSpeed) * multiplier);
+
+        _criticalChance = Mathf.RoundToInt(_weaponDataSO.GetStatValue(Stats.CriticalChance) * multiplier);
+        _criticalPercent = _weaponDataSO.GetStatValue(Stats.CriticalPercent) * multiplier;
+
+        if (_weaponDataSO.Prefab.GetType() == typeof(RangeWeapon))
+            _weaponRange = _weaponDataSO.GetStatValue(Stats.Range) * multiplier;
+
     }
 
     public abstract void UpdatePlayerStats(PlayerStatsManager playerStatsManager);
