@@ -35,4 +35,16 @@ public class WeaponDataSO : ScriptableObject
 
         }
     }
+
+    public float GetStatValue(Stats stat)
+    {
+        foreach (KeyValuePair<Stats, float> kvp in BaseStats)
+        {
+            if (kvp.Key == stat)
+                return kvp.Value;
+        }
+
+        Debug.LogError("Stat is not conxist");
+        return 0;
+    }
 }

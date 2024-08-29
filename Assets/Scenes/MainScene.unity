@@ -15743,6 +15743,10 @@ PrefabInstance:
       propertyPath: _bulletPoolContainer
       value: 
       objectReference: {fileID: 284789286}
+    - target: {fileID: 1433820441882707210, guid: d1cbbb1fa93115d4b917c7a86ba2f909, type: 3}
+      propertyPath: <Level>k__BackingField
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1836719194604984789, guid: d1cbbb1fa93115d4b917c7a86ba2f909, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -15797,7 +15801,7 @@ PrefabInstance:
       objectReference: {fileID: 1741343421}
     - target: {fileID: 6537151307167392854, guid: d1cbbb1fa93115d4b917c7a86ba2f909, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7544225966072847608, guid: d1cbbb1fa93115d4b917c7a86ba2f909, type: 3}
       propertyPath: m_Name

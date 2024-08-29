@@ -17,7 +17,6 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
     protected List<Enemy> _enemiesAttackedList;
 
     [Header("Settings")]
-    [SerializeField] protected int _weaponBaseDamge;
     protected int _weaponDamge;
     [SerializeField] private float _weaponRange;
     [SerializeField] private float _rotationSpeed;
@@ -29,6 +28,8 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
     private float _minDistance;
 
     private float _attackTimer;
+
+    [field: SerializeField] public int Level { get; private set; }
 
     protected virtual void Awake()
     {
@@ -179,6 +180,12 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
         }
 
         return _weaponDamge;
+    }
+
+    protected void ConfigueDamge()
+    {
+        float multiplier = 1 + (float)Level / 3;
+        _weaponDamge = Mathf.RoundToInt(_weaponDataSO.GetStatValue(Stats.Attack) * multiplier);
     }
 
     public abstract void UpdatePlayerStats(PlayerStatsManager playerStatsManager);

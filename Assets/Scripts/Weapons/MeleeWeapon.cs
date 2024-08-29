@@ -48,6 +48,8 @@ public class MeleeWeapon : Weapon
 
     public override void UpdatePlayerStats(PlayerStatsManager playerStatsManager)
     {
-        _weaponDamge = Mathf.RoundToInt(_weaponBaseDamge * (1 + (_weaponDataSO.BaseStats[Stats.Attack] / 100) + playerStatsManager.GetStatValue(Stats.Attack) / 100));
+        ConfigueDamge();
+
+        _weaponDamge = Mathf.RoundToInt(_weaponDamge * (1 + playerStatsManager.GetStatValue(Stats.Attack) / 100));
     }
 }
