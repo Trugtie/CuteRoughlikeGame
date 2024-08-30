@@ -1748,6 +1748,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponSelectionContainerTransform: {fileID: 1000269289}
   _weaponSelectionButtonUI: {fileID: 3357374421062845452, guid: ef5062aa3b40ee546865fb36c2e06f05, type: 3}
+  _weaponDatasSO:
+  - {fileID: 11400000, guid: df015402091d6aa44803fcce52ebce40, type: 2}
+  - {fileID: 11400000, guid: dded283f91eb1014d8734b27820b8741, type: 2}
 --- !u!1001 &340049015
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4078,7 +4081,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &739014582
 RectTransform:
   m_ObjectHideFlags: 0

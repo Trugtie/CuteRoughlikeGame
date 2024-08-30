@@ -1,13 +1,16 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class WeaponSelectionManager : MonoBehaviour, IGameStateListener
 {
     [Header(" Elements ")]
     [SerializeField] private Transform _weaponSelectionContainerTransform;
     [SerializeField] private WeaponSelectionButtonUI _weaponSelectionButtonUI;
+
+    [Header(" Data ")]
+    [SerializeField] private WeaponDataSO[] _weaponDatasSO;
 
     public void GameStateChangedCallback(GameStates gameState)
     {
@@ -32,6 +35,27 @@ public class WeaponSelectionManager : MonoBehaviour, IGameStateListener
     private void GenerateWeaponSelectionButtonUI()
     {
         WeaponSelectionButtonUI weaponSelectionButtonInstance = Instantiate(_weaponSelectionButtonUI, _weaponSelectionContainerTransform);
+
+        WeaponDataSO weaponData = _weaponDatasSO[Random.Range(0, _weaponDatasSO.Length)];
+
+        weaponSelectionButtonInstance.Configure(weaponData);
+
+        weaponSelectionButtonInstance.WeaponSelectButton.onClick.RemoveAllListeners();
+        weaponSelectionButtonInstance.WeaponSelectButton.onClick.AddListener(() => SelectionWeaponCallback(weaponSelectionButtonInstance, weaponData));
+    }
+
+    private void SelectionWeaponCallback(WeaponSelectionButtonUI selectedButton, WeaponDataSO weaponDataSO)
+    {
+        foreach (WeaponSelectionButtonUI weaponSelectButton in _weaponSelectionContainerTransform.GetComponentsInChildren<WeaponSelectionButtonUI>())
+        {
+            if (selectedButton == weaponSelectButton)
+                weaponSelectButton.Select();
+            else
+                weaponSelectButton.DeSelect();
+
+        }
+
+        Debug.Log("Select " + weaponDataSO.name);
     }
 
     private void ClearWeaponSelectionContainer()

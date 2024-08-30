@@ -210,6 +210,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ef9b905c6bf7542b57d170d517cb32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _weaponNameText: {fileID: 6744493868550258337}
+  _weaponIcon: {fileID: 557137339345220826}
+  <WeaponSelectButton>k__BackingField: {fileID: 5321514795435193592}
 --- !u!1 &3402370726864518073
 GameObject:
   m_ObjectHideFlags: 0
