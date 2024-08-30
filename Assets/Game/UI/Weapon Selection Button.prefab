@@ -213,6 +213,8 @@ MonoBehaviour:
   _weaponNameText: {fileID: 6744493868550258337}
   _weaponIcon: {fileID: 557137339345220826}
   <WeaponSelectButton>k__BackingField: {fileID: 5321514795435193592}
+  _backgroundColorContainer:
+  - {fileID: 9031027105059387007}
 --- !u!1 &3402370726864518073
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,6 +23,7 @@ public class WeaponSelectionManager : MonoBehaviour, IGameStateListener
         }
     }
 
+    [Button]
     private void ConfigueWeaponSelection()
     {
         ClearWeaponSelectionContainer();
@@ -38,7 +40,9 @@ public class WeaponSelectionManager : MonoBehaviour, IGameStateListener
 
         WeaponDataSO weaponData = _weaponDatasSO[Random.Range(0, _weaponDatasSO.Length)];
 
-        weaponSelectionButtonInstance.Configure(weaponData);
+        int level = Random.Range(0, 2);
+
+        weaponSelectionButtonInstance.Configure(weaponData, level);
 
         weaponSelectionButtonInstance.WeaponSelectButton.onClick.RemoveAllListeners();
         weaponSelectionButtonInstance.WeaponSelectButton.onClick.AddListener(() => SelectionWeaponCallback(weaponSelectionButtonInstance, weaponData));

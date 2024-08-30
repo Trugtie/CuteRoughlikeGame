@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,10 +9,16 @@ public class WeaponSelectionButtonUI : MonoBehaviour
     [SerializeField] private Image _weaponIcon;
     [field: SerializeField] public Button WeaponSelectButton { get; private set; }
 
-    public void Configure(WeaponDataSO weaponDataSO)
+    [Header("Colorable Containers")]
+    [SerializeField] private Image[] _backgroundColorContainer;
+
+    public void Configure(WeaponDataSO weaponDataSO, int level)
     {
         _weaponNameText.text = weaponDataSO.name;
         _weaponIcon.sprite = weaponDataSO.WeaponSprite;
+
+        foreach (Image background in _backgroundColorContainer)
+            background.color = ColorPalleteSystem.Instance.GetLevelColor(level);
     }
 
     public void Select()
