@@ -200,5 +200,11 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
 
     }
 
+    public void UpdateToLevel(int level)
+    {
+        Level = level;
+        ConfigueDamge();
+    }
+
     public abstract void UpdatePlayerStats(PlayerStatsManager playerStatsManager);
 }
