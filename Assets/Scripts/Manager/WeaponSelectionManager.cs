@@ -1,5 +1,4 @@
 using NaughtyAttributes;
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -9,6 +8,9 @@ public class WeaponSelectionManager : MonoBehaviour, IGameStateListener
     [Header(" Elements ")]
     [SerializeField] private Transform _weaponSelectionContainerTransform;
     [SerializeField] private WeaponSelectionButtonUI _weaponSelectionButtonUI;
+    [SerializeField] private PlayerWeapons _playerWeapons;
+    private WeaponDataSO _seletectedWeapon;
+    private int _seletectedWeaponLevel;
 
     [Header(" Data ")]
     [SerializeField] private WeaponDataSO[] _weaponDatasSO;
@@ -17,6 +19,17 @@ public class WeaponSelectionManager : MonoBehaviour, IGameStateListener
     {
         switch (gameState)
         {
+            case GameStates.GAMEPLAY:
+
+                if (_seletectedWeapon == null)
+                    return;
+
+                _playerWeapons.AddWeapon(_seletectedWeapon, _seletectedWeaponLevel);
+
+                _seletectedWeapon = null;
+                _seletectedWeaponLevel = 0;
+
+                break;
             case GameStates.WEAPONSELECTION:
                 ConfigueWeaponSelection();
                 break;
@@ -41,6 +54,7 @@ public class WeaponSelectionManager : MonoBehaviour, IGameStateListener
         WeaponDataSO weaponData = _weaponDatasSO[Random.Range(0, _weaponDatasSO.Length)];
 
         int level = Random.Range(0, 2);
+        _seletectedWeaponLevel = level;
 
         weaponSelectionButtonInstance.Configure(weaponData, level);
 
@@ -50,6 +64,8 @@ public class WeaponSelectionManager : MonoBehaviour, IGameStateListener
 
     private void SelectionWeaponCallback(WeaponSelectionButtonUI selectedButton, WeaponDataSO weaponDataSO)
     {
+        _seletectedWeapon = weaponDataSO;
+
         foreach (WeaponSelectionButtonUI weaponSelectButton in _weaponSelectionContainerTransform.GetComponentsInChildren<WeaponSelectionButtonUI>())
         {
             if (selectedButton == weaponSelectButton)
