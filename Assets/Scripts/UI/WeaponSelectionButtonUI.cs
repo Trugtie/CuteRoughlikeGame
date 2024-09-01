@@ -15,6 +15,7 @@ public class WeaponSelectionButtonUI : MonoBehaviour
     public void Configure(WeaponDataSO weaponDataSO, int level)
     {
         _weaponNameText.text = weaponDataSO.name;
+        _weaponNameText.color = ColorPalleteSystem.Instance.GetLevelColor(level);
         _weaponIcon.sprite = weaponDataSO.WeaponSprite;
 
         foreach (Image background in _backgroundColorContainer)
