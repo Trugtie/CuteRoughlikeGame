@@ -27,12 +27,13 @@ public class WeaponSelectionButtonUI : MonoBehaviour
         foreach (Image background in _backgroundColorContainer)
             background.color = ColorPalleteSystem.Instance.GetLevelColor(level);
 
-        ConfigureStats(weaponDataSO);
+        Dictionary<Stats, float> calculatedDictionary = WeaponCalculator.GetCalculatedWeaponStats(weaponDataSO, level);
+        ConfigureStats(calculatedDictionary);
     }
 
-    private void ConfigureStats(WeaponDataSO weaponDataSO)
+    private void ConfigureStats(Dictionary<Stats, float> calculatedDictionary)
     {
-        StatContainerManager.GenerateStatContainer(weaponDataSO.BaseStats, _statContainerTransform);
+        StatContainerManager.GenerateStatContainer(calculatedDictionary, _statContainerTransform);
     }
 
     public void Select()

@@ -188,15 +188,13 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
 
     protected void ConfigueDamge()
     {
-        float multiplier = 1 + (float)Level / 3;
-        _weaponDamge = Mathf.RoundToInt(_weaponDataSO.GetStatValue(Stats.Attack) * multiplier);
-        _attackDelay = 1 / (_weaponDataSO.GetStatValue(Stats.AttackSpeed) * multiplier);
+        Dictionary<Stats, float> calculatedWeaponStat = WeaponCalculator.GetCalculatedWeaponStats(_weaponDataSO, Level);
 
-        _criticalChance = Mathf.RoundToInt(_weaponDataSO.GetStatValue(Stats.CriticalChance) * multiplier);
-        _criticalPercent = _weaponDataSO.GetStatValue(Stats.CriticalPercent) * multiplier;
-
-        if (_weaponDataSO.Prefab.GetType() == typeof(RangeWeapon))
-            _weaponRange = _weaponDataSO.GetStatValue(Stats.Range) * multiplier;
+        _weaponDamge = Mathf.RoundToInt(calculatedWeaponStat[Stats.Attack]);
+        _attackDelay = 1 / (calculatedWeaponStat[Stats.AttackSpeed]);
+        _criticalChance = Mathf.RoundToInt(calculatedWeaponStat[Stats.CriticalChance]);
+        _criticalPercent = calculatedWeaponStat[Stats.CriticalPercent];
+        _weaponRange = calculatedWeaponStat[Stats.Range];
 
     }
 
