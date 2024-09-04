@@ -9,6 +9,8 @@ public class StatContainerManager : MonoBehaviour
     [Header(" Elements ")]
     [SerializeField] private StatsValueContainerUI _statsValueContainerPrefab;
 
+    private List<StatsValueContainerUI> _statsValueContainers = new List<StatsValueContainerUI>();
+
     private void Awake()
     {
         if (Instance == null)
@@ -29,7 +31,31 @@ public class StatContainerManager : MonoBehaviour
             string statName = Enums.FormatEnumString(kvp.Key);
             string statValue = kvp.Value.ToString();
 
+            _statsValueContainers.Add(instanceStatValueUI);
+
             instanceStatValueUI.Configure(statIcon, statName, statValue);
+        }
+
+        LeanTween.delayedCall(Time.deltaTime * 2, () => { ResizeFontSize(); });
+    }
+
+    private void ResizeFontSize()
+    {
+        if (_statsValueContainers.Count < 0) return;
+
+        float minFontSize = 5000f;
+
+        foreach (StatsValueContainerUI statValueUI in _statsValueContainers)
+        {
+            float fontSize = statValueUI.GetFontSize();
+
+            if (fontSize < minFontSize)
+                minFontSize = fontSize;
+        }
+
+        foreach (StatsValueContainerUI statValueUI in _statsValueContainers)
+        {
+            statValueUI.SetFontSize(minFontSize);
         }
     }
 
@@ -40,6 +66,8 @@ public class StatContainerManager : MonoBehaviour
 
     private void ClearStats(Transform parentTransform)
     {
+        _statsValueContainers.Clear();
+
         foreach (Transform child in parentTransform)
         {
             Destroy(child.gameObject);

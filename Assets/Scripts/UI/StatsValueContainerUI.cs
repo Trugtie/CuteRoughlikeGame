@@ -17,4 +17,15 @@ public class StatsValueContainerUI : MonoBehaviour
         _nameText.SetText(statName);
         _valueText.SetText(value);
     }
+
+    public float GetFontSize()
+    {
+        return _nameText.fontSize;
+    }
+
+    public void SetFontSize(float size)
+    {
+        _nameText.fontSizeMax = size;
+        _valueText.fontSizeMax = size;
+    }
 }
