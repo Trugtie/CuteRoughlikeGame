@@ -20,7 +20,7 @@ public class WeaponSelectionButtonUI : MonoBehaviour
 
     public void Configure(WeaponDataSO weaponDataSO, int level)
     {
-        _weaponNameText.text = weaponDataSO.name;
+        _weaponNameText.text = weaponDataSO.name + " (lv " + (level + 1) + ")";
         _weaponNameText.color = ColorPalleteSystem.Instance.GetLevelColor(level);
         _weaponIcon.sprite = weaponDataSO.WeaponSprite;
 
