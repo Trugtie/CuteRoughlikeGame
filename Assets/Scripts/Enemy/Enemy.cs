@@ -76,6 +76,11 @@ public abstract class Enemy : MonoBehaviour, IDamgedable
     protected void PassAway()
     {
         OnAnyPassAway?.Invoke(transform.position);
+        PassAwayAfterWave();
+    }
+
+    public void PassAwayAfterWave()
+    {
         _deadVFX.Play();
         _deadVFX.transform.SetParent(null);
         Destroy(gameObject);

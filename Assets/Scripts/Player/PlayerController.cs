@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerController : MonoBehaviour, IPlayerStatsDependency
+public class PlayerController : MonoBehaviour, IPlayerStatsDependency, IGameStateListener
 {
     [Header("Elements")]
     [SerializeField] private WonMobileJoystick _joystick;
@@ -36,5 +36,11 @@ public class PlayerController : MonoBehaviour, IPlayerStatsDependency
         _moveSpeed = _baseMoveSpeed * (1 + moveSpeedStatValue);
 
         _moveSpeed = Mathf.Max(_moveSpeed, _minSpeed);
+    }
+
+    public void GameStateChangedCallback(GameStates gameState)
+    {
+        if (gameState != GameStates.GAMEPLAY)
+            _playerRb.velocity = Vector2.zero;
     }
 }

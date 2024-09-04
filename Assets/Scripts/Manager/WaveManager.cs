@@ -40,8 +40,6 @@ public class WaveManager : MonoBehaviour, IGameStateListener
 
     private void StartWave(int waveIndex)
     {
-        Debug.Log("Starting Wave " + waveIndex);
-
         _localCounters.Clear();
         _timer = 0;
 
@@ -92,7 +90,6 @@ public class WaveManager : MonoBehaviour, IGameStateListener
         _currentWaveIndex++;
         if (_currentWaveIndex >= _waves.Length)
         {
-            Debug.Log("Wave Complete!");
             GameManager.Instance.SetState(GameStates.STAGECOMPLETE);
             OnWaveComplete?.Invoke();
         }
@@ -107,9 +104,9 @@ public class WaveManager : MonoBehaviour, IGameStateListener
 
     private void DestroyAllEnemies()
     {
-        foreach (Transform child in transform)
+        foreach (Enemy enemy in transform.GetComponentsInChildren<Enemy>())
         {
-            Destroy(child.gameObject);
+            enemy.PassAwayAfterWave();
         }
     }
 
@@ -127,7 +124,6 @@ public class WaveManager : MonoBehaviour, IGameStateListener
 
     public void GameStateChangedCallback(GameStates gameState)
     {
-        Debug.Log(gameState.ToString());
         switch (gameState)
         {
             case GameStates.GAMEPLAY:

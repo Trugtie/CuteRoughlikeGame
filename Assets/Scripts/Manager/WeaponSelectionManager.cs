@@ -74,8 +74,6 @@ public class WeaponSelectionManager : MonoBehaviour, IGameStateListener
                 weaponSelectButton.DeSelect();
 
         }
-
-        Debug.Log("Select " + weaponDataSO.name);
     }
 
     private void ClearWeaponSelectionContainer()

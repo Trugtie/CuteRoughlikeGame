@@ -17,6 +17,7 @@ public class WeaponSelectionButtonUI : MonoBehaviour
 
     [Header("Colorable Containers")]
     [SerializeField] private Image[] _backgroundColorContainer;
+    [SerializeField] private Outline _outline;
 
     public void Configure(WeaponDataSO weaponDataSO, int level)
     {
@@ -26,6 +27,8 @@ public class WeaponSelectionButtonUI : MonoBehaviour
 
         foreach (Image background in _backgroundColorContainer)
             background.color = ColorPalleteSystem.Instance.GetLevelColor(level);
+
+        _outline.effectColor = ColorPalleteSystem.Instance.GetLevelOulineColor(level);
 
         Dictionary<Stats, float> calculatedDictionary = WeaponCalculator.GetCalculatedWeaponStats(weaponDataSO, level);
         ConfigureStats(calculatedDictionary);
