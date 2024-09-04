@@ -12,7 +12,6 @@ public class WeaponSelectionButtonUI : MonoBehaviour
 
     [Header(" Stats ")]
     [SerializeField] private Transform _statContainerTransform;
-    [SerializeField] private StatsValueContainerUI _statContainerPrefab;
 
     [field: SerializeField] public Button WeaponSelectButton { get; private set; }
 
@@ -33,26 +32,7 @@ public class WeaponSelectionButtonUI : MonoBehaviour
 
     private void ConfigureStats(WeaponDataSO weaponDataSO)
     {
-        ClearStats();
-
-        foreach (KeyValuePair<Stats, float> kvp in weaponDataSO.BaseStats)
-        {
-            StatsValueContainerUI instanceStatValueUI = Instantiate(_statContainerPrefab, _statContainerTransform);
-
-            Sprite statIcon = ResourceManager.GetStatIcon(kvp.Key);
-            string statName = Enums.FormatEnumString(kvp.Key);
-            string statValue = kvp.Value.ToString();
-
-            instanceStatValueUI.Configure(statIcon, statName, statValue);
-        }
-    }
-
-    private void ClearStats()
-    {
-        foreach (Transform child in _statContainerTransform)
-        {
-            Destroy(child.gameObject);
-        }
+        StatContainerManager.GenerateStatContainer(weaponDataSO.BaseStats, _statContainerTransform);
     }
 
     public void Select()
