@@ -12,14 +12,40 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
     [Header(" Elements ")]
     [SerializeField] private UpgradeButtonUI[] _upgradeButtons;
 
+    [Header(" Settings ")]
+    private int _chestCollectedCounts;
+
+    private void Awake()
+    {
+        Chest.OnAnyChestCollected += CheckCollectedCallback;
+    }
+
+    private void OnDestroy()
+    {
+        Chest.OnAnyChestCollected -= CheckCollectedCallback;
+    }
+
     public void GameStateChangedCallback(GameStates gameState)
     {
         switch (gameState)
         {
             case GameStates.WAVETRANSITION:
-                ConfigueUpgradeButtons();
+                TryOpenChest();
                 break;
         }
+    }
+
+    private void TryOpenChest()
+    {
+        if (_chestCollectedCounts > 0)
+            ShowChest();
+        else
+            ConfigueUpgradeButtons();
+    }
+
+    private void ShowChest()
+    {
+        Debug.Log("Show chest ");
     }
 
     [Button]
@@ -48,6 +74,12 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
     private void BonusUpgradeCallback()
     {
         GameManager.Instance.WaveTransitionCallback();
+    }
+
+    private void CheckCollectedCallback(Chest chest)
+    {
+        _chestCollectedCounts++;
+        Debug.Log($"We now have {_chestCollectedCounts} chest");
     }
 
     private Action GetPerformActionFromStat(Stats stat, out string buttonString)
