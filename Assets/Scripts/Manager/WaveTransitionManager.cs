@@ -12,6 +12,7 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
     [Header(" Elements ")]
     [SerializeField] private UpgradeButtonUI[] _upgradeButtons;
     [SerializeField] private Transform _upgradeButtonsParent;
+    [SerializeField] private PlayerObjects _playerObjects;
 
     [Header(" Settings ")]
     private int _chestCollectedCounts;
@@ -42,6 +43,8 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
 
     private void TryOpenChest()
     {
+        ClearAllChest();
+
         if (_chestCollectedCounts > 0)
             ShowChest();
         else
@@ -57,9 +60,24 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
 
         ChestObjectContainerUI chestObjectContainerUIInstance = Instantiate(_chestObjectContainerPrefab, _chestObjectContainerParent);
         chestObjectContainerUIInstance.Configure(randomObject);
+        chestObjectContainerUIInstance.TakeButton.onClick.AddListener(() => TakeObjectCallback(randomObject));
 
         _chestObjectContainerParent.gameObject.SetActive(true);
         _upgradeButtonsParent.gameObject.SetActive(false);
+    }
+
+    private void TakeObjectCallback(ObjectDataSO randomObject)
+    {
+        _playerObjects.AddObject(randomObject);
+        TryOpenChest();
+    }
+
+    private void ClearAllChest()
+    {
+        foreach (Transform child in _chestObjectContainerParent)
+        {
+            Destroy(child.gameObject);
+        }
     }
 
     [Button]

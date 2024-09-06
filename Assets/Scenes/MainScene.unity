@@ -296,6 +296,7 @@ MonoBehaviour:
   - {fileID: 1173137043}
   - {fileID: 1410789288}
   _upgradeButtonsParent: {fileID: 476980229}
+  _playerObjects: {fileID: 3375243719660658739}
   _chestObjectContainerPrefab: {fileID: 6607761872571808145, guid: 16229c1562f878948bcfc9284271ffe2, type: 3}
   _chestObjectContainerParent: {fileID: 1169775694}
 --- !u!1001 &46903405
@@ -18483,8 +18484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce972a1b1e921b47b3407b59112821d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Objects>k__BackingField:
-  - {fileID: 11400000, guid: 231f43dc0539d7a409cb089be3c0f61e, type: 2}
+  <Objects>k__BackingField: []
 --- !u!114 &3375243719660658740
 MonoBehaviour:
   m_ObjectHideFlags: 0

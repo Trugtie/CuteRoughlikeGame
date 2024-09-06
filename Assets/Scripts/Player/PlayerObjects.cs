@@ -15,11 +15,9 @@ public class PlayerObjects : MonoBehaviour
         _playerStatsManager = GetComponent<PlayerStatsManager>();
     }
 
-    private void Start()
+    public void AddObject(ObjectDataSO objectDataSO)
     {
-        foreach (ObjectDataSO data in Objects)
-        {
-            _playerStatsManager.AddObject(data.BaseStats);
-        }
+        Objects.Add(objectDataSO);
+        _playerStatsManager.AddObject(objectDataSO.BaseStats);
     }
 }
