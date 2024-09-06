@@ -11,9 +11,14 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
 {
     [Header(" Elements ")]
     [SerializeField] private UpgradeButtonUI[] _upgradeButtons;
+    [SerializeField] private Transform _upgradeButtonsParent;
 
     [Header(" Settings ")]
     private int _chestCollectedCounts;
+
+    [Header("Chest Relate Settings")]
+    [SerializeField] private ChestObjectContainerUI _chestObjectContainerPrefab;
+    [SerializeField] private Transform _chestObjectContainerParent;
 
     private void Awake()
     {
@@ -45,12 +50,23 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
 
     private void ShowChest()
     {
-        Debug.Log("Show chest ");
+        _chestCollectedCounts--;
+
+        ObjectDataSO[] objects = ResourceManager.Objects;
+        ObjectDataSO randomObject = objects[Random.Range(0, objects.Length)];
+
+        ChestObjectContainerUI chestObjectContainerUIInstance = Instantiate(_chestObjectContainerPrefab, _chestObjectContainerParent);
+        chestObjectContainerUIInstance.Configure(randomObject);
+
+        _chestObjectContainerParent.gameObject.SetActive(true);
+        _upgradeButtonsParent.gameObject.SetActive(false);
     }
 
     [Button]
     private void ConfigueUpgradeButtons()
     {
+        _upgradeButtonsParent.gameObject.SetActive(true);
+
         for (int i = 0; i < _upgradeButtons.Length; i++)
         {
             int randomIndex = Random.Range(0, Enum.GetValues(typeof(Stats)).Length);

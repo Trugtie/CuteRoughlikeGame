@@ -4,15 +4,17 @@ using UnityEngine;
 
 public static class ResourceManager
 {
-    private const string PATH = "Data/StatsIconDataSO";
+    private const string STATS_ICON_PATH = "Data/StatsIconDataSO";
+    private const string OBJECTS_PATH = "Data/ObjectsData";
 
     [Header(" Data ")]
     private static StatsIconSO _statsIconSO;
+    private static ObjectDataSO[] _objectDatasSO;
 
     public static Sprite GetStatIcon(Stats stat)
     {
         if (_statsIconSO == null)
-            _statsIconSO = Resources.Load<StatsIconSO>(PATH);
+            _statsIconSO = Resources.Load<StatsIconSO>(STATS_ICON_PATH);
 
         foreach (StatIconData data in _statsIconSO.StatsIconDatas)
         {
@@ -23,5 +25,18 @@ public static class ResourceManager
         Debug.LogError("Not set icon yet at Stat: " + stat.ToString());
 
         return null;
+    }
+
+    public static ObjectDataSO[] Objects
+    {
+        get
+        {
+            if (_objectDatasSO == null)
+                _objectDatasSO = Resources.LoadAll<ObjectDataSO>(OBJECTS_PATH);
+
+            return _objectDatasSO;
+        }
+
+        private set { }
     }
 }
