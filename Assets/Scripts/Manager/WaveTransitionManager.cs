@@ -104,12 +104,13 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
             int randomIndex = Random.Range(0, Enum.GetValues(typeof(Stats)).Length);
             Stats stat = (Stats)Enum.GetValues(typeof(Stats)).GetValue(randomIndex);
 
+            Sprite icon = ResourceManager.GetStatIcon(stat);
             string randomStatString = Enums.FormatEnumString(stat);
-
             string buttonString;
+
             Action action = GetPerformActionFromStat(stat, out buttonString);
 
-            _upgradeButtons[i].ConfigueUpgradeButton(null, randomStatString, buttonString);
+            _upgradeButtons[i].ConfigueUpgradeButton(icon, randomStatString, buttonString);
 
             _upgradeButtons[i].Button.onClick.RemoveAllListeners();
 
@@ -187,8 +188,9 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
                 break;
             default:
                 return () => Debug.Log("Invalid Action");
-
         }
+
+        buttonString = $"{Enums.FormatEnumString(stat)} {buttonString}";
 
         return () => PlayerStatsManager.Instance.AddStat(stat, randomValue);
     }
