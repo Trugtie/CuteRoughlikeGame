@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     public void WaveTransitionCallback()
     {
-        if (Player.Instance.HasLevelUp())
+        if (Player.Instance.HasLevelUp() || WaveTransitionManager.Instance.HasCollectedChest())
         {
             SetGameState(GameStates.WAVETRANSITION);
         }

@@ -9,6 +9,8 @@ using Random = UnityEngine.Random;
 
 public class WaveTransitionManager : MonoBehaviour, IGameStateListener
 {
+    public static WaveTransitionManager Instance { get; private set; }
+
     [Header(" Elements ")]
     [SerializeField] private UpgradeButtonUI[] _upgradeButtons;
     [SerializeField] private Transform _upgradeButtonsParent;
@@ -23,6 +25,11 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
 
     private void Awake()
     {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+
         Chest.OnAnyChestCollected += CheckCollectedCallback;
     }
 
@@ -61,14 +68,21 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
         ChestObjectContainerUI chestObjectContainerUIInstance = Instantiate(_chestObjectContainerPrefab, _chestObjectContainerParent);
         chestObjectContainerUIInstance.Configure(randomObject);
         chestObjectContainerUIInstance.TakeButton.onClick.AddListener(() => TakeObjectCallback(randomObject));
+        chestObjectContainerUIInstance.RecycleButton.onClick.AddListener(() => RecycleObjectCallback(randomObject));
 
         _chestObjectContainerParent.gameObject.SetActive(true);
         _upgradeButtonsParent.gameObject.SetActive(false);
     }
 
-    private void TakeObjectCallback(ObjectDataSO randomObject)
+    private void RecycleObjectCallback(ObjectDataSO objectToRecycle)
     {
-        _playerObjects.AddObject(randomObject);
+        CurrencyManager.Instance.AddCurrency(objectToRecycle.RecyclePrice);
+        TryOpenChest();
+    }
+
+    private void TakeObjectCallback(ObjectDataSO objectToTake)
+    {
+        _playerObjects.AddObject(objectToTake);
         TryOpenChest();
     }
 
@@ -177,5 +191,10 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
         }
 
         return () => PlayerStatsManager.Instance.AddStat(stat, randomValue);
+    }
+
+    public bool HasCollectedChest()
+    {
+        return _chestCollectedCounts > 0;
     }
 }

@@ -15,6 +15,7 @@ MonoBehaviour:
   <Name>k__BackingField: Heart
   <Icon>k__BackingField: {fileID: 21300000, guid: 4217838d18d06c04fbb38361be7b975f, type: 3}
   <Price>k__BackingField: 100
+  <RecyclePrice>k__BackingField: 75
   <Rality>k__BackingField: 0
   Stats:
   - stat: 5
