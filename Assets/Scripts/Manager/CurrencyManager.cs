@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CurrencyManager : MonoBehaviour
 {
+    public Action<int> OnUpdatedCurrency;
+
     public static CurrencyManager Instance { get; private set; }
 
     [field: SerializeField] public int Currency { get; private set; }
@@ -19,5 +22,6 @@ public class CurrencyManager : MonoBehaviour
     public void AddCurrency(int amount)
     {
         Currency += amount;
+        OnUpdatedCurrency?.Invoke(Currency);
     }
 }

@@ -8,6 +8,7 @@ public class ChestObjectContainerUI : MonoBehaviour
 {
     [Header(" Elements ")]
     [SerializeField] private TextMeshProUGUI _objectNameText;
+    [SerializeField] private TextMeshProUGUI _candyRecycleText;
     [SerializeField] private Image _objectIcon;
 
     [Header(" Stats ")]
@@ -23,6 +24,7 @@ public class ChestObjectContainerUI : MonoBehaviour
     public void Configure(ObjectDataSO objectDataSO)
     {
         _objectNameText.text = objectDataSO.name;
+        _candyRecycleText.text = objectDataSO.RecyclePrice.ToString();
         _objectNameText.color = ColorPalleteSystem.Instance.GetLevelColor(objectDataSO.Rality);
         _objectIcon.sprite = objectDataSO.Icon;
 
