@@ -128,7 +128,6 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
     private void CheckCollectedCallback(Chest chest)
     {
         _chestCollectedCounts++;
-        Debug.Log($"We now have {_chestCollectedCounts} chest");
     }
 
     private Action GetPerformActionFromStat(Stats stat, out string buttonString)
@@ -189,8 +188,6 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
             default:
                 return () => Debug.Log("Invalid Action");
         }
-
-        buttonString = $"{Enums.FormatEnumString(stat)} {buttonString}";
 
         return () => PlayerStatsManager.Instance.AddStat(stat, randomValue);
     }
