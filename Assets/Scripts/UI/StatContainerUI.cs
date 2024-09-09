@@ -22,9 +22,9 @@ public class StatContainerUI : MonoBehaviour, IPlayerStatsDependency
 
             Sprite statIcon = ResourceManager.GetStatIcon(stat);
             string statName = Enums.FormatEnumString(stat);
-            string statValue = playerStatsManager.GetStatValue(stat).ToString("F0");
+            float statValue = playerStatsManager.GetStatValue(stat);
 
-            statsValueContainerUI.Configure(statIcon, statName, statValue);
+            statsValueContainerUI.Configure(statIcon, statName, statValue, true);
             childStatContainerIndex++;
         }
 
