@@ -1,7 +1,9 @@
+using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class ShopManager : MonoBehaviour, IGameStateListener
 {
@@ -22,14 +24,26 @@ public class ShopManager : MonoBehaviour, IGameStateListener
         }
     }
 
+    [Button]
     private void Configure()
     {
         ClearItemShop();
 
-        for (int i = 0; i < _amoutOfSpawnItem; i++)
+        int weaponItemToAdd = Random.Range(Mathf.Min(2, _amoutOfSpawnItem), _amoutOfSpawnItem);
+        int objectItemToAdd = _amoutOfSpawnItem - weaponItemToAdd;
+
+        for (int i = 0; i < weaponItemToAdd; i++)
         {
-            Instantiate(_shopItemPrefab, _spawnItemContainerPosition);
+            GameObject weaponItem = Instantiate(_shopItemPrefab, _spawnItemContainerPosition);
+            weaponItem.name = "Weapon Item";
         }
+
+        for (int i = 0; i < objectItemToAdd; i++)
+        {
+            GameObject objectItem = Instantiate(_shopItemPrefab, _spawnItemContainerPosition);
+            objectItem.name = "Object Item";
+        }
+
     }
 
     private void ClearItemShop()
