@@ -10,16 +10,22 @@ public class ShopItemContainerUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _itemNameText;
     [SerializeField] private Image _itemIcon;
     [SerializeField] private TextMeshProUGUI _priceText;
-    [SerializeField] private StatsValueContainerUI _statsValueFrameUI;
 
     [field: SerializeField] public Button PurchaseButton { get; private set; }
 
     [Header(" Stats ")]
     [SerializeField] private Transform _statContainerTransform;
+    [SerializeField] private StatsValueContainerUI _statsValueFrameUI;
 
     [Header("Colorable Containers")]
     [SerializeField] private Image[] _backgroundColorContainer;
     [SerializeField] private Outline _outline;
+
+    [Header(" Lock Elements ")]
+    [SerializeField] private Button _lockButton;
+    [SerializeField] private Sprite _lockSprite, _unlockSprite;
+
+    public bool IsLock { get; private set; }
 
     public void Configure(WeaponDataSO weaponDataSO, int level)
     {
@@ -27,6 +33,8 @@ public class ShopItemContainerUI : MonoBehaviour
         _itemNameText.color = ColorPalleteSystem.Instance.GetLevelColor(level);
         _itemIcon.sprite = weaponDataSO.WeaponSprite;
         _priceText.text = WeaponCalculator.GetCalculatedWeaponPrice(weaponDataSO, level).ToString();
+
+        _lockButton.onClick.AddListener(LockCallback);
 
         foreach (Image background in _backgroundColorContainer)
             background.color = ColorPalleteSystem.Instance.GetLevelColor(level);
@@ -44,6 +52,8 @@ public class ShopItemContainerUI : MonoBehaviour
         _itemIcon.sprite = objectDataSO.Icon;
         _priceText.text = objectDataSO.Price.ToString();
 
+        _lockButton.onClick.AddListener(LockCallback);
+
         foreach (Image background in _backgroundColorContainer)
             background.color = ColorPalleteSystem.Instance.GetLevelColor(objectDataSO.Rality);
 
@@ -56,5 +66,16 @@ public class ShopItemContainerUI : MonoBehaviour
     private void ConfigureStats(Dictionary<Stats, float> stats)
     {
         StatContainerManager.GenerateStatContainerWithFrame(stats, _statsValueFrameUI, _statContainerTransform);
+    }
+
+    private void LockCallback()
+    {
+        IsLock = !IsLock;
+        UpdateLockVisual();
+    }
+
+    private void UpdateLockVisual()
+    {
+        _lockButton.image.sprite = IsLock ? _lockSprite : _unlockSprite;
     }
 }

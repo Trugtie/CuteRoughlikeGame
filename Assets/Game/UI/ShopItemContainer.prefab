@@ -548,12 +548,15 @@ MonoBehaviour:
   _itemNameText: {fileID: 5015455009945960258}
   _itemIcon: {fileID: 6481340670258290991}
   _priceText: {fileID: 5333835007420860533}
-  _statsValueFrameUI: {fileID: 8218773536676232364}
   <PurchaseButton>k__BackingField: {fileID: 2518248978504430697}
   _statContainerTransform: {fileID: 6338489319365393584}
+  _statsValueFrameUI: {fileID: 8218773536676232364}
   _backgroundColorContainer:
   - {fileID: 5302456606506287328}
   _outline: {fileID: 369857640490484692}
+  _lockButton: {fileID: 293442341073213118}
+  _lockSprite: {fileID: -5620155193319629329, guid: 5bf7f0050ae64884fb73a265bed13e87, type: 3}
+  _unlockSprite: {fileID: 7451771499657765821, guid: e6e0c4110e86bfe48812aeb60cdf44fc, type: 3}
 --- !u!1 &1540858813281232927
 GameObject:
   m_ObjectHideFlags: 0
@@ -2706,7 +2709,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 20}
-  m_SizeDelta: {x: 150, y: 150}
+  m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &9194332661873520041
 CanvasRenderer:
