@@ -9,7 +9,7 @@ public class ShopManager : MonoBehaviour, IGameStateListener
 {
     [Header(" Elements ")]
     [SerializeField] private Transform _spawnItemContainerPosition;
-    [SerializeField] private GameObject _shopItemPrefab;
+    [SerializeField] private ShopItemContainerUI _shopItemPrefab;
 
     [Header(" Settings ")]
     [SerializeField] private int _amoutOfSpawnItem;
@@ -34,14 +34,21 @@ public class ShopManager : MonoBehaviour, IGameStateListener
 
         for (int i = 0; i < weaponItemToAdd; i++)
         {
-            GameObject weaponItem = Instantiate(_shopItemPrefab, _spawnItemContainerPosition);
-            weaponItem.name = "Weapon Item";
+            ShopItemContainerUI weaponItem = Instantiate(_shopItemPrefab, _spawnItemContainerPosition);
+
+            WeaponDataSO weaponDataSO = ResourceManager.GetRandomWeaponData();
+            int level = Random.Range(0, 4);
+
+            weaponItem.Configure(weaponDataSO, level);
         }
 
         for (int i = 0; i < objectItemToAdd; i++)
         {
-            GameObject objectItem = Instantiate(_shopItemPrefab, _spawnItemContainerPosition);
-            objectItem.name = "Object Item";
+            ShopItemContainerUI objectItem = Instantiate(_shopItemPrefab, _spawnItemContainerPosition);
+
+            ObjectDataSO objectDataSO = ResourceManager.GetRandomObjectData();
+
+            objectItem.Configure(objectDataSO);
         }
 
     }

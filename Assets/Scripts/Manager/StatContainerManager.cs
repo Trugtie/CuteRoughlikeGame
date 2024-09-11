@@ -39,6 +39,27 @@ public class StatContainerManager : MonoBehaviour
         LeanTween.delayedCall(Time.deltaTime * 2, () => { ResizeFontSize(); });
     }
 
+    private void GenerateContainerWithFrame(Dictionary<Stats, float> dictionary, StatsValueContainerUI frame, Transform parentTransform)
+    {
+        ClearStatsHaveFrameUI(parentTransform);
+
+        foreach (KeyValuePair<Stats, float> kvp in dictionary)
+        {
+            StatsValueContainerUI instanceStatValueUI = Instantiate(frame, parentTransform);
+
+            Sprite statIcon = ResourceManager.GetStatIcon(kvp.Key);
+            string statName = Enums.FormatEnumString(kvp.Key);
+            float statValue = kvp.Value;
+
+            _statsValueContainers.Add(instanceStatValueUI);
+
+            instanceStatValueUI.Configure(statIcon, statName, statValue);
+            instanceStatValueUI.gameObject.SetActive(true);
+        }
+
+        LeanTween.delayedCall(Time.deltaTime * 2, () => { ResizeFontSize(); });
+    }
+
     private void ResizeFontSize()
     {
         if (_statsValueContainers.Count < 0) return;
@@ -64,12 +85,34 @@ public class StatContainerManager : MonoBehaviour
         Instance.GenerateContainer(dictionary, parentTransform);
     }
 
+    public static void GenerateStatContainerWithFrame(Dictionary<Stats, float> dictionary, StatsValueContainerUI frame, Transform parentTransform)
+    {
+        Instance.GenerateContainerWithFrame(dictionary, frame, parentTransform);
+    }
+
     private void ClearStats(Transform parentTransform)
     {
         _statsValueContainers.Clear();
 
         foreach (Transform child in parentTransform)
         {
+            Destroy(child.gameObject);
+        }
+    }
+
+    private void ClearStatsHaveFrameUI(Transform parentTransform)
+    {
+        _statsValueContainers.Clear();
+
+        foreach (Transform child in parentTransform)
+        {
+            if (child == parentTransform.GetChild(0))
+            {
+                if (child.gameObject.activeSelf)
+                    child.gameObject.SetActive(false);
+
+                continue;
+            }
             Destroy(child.gameObject);
         }
     }

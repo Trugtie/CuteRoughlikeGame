@@ -21,4 +21,10 @@ public static class WeaponCalculator
 
         return calculatedDictionary;
     }
+
+    public static int GetCalculatedWeaponPrice(WeaponDataSO weaponDataSO, int level)
+    {
+        float multiplier = 1 + (float)level / 3;
+        return (int)(weaponDataSO.PurchasePrice * multiplier);
+    }
 }
