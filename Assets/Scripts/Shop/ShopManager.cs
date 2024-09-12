@@ -3,16 +3,27 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class ShopManager : MonoBehaviour, IGameStateListener
 {
+    public static ShopManager Instance { get; private set; }
+
     [Header(" Elements ")]
     [SerializeField] private Transform _spawnItemContainerPosition;
     [SerializeField] private ShopItemContainerUI _shopItemPrefab;
 
     [Header(" Settings ")]
     [SerializeField] private int _amoutOfSpawnItem;
+
+    private void Awake()
+    {
+        if (Instance == null)
+            Instance = this;
+        else
+            Destroy(gameObject);
+    }
 
     public void GameStateChangedCallback(GameStates gameState)
     {
@@ -27,10 +38,27 @@ public class ShopManager : MonoBehaviour, IGameStateListener
     [Button]
     private void Configure()
     {
-        ClearItemShop();
+        List<GameObject> itemsToDestroy = new List<GameObject>();
 
-        int weaponItemToAdd = Random.Range(Mathf.Min(2, _amoutOfSpawnItem), _amoutOfSpawnItem);
-        int objectItemToAdd = _amoutOfSpawnItem - weaponItemToAdd;
+        foreach (Transform child in _spawnItemContainerPosition)
+        {
+            ShopItemContainerUI shopItem = child.GetComponent<ShopItemContainerUI>();
+
+            if (!shopItem.IsLock)
+                itemsToDestroy.Add(shopItem.gameObject);
+        }
+
+        while (itemsToDestroy.Count > 0)
+        {
+            Transform itemTransform = itemsToDestroy[0].transform;
+            itemTransform.SetParent(null);
+            Destroy(itemTransform.gameObject);
+            itemsToDestroy.RemoveAt(0);
+        }
+
+        int _amoutOfSpawnItemToAdd = _amoutOfSpawnItem - _spawnItemContainerPosition.childCount;
+        int weaponItemToAdd = Random.Range(Mathf.Min(2, _amoutOfSpawnItemToAdd), _amoutOfSpawnItemToAdd);
+        int objectItemToAdd = _amoutOfSpawnItemToAdd - weaponItemToAdd;
 
         for (int i = 0; i < weaponItemToAdd; i++)
         {
@@ -53,11 +81,8 @@ public class ShopManager : MonoBehaviour, IGameStateListener
 
     }
 
-    private void ClearItemShop()
+    public void RerollShopItem()
     {
-        foreach (Transform child in _spawnItemContainerPosition)
-        {
-            Destroy(child.gameObject);
-        }
+        Configure();
     }
 }

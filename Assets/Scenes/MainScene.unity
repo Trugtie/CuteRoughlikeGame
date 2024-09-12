@@ -2588,6 +2588,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startGameBtn: {fileID: 1485244254}
+  _rerollButton: {fileID: 1312139799}
 --- !u!1 &282852442
 GameObject:
   m_ObjectHideFlags: 0
