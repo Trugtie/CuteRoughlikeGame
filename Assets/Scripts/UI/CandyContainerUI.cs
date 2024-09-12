@@ -20,9 +20,9 @@ public class CandyContainerUI : MonoBehaviour
         CurrencyManager.Instance.OnUpdatedCurrency += OnUpdatedCurrencyCallback;
     }
 
-    private void OnUpdatedCurrencyCallback(int candyCurrency)
+    private void OnUpdatedCurrencyCallback()
     {
-        UpdateVisual(candyCurrency);
+        UpdateVisual(CurrencyManager.Instance.Currency);
     }
 
 

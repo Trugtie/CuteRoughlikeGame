@@ -8,6 +8,8 @@ using Random = UnityEngine.Random;
 
 public class ShopManager : MonoBehaviour, IGameStateListener
 {
+    public Action OnUpdateReroll;
+
     public static ShopManager Instance { get; private set; }
 
     [Header(" Elements ")]
@@ -16,6 +18,7 @@ public class ShopManager : MonoBehaviour, IGameStateListener
 
     [Header(" Settings ")]
     [SerializeField] private int _amoutOfSpawnItem;
+    [field: SerializeField] public int RerollPrice { get; private set; }
 
     private void Awake()
     {
@@ -31,6 +34,7 @@ public class ShopManager : MonoBehaviour, IGameStateListener
         {
             case GameStates.SHOP:
                 Configure();
+                OnUpdateReroll?.Invoke();
                 break;
         }
     }
@@ -83,6 +87,7 @@ public class ShopManager : MonoBehaviour, IGameStateListener
 
     public void RerollShopItem()
     {
+        CurrencyManager.Instance.UseCurrency(RerollPrice);
         Configure();
     }
 }
