@@ -549,7 +549,7 @@ MonoBehaviour:
   _itemNameText: {fileID: 5015455009945960258}
   _itemIcon: {fileID: 6481340670258290991}
   _priceText: {fileID: 5333835007420860533}
-  <PurchaseButton>k__BackingField: {fileID: 2637705019730737547}
+  _purchaseButton: {fileID: 2637705019730737547}
   _statContainerTransform: {fileID: 6338489319365393584}
   _statsValueFrameUI: {fileID: 8218773536676232364}
   _backgroundColorContainer:

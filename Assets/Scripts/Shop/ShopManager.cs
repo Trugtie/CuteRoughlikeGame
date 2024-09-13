@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -16,6 +17,7 @@ public class ShopManager : MonoBehaviour, IGameStateListener
     [SerializeField] private Transform _spawnItemContainerPosition;
     [SerializeField] private ShopItemContainerUI _shopItemPrefab;
     [SerializeField] private PlayerWeapons _playerWeapons;
+    [SerializeField] private PlayerObjects playerObjects;
 
     [Header(" Settings ")]
     [SerializeField] private int _amoutOfSpawnItem;
@@ -44,8 +46,29 @@ public class ShopManager : MonoBehaviour, IGameStateListener
         bool isPurchaseWeapon = itemContainer.WeaponDataSO != null;
 
         if (isPurchaseWeapon)
+            TryPurchaseWeapon(itemContainer, level);
+        else
+            PurchaseObject(itemContainer);
+    }
+
+    private void PurchaseObject(ShopItemContainerUI itemContainer)
+    {
+        ObjectDataSO objectDataSO = itemContainer.ObjectDataSO;
+        playerObjects.AddObject(objectDataSO);
+
+        CurrencyManager.Instance.UseCurrency(objectDataSO.Price);
+
+        Destroy(itemContainer.gameObject);
+    }
+
+    private void TryPurchaseWeapon(ShopItemContainerUI itemContainer, int level)
+    {
+        if (_playerWeapons.TryAddWeapon(itemContainer.WeaponDataSO, level))
         {
-            _playerWeapons.TryAddWeapon(itemContainer.WeaponDataSO, level);
+            int price = WeaponCalculator.GetCalculatedWeaponPrice(itemContainer.WeaponDataSO, level);
+            CurrencyManager.Instance.UseCurrency(price);
+
+            Destroy(itemContainer.gameObject);
         }
     }
 

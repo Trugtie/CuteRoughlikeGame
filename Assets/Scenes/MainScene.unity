@@ -1417,6 +1417,7 @@ MonoBehaviour:
   _spawnItemContainerPosition: {fileID: 1943600045}
   _shopItemPrefab: {fileID: 1397686471233582551, guid: 8abf0250a629c50468013afcf0848694, type: 3}
   _playerWeapons: {fileID: 3375243719660658732}
+  playerObjects: {fileID: 3375243719660658739}
   _amoutOfSpawnItem: 6
   <RerollPrice>k__BackingField: 100
 --- !u!1001 &149217912

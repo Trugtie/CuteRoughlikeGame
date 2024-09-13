@@ -15,7 +15,7 @@ public class ShopItemContainerUI : MonoBehaviour
     [SerializeField] private Image _itemIcon;
     [SerializeField] private TextMeshProUGUI _priceText;
 
-    [field: SerializeField] public Button PurchaseButton { get; private set; }
+    [SerializeField] private Button _purchaseButton;
 
     [Header(" Stats ")]
     [SerializeField] private Transform _statContainerTransform;
@@ -31,10 +31,26 @@ public class ShopItemContainerUI : MonoBehaviour
 
     [Header("Purchase")]
     private int _level;
+    private int _price;
     public WeaponDataSO WeaponDataSO { get; private set; }
     public ObjectDataSO ObjectDataSO { get; private set; }
 
     public bool IsLock { get; private set; }
+
+    private void Start()
+    {
+        CurrencyManager.Instance.OnUpdatedCurrency += OnUpdatedCurrencyCallback;
+    }
+
+    private void OnDestroy()
+    {
+        CurrencyManager.Instance.OnUpdatedCurrency -= OnUpdatedCurrencyCallback;
+    }
+
+    private void OnUpdatedCurrencyCallback()
+    {
+        _purchaseButton.interactable = CurrencyManager.Instance.HasEnoughCurrency(_price);
+    }
 
     public void Configure(WeaponDataSO weaponDataSO, int level)
     {
@@ -45,12 +61,12 @@ public class ShopItemContainerUI : MonoBehaviour
         _itemNameText.color = ColorPalleteSystem.Instance.GetLevelColor(level);
         _itemIcon.sprite = weaponDataSO.WeaponSprite;
 
-        int price = WeaponCalculator.GetCalculatedWeaponPrice(weaponDataSO, level);
-        _priceText.text = price.ToString();
+        _price = WeaponCalculator.GetCalculatedWeaponPrice(weaponDataSO, level);
+        _priceText.text = _price.ToString();
 
-        PurchaseButton.interactable = CurrencyManager.Instance.HasEnoughCurrency(price);
+        _purchaseButton.interactable = CurrencyManager.Instance.HasEnoughCurrency(_price);
 
-        PurchaseButton.onClick.AddListener(PurchaseItem);
+        _purchaseButton.onClick.AddListener(PurchaseItem);
         _lockButton.onClick.AddListener(LockCallback);
 
         foreach (Image background in _backgroundColorContainer)
@@ -68,10 +84,12 @@ public class ShopItemContainerUI : MonoBehaviour
         _itemNameText.text = objectDataSO.name;
         _itemNameText.color = ColorPalleteSystem.Instance.GetLevelColor(objectDataSO.Rality);
         _itemIcon.sprite = objectDataSO.Icon;
-        _priceText.text = objectDataSO.Price.ToString();
 
-        PurchaseButton.interactable = CurrencyManager.Instance.HasEnoughCurrency(objectDataSO.Price);
-        PurchaseButton.onClick.AddListener(PurchaseItem);
+        _price = objectDataSO.Price;
+        _priceText.text = _price.ToString();
+
+        _purchaseButton.interactable = CurrencyManager.Instance.HasEnoughCurrency(_price);
+        _purchaseButton.onClick.AddListener(PurchaseItem);
 
         _lockButton.onClick.AddListener(LockCallback);
 
