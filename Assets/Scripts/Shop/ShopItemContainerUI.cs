@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ShopItemContainerUI : MonoBehaviour
 {
+    public static Action<ShopItemContainerUI, int> OnAnyPurchaseItem;
+
     [Header(" Elements ")]
     [SerializeField] private TextMeshProUGUI _itemNameText;
     [SerializeField] private Image _itemIcon;
@@ -25,15 +29,28 @@ public class ShopItemContainerUI : MonoBehaviour
     [SerializeField] private Button _lockButton;
     [SerializeField] private Sprite _lockSprite, _unlockSprite;
 
+    [Header("Purchase")]
+    private int _level;
+    public WeaponDataSO WeaponDataSO { get; private set; }
+    public ObjectDataSO ObjectDataSO { get; private set; }
+
     public bool IsLock { get; private set; }
 
     public void Configure(WeaponDataSO weaponDataSO, int level)
     {
+        WeaponDataSO = weaponDataSO;
+        _level = level;
+
         _itemNameText.text = weaponDataSO.name + " (lv " + (level + 1) + ")";
         _itemNameText.color = ColorPalleteSystem.Instance.GetLevelColor(level);
         _itemIcon.sprite = weaponDataSO.WeaponSprite;
-        _priceText.text = WeaponCalculator.GetCalculatedWeaponPrice(weaponDataSO, level).ToString();
 
+        int price = WeaponCalculator.GetCalculatedWeaponPrice(weaponDataSO, level);
+        _priceText.text = price.ToString();
+
+        PurchaseButton.interactable = CurrencyManager.Instance.HasEnoughCurrency(price);
+
+        PurchaseButton.onClick.AddListener(PurchaseItem);
         _lockButton.onClick.AddListener(LockCallback);
 
         foreach (Image background in _backgroundColorContainer)
@@ -47,10 +64,14 @@ public class ShopItemContainerUI : MonoBehaviour
 
     public void Configure(ObjectDataSO objectDataSO)
     {
+        ObjectDataSO = objectDataSO;
         _itemNameText.text = objectDataSO.name;
         _itemNameText.color = ColorPalleteSystem.Instance.GetLevelColor(objectDataSO.Rality);
         _itemIcon.sprite = objectDataSO.Icon;
         _priceText.text = objectDataSO.Price.ToString();
+
+        PurchaseButton.interactable = CurrencyManager.Instance.HasEnoughCurrency(objectDataSO.Price);
+        PurchaseButton.onClick.AddListener(PurchaseItem);
 
         _lockButton.onClick.AddListener(LockCallback);
 
@@ -61,6 +82,11 @@ public class ShopItemContainerUI : MonoBehaviour
 
         Dictionary<Stats, float> objectBaseStats = objectDataSO.BaseStats;
         ConfigureStats(objectBaseStats);
+    }
+
+    private void PurchaseItem()
+    {
+        OnAnyPurchaseItem?.Invoke(this, _level);
     }
 
     private void ConfigureStats(Dictionary<Stats, float> stats)

@@ -7,10 +7,17 @@ public class PlayerWeapons : MonoBehaviour
     [Header(" Elements ")]
     [SerializeField] private WeaponPosition[] _weaponPositions;
 
-    public void AddWeapon(WeaponDataSO weaponDataSO, int weaponLevel)
+    public bool TryAddWeapon(WeaponDataSO weaponDataSO, int weaponLevel)
     {
-        WeaponPosition weaponPosition = _weaponPositions[Random.Range(0, _weaponPositions.Length)];
+        foreach (WeaponPosition weaponPosition in _weaponPositions)
+        {
+            if (weaponPosition.Weapon != null)
+                continue;
 
-        weaponPosition.AssignWeapon(weaponDataSO.Prefab, weaponLevel);
+            weaponPosition.AssignWeapon(weaponDataSO.Prefab, weaponLevel);
+            return true;
+        }
+
+        return false;
     }
 }

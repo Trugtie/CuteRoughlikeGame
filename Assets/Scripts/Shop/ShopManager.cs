@@ -15,6 +15,7 @@ public class ShopManager : MonoBehaviour, IGameStateListener
     [Header(" Elements ")]
     [SerializeField] private Transform _spawnItemContainerPosition;
     [SerializeField] private ShopItemContainerUI _shopItemPrefab;
+    [SerializeField] private PlayerWeapons _playerWeapons;
 
     [Header(" Settings ")]
     [SerializeField] private int _amoutOfSpawnItem;
@@ -26,6 +27,26 @@ public class ShopManager : MonoBehaviour, IGameStateListener
             Instance = this;
         else
             Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        ShopItemContainerUI.OnAnyPurchaseItem += OnAnyPurchaseItemCallback;
+    }
+
+    private void OnDestroy()
+    {
+        ShopItemContainerUI.OnAnyPurchaseItem -= OnAnyPurchaseItemCallback;
+    }
+
+    private void OnAnyPurchaseItemCallback(ShopItemContainerUI itemContainer, int level)
+    {
+        bool isPurchaseWeapon = itemContainer.WeaponDataSO != null;
+
+        if (isPurchaseWeapon)
+        {
+            _playerWeapons.TryAddWeapon(itemContainer.WeaponDataSO, level);
+        }
     }
 
     public void GameStateChangedCallback(GameStates gameState)
