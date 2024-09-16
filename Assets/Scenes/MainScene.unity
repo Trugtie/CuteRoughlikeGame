@@ -2633,6 +2633,7 @@ MonoBehaviour:
   _rerollPriceText: {fileID: 349014789}
   _statsButton: {fileID: 1745827718}
   _overlayTrigger: {fileID: 1950960499}
+  _overlayRectTransform: {fileID: 1950960498}
   _statsContainerRect: {fileID: 463919653}
 --- !u!1 &282852442
 GameObject:
