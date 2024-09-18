@@ -15,17 +15,26 @@ public class ShopUI : MonoBehaviour
 
     [Header(" Stat Container ")]
     [SerializeField] private Button _statsButton;
-    [SerializeField] private EventTrigger _overlayTrigger;
-    [SerializeField] private RectTransform _overlayRectTransform;
     [SerializeField] private RectTransform _statsContainerRect;
 
-    private float _overlayAlpha;
     private Vector2 _statsContainerShowPos;
     private Vector2 _statsContainerHidePos;
 
+    [Header(" Inventory Container ")]
+    [SerializeField] private Button _inventoryButton;
+    [SerializeField] private RectTransform _inventoryContainerRect;
+
+    private Vector2 _inventoryContainerShowPos;
+    private Vector2 _inventoryContainerHidePos;
+
+    [Header(" Sliding Overlay UI")]
+    [SerializeField] private EventTrigger _overlayTrigger;
+    [SerializeField] private RectTransform _overlayRectTransform;
+    private float _overlayAlpha;
+
     private void OnEnable()
     {
-        StartCoroutine(ConfigureStasContainerRoutine());
+        StartCoroutine(ConfigureSlideContainerRoutine());
     }
 
     private void Start()
@@ -34,7 +43,8 @@ public class ShopUI : MonoBehaviour
 
         _rerollButton.onClick.AddListener(() => ShopManager.Instance.RerollShopItem());
 
-        _statsButton.onClick.AddListener(() => ToggleStatsContainer(true));
+        _statsButton.onClick.AddListener(() => ShowSlideContainer(_statsContainerRect, _statsContainerShowPos));
+        _inventoryButton.onClick.AddListener(() => ShowSlideContainer(_inventoryContainerRect, _inventoryContainerShowPos));
 
         EventTrigger.Entry entry = new EventTrigger.Entry();
         entry.eventID = EventTriggerType.PointerDown;
@@ -46,10 +56,11 @@ public class ShopUI : MonoBehaviour
         CurrencyManager.Instance.OnUpdatedCurrency += UpdateRerollVisual;
     }
 
-    private IEnumerator ConfigureStasContainerRoutine()
+    private IEnumerator ConfigureSlideContainerRoutine()
     {
         yield return null;
-        ConfigureStatsContainerUI();
+        ConfigureStatsContainerUI(_statsContainerRect, ref _statsContainerShowPos, ref _statsContainerHidePos, true);
+        ConfigureStatsContainerUI(_inventoryContainerRect, ref _inventoryContainerShowPos, ref _inventoryContainerHidePos, false);
     }
 
     private void OnDestroy()
@@ -58,23 +69,29 @@ public class ShopUI : MonoBehaviour
         CurrencyManager.Instance.OnUpdatedCurrency -= UpdateRerollVisual;
     }
 
-    private void ConfigureStatsContainerUI()
+    private void ConfigureStatsContainerUI(RectTransform containerRect, ref Vector2 showPos, ref Vector2 hidePos, bool isSlideLeft)
     {
-        float width = Screen.width / (4 * _statsContainerRect.lossyScale.x);
-        _statsContainerRect.offsetMax = new Vector2(width, _statsContainerRect.offsetMax.y);
+        float width = Screen.width / (4 * containerRect.lossyScale.x);
 
-        _statsContainerShowPos = _statsContainerRect.anchoredPosition;
-        _statsContainerHidePos = _statsContainerShowPos + Vector2.left * width;
+        containerRect.sizeDelta = new Vector2(width, containerRect.offsetMax.y);
 
-        _statsContainerRect.anchoredPosition = _statsContainerHidePos;
+        showPos = containerRect.anchoredPosition;
 
-        _statsContainerRect.gameObject.SetActive(false);
+        if (isSlideLeft)
+            hidePos = showPos + Vector2.left * width;
+        else
+            hidePos = showPos + Vector2.right * width;
+
+        containerRect.anchoredPosition = hidePos;
+        containerRect.gameObject.SetActive(false);
+
         _overlayRectTransform.gameObject.SetActive(false);
     }
 
     public void OnOverlayButtonClick(PointerEventData data)
     {
-        ToggleStatsContainer(false);
+        HideSlideContainer(_statsContainerRect, _statsContainerHidePos);
+        HideSlideContainer(_inventoryContainerRect, _inventoryContainerHidePos);
     }
 
     private void UpdateRerollVisual()
@@ -85,35 +102,35 @@ public class ShopUI : MonoBehaviour
         _rerollButton.interactable = CurrencyManager.Instance.HasEnoughCurrency(rerollPrice);
     }
 
-    private void ToggleStatsContainer(bool isShow)
+    private void ShowSlideContainer(RectTransform containerRect, Vector2 showPos)
     {
-        if (isShow)
-        {
-            _statsContainerRect.gameObject.SetActive(isShow);
-            _overlayRectTransform.gameObject.SetActive(isShow);
+        containerRect.gameObject.SetActive(true);
+        _overlayRectTransform.gameObject.SetActive(true);
 
-            _overlayRectTransform.GetComponent<Image>().raycastTarget = true;
+        _overlayRectTransform.GetComponent<Image>().raycastTarget = true;
 
-            LeanTween.cancel(_statsContainerRect);
-            LeanTween.move(_statsContainerRect, _statsContainerShowPos, .3f)
-                .setEase(LeanTweenType.easeInCubic);
+        LeanTween.cancel(containerRect);
+        LeanTween.move(containerRect, showPos, .3f)
+            .setEase(LeanTweenType.easeInCubic);
 
-            LeanTween.cancel(_overlayRectTransform);
-            LeanTween.alpha(_overlayRectTransform, _overlayAlpha, 0.3f).setRecursive(false);
-        }
-        else
-        {
-            _overlayRectTransform.GetComponent<Image>().raycastTarget = false;
+        LeanTween.cancel(_overlayRectTransform);
+        LeanTween.alpha(_overlayRectTransform, _overlayAlpha, 0.3f).setRecursive(false);
+    }
 
-            LeanTween.cancel(_statsContainerRect);
-            LeanTween.move(_statsContainerRect, _statsContainerHidePos, .3f)
-                .setEase(LeanTweenType.easeOutCubic)
-                .setOnComplete(() => _statsContainerRect.gameObject.SetActive(isShow));
+    private void HideSlideContainer(RectTransform containerRect, Vector2 hidePos)
+    {
+        if (!containerRect.gameObject.activeSelf) return;
 
-            LeanTween.cancel(_overlayRectTransform);
-            LeanTween.alpha(_overlayRectTransform, 0f, 0.3f)
-                .setRecursive(false)
-                .setOnComplete(() => _overlayRectTransform.gameObject.SetActive(isShow));
-        }
+        _overlayRectTransform.GetComponent<Image>().raycastTarget = false;
+
+        LeanTween.cancel(containerRect);
+        LeanTween.move(containerRect, hidePos, .3f)
+            .setEase(LeanTweenType.easeOutCubic)
+            .setOnComplete(() => containerRect.gameObject.SetActive(false));
+
+        LeanTween.cancel(_overlayRectTransform);
+        LeanTween.alpha(_overlayRectTransform, 0f, 0.3f)
+            .setRecursive(false)
+            .setOnComplete(() => _overlayRectTransform.gameObject.SetActive(false));
     }
 }
