@@ -11,8 +11,7 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
         Attack
     }
 
-    [Header("Data")]
-    [SerializeField] protected WeaponDataSO _weaponDataSO;
+    [field: SerializeField] public WeaponDataSO WeaponDataSO { get; private set; }
 
     [Header("Elements")]
     private Animator _animator;
@@ -188,7 +187,7 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
 
     protected void ConfigueDamge()
     {
-        Dictionary<Stats, float> calculatedWeaponStat = WeaponCalculator.GetCalculatedWeaponStats(_weaponDataSO, Level);
+        Dictionary<Stats, float> calculatedWeaponStat = WeaponCalculator.GetCalculatedWeaponStats(WeaponDataSO, Level);
 
         _weaponDamge = Mathf.RoundToInt(calculatedWeaponStat[Stats.Attack]);
         _attackDelay = 1 / (calculatedWeaponStat[Stats.AttackSpeed]);

@@ -195,14 +195,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6084f7b01e898c46a0af5fc56d68b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponDataSO: {fileID: 11400000, guid: df015402091d6aa44803fcce52ebce40, type: 2}
-  _weaponBaseDamge: 0
+  <WeaponDataSO>k__BackingField: {fileID: 11400000, guid: df015402091d6aa44803fcce52ebce40, type: 2}
   _weaponRange: 3
   _rotationSpeed: 10
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 8
   _attackDelay: 0.5
+  <Level>k__BackingField: 0
   _hitPositions:
   - hitTransform: {fileID: 8087260559681334120}
     hitRange: 0.5

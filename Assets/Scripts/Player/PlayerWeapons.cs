@@ -20,4 +20,18 @@ public class PlayerWeapons : MonoBehaviour
 
         return false;
     }
+
+    public Weapon[] GetWeapons()
+    {
+        List<Weapon> weapons = new List<Weapon>();
+
+        foreach (WeaponPosition weaponPos in _weaponPositions)
+        {
+            if (weaponPos.Weapon == null)
+                continue;
+            weapons.Add(weaponPos.Weapon);
+        }
+
+        return weapons.ToArray();
+    }
 }

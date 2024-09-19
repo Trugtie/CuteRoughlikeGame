@@ -99,14 +99,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39f40455f5d5f584fa5d83ef28765769, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponDataSO: {fileID: 11400000, guid: dded283f91eb1014d8734b27820b8741, type: 2}
-  _weaponBaseDamge: 10
+  <WeaponDataSO>k__BackingField: {fileID: 11400000, guid: dded283f91eb1014d8734b27820b8741, type: 2}
   _weaponRange: 8
   _rotationSpeed: 10
   _enemyLayer:
     serializedVersion: 2
     m_Bits: 8
   _attackDelay: 0.5
+  <Level>k__BackingField: 0
   _shootStartPosition: {fileID: 1492234807615116427}
   _bullet: {fileID: 2623027276941760831, guid: b1a4b5ecc4603f042a005777cd0b5726, type: 3}
   _bulletPoolContainer: {fileID: 0}
