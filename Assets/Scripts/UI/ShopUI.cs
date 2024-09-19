@@ -3,6 +3,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
 using System.Collections;
+using NaughtyAttributes;
 
 public class ShopUI : MonoBehaviour
 {
@@ -26,6 +27,13 @@ public class ShopUI : MonoBehaviour
 
     private Vector2 _inventoryContainerShowPos;
     private Vector2 _inventoryContainerHidePos;
+
+    [Header(" Item Info Container")]
+    [SerializeField] private RectTransform _itemContainerRect;
+
+    private Vector2 _itemContainerShowPos;
+    private Vector2 _itemContainerHidePos;
+
 
     [Header(" Sliding Overlay UI")]
     [SerializeField] private EventTrigger _overlayTrigger;
@@ -59,8 +67,9 @@ public class ShopUI : MonoBehaviour
     private IEnumerator ConfigureSlideContainerRoutine()
     {
         yield return null;
-        ConfigureStatsContainerUI(_statsContainerRect, ref _statsContainerShowPos, ref _statsContainerHidePos, true);
-        ConfigureStatsContainerUI(_inventoryContainerRect, ref _inventoryContainerShowPos, ref _inventoryContainerHidePos, false);
+        ConfigureSlideLeftRightContainerUI(_statsContainerRect, ref _statsContainerShowPos, ref _statsContainerHidePos, true);
+        ConfigureSlideLeftRightContainerUI(_inventoryContainerRect, ref _inventoryContainerShowPos, ref _inventoryContainerHidePos, false);
+        ConfigureTopDownDoubleSlideContainerUI(_itemContainerRect, ref _itemContainerShowPos, ref _itemContainerHidePos, true);
     }
 
     private void OnDestroy()
@@ -69,11 +78,14 @@ public class ShopUI : MonoBehaviour
         CurrencyManager.Instance.OnUpdatedCurrency -= UpdateRerollVisual;
     }
 
-    private void ConfigureStatsContainerUI(RectTransform containerRect, ref Vector2 showPos, ref Vector2 hidePos, bool isSlideLeft)
+    private void ConfigureSlideLeftRightContainerUI(RectTransform containerRect, ref Vector2 showPos, ref Vector2 hidePos, bool isSlideLeft)
     {
         float width = Screen.width / (4 * containerRect.lossyScale.x);
 
-        containerRect.sizeDelta = new Vector2(width, containerRect.offsetMax.y);
+        if (isSlideLeft)
+            containerRect.offsetMax = new Vector2(width, containerRect.offsetMax.y);
+        else
+            containerRect.offsetMin = new Vector2(-width, containerRect.offsetMin.y);
 
         showPos = containerRect.anchoredPosition;
 
@@ -86,6 +98,23 @@ public class ShopUI : MonoBehaviour
         containerRect.gameObject.SetActive(false);
 
         _overlayRectTransform.gameObject.SetActive(false);
+    }
+
+    private void ConfigureTopDownDoubleSlideContainerUI(RectTransform containerRect, ref Vector2 showPos, ref Vector2 hidePos, bool isSlideTop)
+    {
+        float height = Screen.height / (2 * containerRect.lossyScale.y);
+
+        containerRect.offsetMax = new Vector2(containerRect.offsetMax.x, height);
+
+        showPos = containerRect.anchoredPosition;
+
+        if (isSlideTop)
+            hidePos = showPos + Vector2.down * height;
+        else
+            hidePos = showPos + Vector2.up * height;
+
+        containerRect.anchoredPosition = hidePos;
+        containerRect.gameObject.SetActive(false);
     }
 
     public void OnOverlayButtonClick(PointerEventData data)
@@ -120,6 +149,8 @@ public class ShopUI : MonoBehaviour
     private void HideSlideContainer(RectTransform containerRect, Vector2 hidePos)
     {
         if (!containerRect.gameObject.activeSelf) return;
+        if (containerRect == _inventoryContainerRect)
+            HideDoubleSlideContainer(_itemContainerRect, _itemContainerHidePos);
 
         _overlayRectTransform.GetComponent<Image>().raycastTarget = false;
 
@@ -132,5 +163,35 @@ public class ShopUI : MonoBehaviour
         LeanTween.alpha(_overlayRectTransform, 0f, 0.3f)
             .setRecursive(false)
             .setOnComplete(() => _overlayRectTransform.gameObject.SetActive(false));
+    }
+
+    private void ShowDoubleSlideContainer(RectTransform containerRect, Vector2 showPos)
+    {
+        containerRect.gameObject.SetActive(true);
+
+        containerRect.LeanCancel();
+        containerRect.LeanMove((Vector3)showPos, .3f).setEase(LeanTweenType.easeInCubic);
+    }
+
+    private void HideDoubleSlideContainer(RectTransform containerRect, Vector2 hidePos)
+    {
+        if (!containerRect.gameObject.activeSelf) return;
+
+        containerRect.LeanCancel();
+        containerRect.LeanMove((Vector3)hidePos, .3f)
+            .setEase(LeanTweenType.easeOutCubic)
+            .setOnComplete(() => containerRect.gameObject.SetActive(false));
+    }
+
+    //Debug
+    [Button]
+    private void ShowItemsSlide()
+    {
+        ShowDoubleSlideContainer(_itemContainerRect, _itemContainerShowPos);
+    }
+    [Button]
+    private void HideItemSlide()
+    {
+        HideDoubleSlideContainer(_itemContainerRect, _itemContainerHidePos);
     }
 }
