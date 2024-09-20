@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine.EventSystems;
 using System.Collections;
 using NaughtyAttributes;
+using System;
 
 public class ShopUI : MonoBehaviour
 {
@@ -47,10 +48,14 @@ public class ShopUI : MonoBehaviour
 
     private void Start()
     {
+        SetupButton();
+        SetupEvent();
+    }
+
+    private void SetupButton()
+    {
         _startGameButton.onClick.AddListener(() => GameManager.Instance.SetState(GameStates.GAMEPLAY));
-
         _rerollButton.onClick.AddListener(() => ShopManager.Instance.RerollShopItem());
-
         _statsButton.onClick.AddListener(() => ShowSlideContainer(_statsContainerRect, _statsContainerShowPos));
         _inventoryButton.onClick.AddListener(() => ShowSlideContainer(_inventoryContainerRect, _inventoryContainerShowPos));
 
@@ -60,8 +65,34 @@ public class ShopUI : MonoBehaviour
         _overlayTrigger.triggers.Add(entry);
         _overlayAlpha = _overlayRectTransform.GetComponent<Image>().color.a;
 
+    }
+
+    private void SetupEvent()
+    {
         ShopManager.Instance.OnUpdateReroll += UpdateRerollVisual;
         CurrencyManager.Instance.OnUpdatedCurrency += UpdateRerollVisual;
+        InventoryManager.Instance.OnShowObjectItemInfo += OnShowObjectItemInfoCallback;
+        InventoryManager.Instance.OnShowWeaponItemInfo += OnShowWeaponItemInfoCallback;
+    }
+
+    private void OnDestroy()
+    {
+        ShopManager.Instance.OnUpdateReroll -= UpdateRerollVisual;
+        CurrencyManager.Instance.OnUpdatedCurrency -= UpdateRerollVisual;
+        InventoryManager.Instance.OnShowObjectItemInfo -= OnShowObjectItemInfoCallback;
+        InventoryManager.Instance.OnShowWeaponItemInfo -= OnShowWeaponItemInfoCallback;
+    }
+
+    private void OnShowObjectItemInfoCallback(ObjectDataSO objectDataSO)
+    {
+        _itemContainerRect.GetComponent<ItemInfoSlideUI>().Configure(objectDataSO, () => HideItemSlide());
+        ShowItemsSlide();
+    }
+
+    private void OnShowWeaponItemInfoCallback(Weapon weapon)
+    {
+        _itemContainerRect.GetComponent<ItemInfoSlideUI>().Configure(weapon, () => HideItemSlide());
+        ShowItemsSlide();
     }
 
     private IEnumerator ConfigureSlideContainerRoutine()
@@ -70,12 +101,6 @@ public class ShopUI : MonoBehaviour
         ConfigureSlideLeftRightContainerUI(_statsContainerRect, ref _statsContainerShowPos, ref _statsContainerHidePos, true);
         ConfigureSlideLeftRightContainerUI(_inventoryContainerRect, ref _inventoryContainerShowPos, ref _inventoryContainerHidePos, false);
         ConfigureTopDownDoubleSlideContainerUI(_itemContainerRect, ref _itemContainerShowPos, ref _itemContainerHidePos, true);
-    }
-
-    private void OnDestroy()
-    {
-        ShopManager.Instance.OnUpdateReroll -= UpdateRerollVisual;
-        CurrencyManager.Instance.OnUpdatedCurrency -= UpdateRerollVisual;
     }
 
     private void ConfigureSlideLeftRightContainerUI(RectTransform containerRect, ref Vector2 showPos, ref Vector2 hidePos, bool isSlideLeft)

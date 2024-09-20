@@ -8,6 +8,7 @@ public class WeaponDataSO : ScriptableObject
     [field: SerializeField] public string WeaponName { get; private set; }
     [field: SerializeField] public Sprite WeaponSprite { get; private set; }
     [field: SerializeField] public int PurchasePrice { get; private set; }
+    public int RecyclePrice { get; private set; }
 
     [field: SerializeField] public Weapon Prefab { get; private set; }
 

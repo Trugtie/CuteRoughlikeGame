@@ -27,4 +27,10 @@ public static class WeaponCalculator
         float multiplier = 1 + (float)level / 3;
         return (int)(weaponDataSO.PurchasePrice * multiplier);
     }
+
+    public static int GetCalculatedWeaponRecylePrice(WeaponDataSO weaponDataSO, int level)
+    {
+        float multiplier = 1 + (float)level / 3;
+        return (int)(weaponDataSO.PurchasePrice * multiplier) * 75 / 100;
+    }
 }
