@@ -25,6 +25,21 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
             Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        ShopItemContainerUI.OnAnyPurchaseItem += OnAnyPurchaseItemCallback;
+    }
+
+    private void OnDestroy()
+    {
+        ShopItemContainerUI.OnAnyPurchaseItem -= OnAnyPurchaseItemCallback;
+    }
+
+    private void OnAnyPurchaseItemCallback(ShopItemContainerUI uI, int arg2)
+    {
+        Configure();
+    }
+
     public void GameStateChangedCallback(GameStates gameState)
     {
         switch (gameState)
