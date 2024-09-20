@@ -39,6 +39,7 @@ public class ItemInfoSlideUI : MonoBehaviour
             );
 
         _closeButton.onClick.AddListener(() => onCloseButtonAction?.Invoke());
+        _mergeButton.gameObject.SetActive(true);
     }
 
     public void Configure(ObjectDataSO objectDataSO, Action onCloseButtonAction)
@@ -53,5 +54,7 @@ public class ItemInfoSlideUI : MonoBehaviour
         StatContainerManager.GenerateStatContainerWithFrame(objectDataSO.BaseStats, _statsValueContainerTemplate, _statsValueContainerParentTransform);
 
         _closeButton.onClick.AddListener(() => onCloseButtonAction?.Invoke());
+
+        _mergeButton.gameObject.SetActive(false);
     }
 }
