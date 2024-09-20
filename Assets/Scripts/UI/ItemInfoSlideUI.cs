@@ -32,7 +32,11 @@ public class ItemInfoSlideUI : MonoBehaviour
         float recyclePrice = WeaponCalculator.GetCalculatedWeaponRecylePrice(weapon.WeaponDataSO, weapon.Level);
         _recylePrice.SetText(recyclePrice.ToString());
 
-        StatContainerManager.GenerateStatContainerWithFrame(weapon.WeaponDataSO.BaseStats, _statsValueContainerTemplate, _statsValueContainerParentTransform);
+        StatContainerManager.GenerateStatContainerWithFrame(
+            WeaponCalculator.GetCalculatedWeaponStats(weapon.WeaponDataSO, weapon.Level),
+            _statsValueContainerTemplate,
+            _statsValueContainerParentTransform
+            );
 
         _closeButton.onClick.AddListener(() => onCloseButtonAction?.Invoke());
     }
