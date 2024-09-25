@@ -66,7 +66,10 @@ public class ShopItemContainerUI : MonoBehaviour
 
         _purchaseButton.interactable = CurrencyManager.Instance.HasEnoughCurrency(_price);
 
+        _purchaseButton.onClick.RemoveAllListeners();
         _purchaseButton.onClick.AddListener(PurchaseItem);
+
+        _lockButton.onClick.RemoveAllListeners();
         _lockButton.onClick.AddListener(LockCallback);
 
         foreach (Image background in _backgroundColorContainer)
@@ -89,8 +92,11 @@ public class ShopItemContainerUI : MonoBehaviour
         _priceText.text = _price.ToString();
 
         _purchaseButton.interactable = CurrencyManager.Instance.HasEnoughCurrency(_price);
+
+        _purchaseButton.onClick.RemoveAllListeners();
         _purchaseButton.onClick.AddListener(PurchaseItem);
 
+        _lockButton.onClick.RemoveAllListeners();
         _lockButton.onClick.AddListener(LockCallback);
 
         foreach (Image background in _backgroundColorContainer)

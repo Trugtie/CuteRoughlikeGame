@@ -8,6 +8,7 @@ public class StageCompleteUI : MonoBehaviour
 
     private void Start()
     {
+        _restartButton.onClick.RemoveAllListeners();
         _restartButton.onClick.AddListener(() =>
         {
             GameManager.Instance.RestartGame();

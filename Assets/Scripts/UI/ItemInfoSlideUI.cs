@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class ItemInfoSlideUI : MonoBehaviour
 {
+    public static Action<ObjectDataSO> OnAnyRecycleObject;
+    public static Action<Weapon> OnAnyRecycleWeapon;
+
     [Header(" Elements ")]
     [SerializeField] private Image _icon;
     [SerializeField] private Image _backgroundColor;
@@ -38,7 +41,12 @@ public class ItemInfoSlideUI : MonoBehaviour
             _statsValueContainerParentTransform
             );
 
+        _closeButton.onClick.RemoveAllListeners();
         _closeButton.onClick.AddListener(() => onCloseButtonAction?.Invoke());
+
+        _recycleButton.onClick.RemoveAllListeners();
+        _recycleButton.onClick.AddListener(() => OnAnyRecycleWeapon?.Invoke(weapon));
+
         _mergeButton.gameObject.SetActive(true);
     }
 
@@ -53,7 +61,11 @@ public class ItemInfoSlideUI : MonoBehaviour
 
         StatContainerManager.GenerateStatContainerWithFrame(objectDataSO.BaseStats, _statsValueContainerTemplate, _statsValueContainerParentTransform);
 
+        _closeButton.onClick.RemoveAllListeners();
         _closeButton.onClick.AddListener(() => onCloseButtonAction?.Invoke());
+
+        _recycleButton.onClick.RemoveAllListeners();
+        _recycleButton.onClick.AddListener(() => OnAnyRecycleObject?.Invoke(objectDataSO));
 
         _mergeButton.gameObject.SetActive(false);
     }

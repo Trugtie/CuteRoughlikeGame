@@ -54,9 +54,16 @@ public class ShopUI : MonoBehaviour
 
     private void SetupButton()
     {
+        _startGameButton.onClick.RemoveAllListeners();
         _startGameButton.onClick.AddListener(() => GameManager.Instance.SetState(GameStates.GAMEPLAY));
+
+        _rerollButton.onClick.RemoveAllListeners();
         _rerollButton.onClick.AddListener(() => ShopManager.Instance.RerollShopItem());
+
+        _statsButton.onClick.RemoveAllListeners();
         _statsButton.onClick.AddListener(() => ShowSlideContainer(_statsContainerRect, _statsContainerShowPos));
+
+        _inventoryButton.onClick.RemoveAllListeners();
         _inventoryButton.onClick.AddListener(() => ShowSlideContainer(_inventoryContainerRect, _inventoryContainerShowPos));
 
         EventTrigger.Entry entry = new EventTrigger.Entry();
@@ -73,6 +80,8 @@ public class ShopUI : MonoBehaviour
         CurrencyManager.Instance.OnUpdatedCurrency += UpdateRerollVisual;
         InventoryManager.Instance.OnShowObjectItemInfo += OnShowObjectItemInfoCallback;
         InventoryManager.Instance.OnShowWeaponItemInfo += OnShowWeaponItemInfoCallback;
+        ItemInfoSlideUI.OnAnyRecycleObject += OnAnyRecycleObjectCallback;
+        ItemInfoSlideUI.OnAnyRecycleWeapon += OnAnyRecycleWeaponCallback;
     }
 
     private void OnDestroy()
@@ -81,6 +90,18 @@ public class ShopUI : MonoBehaviour
         CurrencyManager.Instance.OnUpdatedCurrency -= UpdateRerollVisual;
         InventoryManager.Instance.OnShowObjectItemInfo -= OnShowObjectItemInfoCallback;
         InventoryManager.Instance.OnShowWeaponItemInfo -= OnShowWeaponItemInfoCallback;
+        ItemInfoSlideUI.OnAnyRecycleObject -= OnAnyRecycleObjectCallback;
+        ItemInfoSlideUI.OnAnyRecycleWeapon -= OnAnyRecycleWeaponCallback;
+    }
+
+    private void OnAnyRecycleWeaponCallback(Weapon weapon)
+    {
+        HideItemSlide();
+    }
+
+    private void OnAnyRecycleObjectCallback(ObjectDataSO objectDataSO)
+    {
+        HideItemSlide();
     }
 
     private void OnShowObjectItemInfoCallback(ObjectDataSO objectDataSO)

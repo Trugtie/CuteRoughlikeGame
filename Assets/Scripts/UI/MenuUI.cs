@@ -8,6 +8,7 @@ public class MenuUI : MonoBehaviour
 
     private void Start()
     {
+        _startGameBtn.onClick.RemoveAllListeners();
         _startGameBtn.onClick.AddListener(() =>
         {
             GameManager.Instance.SetState(GameStates.WEAPONSELECTION);

@@ -28,15 +28,31 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
     private void Start()
     {
         ShopItemContainerUI.OnAnyPurchaseItem += OnAnyPurchaseItemCallback;
+        ItemInfoSlideUI.OnAnyRecycleObject += OnAnyRecycleObjectCallback;
+        ItemInfoSlideUI.OnAnyRecycleWeapon += OnAnyRecycleWeaponCallback;
     }
 
     private void OnDestroy()
     {
         ShopItemContainerUI.OnAnyPurchaseItem -= OnAnyPurchaseItemCallback;
+        ItemInfoSlideUI.OnAnyRecycleObject -= OnAnyRecycleObjectCallback;
+        ItemInfoSlideUI.OnAnyRecycleWeapon -= OnAnyRecycleWeaponCallback;
     }
 
     private void OnAnyPurchaseItemCallback(ShopItemContainerUI uI, int arg2)
     {
+        Configure();
+    }
+
+    private void OnAnyRecycleWeaponCallback(Weapon weapon)
+    {
+
+    }
+
+    private void OnAnyRecycleObjectCallback(ObjectDataSO objectDataSO)
+    {
+        _playerObjects.RemoveObject(objectDataSO);
+        CurrencyManager.Instance.AddCurrency(objectDataSO.RecyclePrice);
         Configure();
     }
 

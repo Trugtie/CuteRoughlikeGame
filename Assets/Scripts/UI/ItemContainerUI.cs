@@ -15,12 +15,16 @@ public class ItemContainerUI : MonoBehaviour
     {
         _backgroundImage.color = ColorPalleteSystem.Instance.GetLevelColor(weapon.Level);
         _itemIcon.sprite = weapon.WeaponDataSO.WeaponSprite;
+
+        _itemButton.onClick.RemoveAllListeners();
         _itemButton.onClick.AddListener(() => onButtonClickAction?.Invoke());
     }
     public void Configure(ObjectDataSO objectData, Action onButtonClickAction)
     {
         _backgroundImage.color = ColorPalleteSystem.Instance.GetLevelColor(objectData.Rality);
         _itemIcon.sprite = objectData.Icon;
+
+        _itemButton.onClick.RemoveAllListeners();
         _itemButton.onClick.AddListener(() => onButtonClickAction?.Invoke());
     }
 }

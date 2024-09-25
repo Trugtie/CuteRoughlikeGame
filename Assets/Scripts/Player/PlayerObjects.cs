@@ -20,4 +20,10 @@ public class PlayerObjects : MonoBehaviour
         Objects.Add(objectDataSO);
         _playerStatsManager.AddObject(objectDataSO.BaseStats);
     }
+
+    public void RemoveObject(ObjectDataSO objectDataSO)
+    {
+        Objects.Remove(objectDataSO);
+        _playerStatsManager.RemoveObject(objectDataSO.BaseStats);
+    }
 }

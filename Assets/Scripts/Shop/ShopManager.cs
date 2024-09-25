@@ -21,7 +21,13 @@ public class ShopManager : MonoBehaviour, IGameStateListener
 
     [Header(" Settings ")]
     [SerializeField] private int _amoutOfSpawnItem;
+
     [field: SerializeField] public int RerollPrice { get; private set; }
+
+    [Header(" Debugs ")]
+    [SerializeField] private bool isNotRandomWeapon;
+    [MinValue(0), MaxValue(6)]
+    [SerializeField] private int _minWeaponToAdd;
 
     private void Awake()
     {
@@ -105,7 +111,12 @@ public class ShopManager : MonoBehaviour, IGameStateListener
         }
 
         int _amoutOfSpawnItemToAdd = _amoutOfSpawnItem - _spawnItemContainerPosition.childCount;
-        int weaponItemToAdd = Random.Range(Mathf.Min(2, _amoutOfSpawnItemToAdd), _amoutOfSpawnItemToAdd);
+
+        int weaponItemToAdd = Random.Range(Mathf.Min(_minWeaponToAdd, _amoutOfSpawnItemToAdd), _amoutOfSpawnItemToAdd);
+
+        if (isNotRandomWeapon)
+            weaponItemToAdd = Mathf.Min(_minWeaponToAdd, _amoutOfSpawnItemToAdd);
+
         int objectItemToAdd = _amoutOfSpawnItemToAdd - weaponItemToAdd;
 
         for (int i = 0; i < weaponItemToAdd; i++)
