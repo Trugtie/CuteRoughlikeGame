@@ -46,7 +46,9 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
 
     private void OnAnyRecycleWeaponCallback(Weapon weapon)
     {
-
+        _playerWeapons.RemovePlayerWeapon(weapon.WeaponAssignIndexPosition);
+        CurrencyManager.Instance.AddCurrency(weapon.GetRecycleCurrencyWeapon());
+        Configure();
     }
 
     private void OnAnyRecycleObjectCallback(ObjectDataSO objectDataSO)

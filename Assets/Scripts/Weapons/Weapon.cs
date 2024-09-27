@@ -32,6 +32,8 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
 
     private float _attackTimer;
 
+    public int WeaponAssignIndexPosition { get; set; }
+
     [field: SerializeField] public int Level { get; private set; }
 
     protected virtual void Awake()
@@ -201,6 +203,11 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
     {
         Level = level;
         ConfigueDamge();
+    }
+
+    public int GetRecycleCurrencyWeapon()
+    {
+        return WeaponCalculator.GetCalculatedWeaponRecylePrice(WeaponDataSO, Level);
     }
 
     public abstract void UpdatePlayerStats(PlayerStatsManager playerStatsManager);

@@ -1458,7 +1458,7 @@ MonoBehaviour:
   playerObjects: {fileID: 3375243719660658739}
   _amoutOfSpawnItem: 6
   <RerollPrice>k__BackingField: 100
-  isNotRandomWeapon: 1
+  isNotRandomWeapon: 0
   _minWeaponToAdd: 0
 --- !u!1001 &149217912
 PrefabInstance:
@@ -10157,7 +10157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 1523450296}
-  _waveDuration: 30
+  _waveDuration: 0
   _waves:
   - name: Wave 01
     segments:

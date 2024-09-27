@@ -9,12 +9,13 @@ public class PlayerWeapons : MonoBehaviour
 
     public bool TryAddWeapon(WeaponDataSO weaponDataSO, int weaponLevel)
     {
-        foreach (WeaponPosition weaponPosition in _weaponPositions)
+        for (int i = 0; i < _weaponPositions.Length; i++)
         {
-            if (weaponPosition.Weapon != null)
+            if (_weaponPositions[i].Weapon != null)
                 continue;
 
-            weaponPosition.AssignWeapon(weaponDataSO.Prefab, weaponLevel);
+            _weaponPositions[i].AssignWeapon(weaponDataSO.Prefab, weaponLevel, i);
+
             return true;
         }
 
@@ -33,5 +34,18 @@ public class PlayerWeapons : MonoBehaviour
         }
 
         return weapons.ToArray();
+    }
+
+    public void RemovePlayerWeapon(int weaponPositionIndex)
+    {
+        for (int i = 0; i < _weaponPositions.Length; i++)
+        {
+            if (i != weaponPositionIndex)
+                continue;
+
+            _weaponPositions[i].UnAssignWeapon();
+
+            return;
+        }
     }
 }
