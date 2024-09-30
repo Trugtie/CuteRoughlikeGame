@@ -205,6 +205,11 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
         ConfigueDamge();
     }
 
+    public void Upgrade()
+    {
+        UpdateToLevel(Level + 1);
+    }
+
     public int GetRecycleCurrencyWeapon()
     {
         return WeaponCalculator.GetCalculatedWeaponRecylePrice(WeaponDataSO, Level);

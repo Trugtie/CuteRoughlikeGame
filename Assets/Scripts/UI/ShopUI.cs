@@ -82,6 +82,7 @@ public class ShopUI : MonoBehaviour
         InventoryManager.Instance.OnShowWeaponItemInfo += OnShowWeaponItemInfoCallback;
         ItemInfoSlideUI.OnAnyRecycleObject += OnAnyRecycleObjectCallback;
         ItemInfoSlideUI.OnAnyRecycleWeapon += OnAnyRecycleWeaponCallback;
+        WeaponMerger.Instance.OnWeaponMerge += OnWeaponMergeCallback;
     }
 
     private void OnDestroy()
@@ -92,6 +93,12 @@ public class ShopUI : MonoBehaviour
         InventoryManager.Instance.OnShowWeaponItemInfo -= OnShowWeaponItemInfoCallback;
         ItemInfoSlideUI.OnAnyRecycleObject -= OnAnyRecycleObjectCallback;
         ItemInfoSlideUI.OnAnyRecycleWeapon -= OnAnyRecycleWeaponCallback;
+        WeaponMerger.Instance.OnWeaponMerge -= OnWeaponMergeCallback;
+    }
+
+    private void OnWeaponMergeCallback(Weapon weapon)
+    {
+        _itemContainerRect.GetComponent<ItemInfoSlideUI>().Configure(weapon, () => HideItemSlide());
     }
 
     private void OnAnyRecycleWeaponCallback(Weapon weapon)

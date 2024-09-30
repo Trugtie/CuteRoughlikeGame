@@ -30,6 +30,7 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
         ShopItemContainerUI.OnAnyPurchaseItem += OnAnyPurchaseItemCallback;
         ItemInfoSlideUI.OnAnyRecycleObject += OnAnyRecycleObjectCallback;
         ItemInfoSlideUI.OnAnyRecycleWeapon += OnAnyRecycleWeaponCallback;
+        WeaponMerger.Instance.OnWeaponMerge += OnWeaponMergeCallback;
     }
 
     private void OnDestroy()
@@ -37,7 +38,14 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
         ShopItemContainerUI.OnAnyPurchaseItem -= OnAnyPurchaseItemCallback;
         ItemInfoSlideUI.OnAnyRecycleObject -= OnAnyRecycleObjectCallback;
         ItemInfoSlideUI.OnAnyRecycleWeapon -= OnAnyRecycleWeaponCallback;
+        WeaponMerger.Instance.OnWeaponMerge -= OnWeaponMergeCallback;
     }
+
+    private void OnWeaponMergeCallback(Weapon weapon)
+    {
+        Configure();
+    }
+
 
     private void OnAnyPurchaseItemCallback(ShopItemContainerUI uI, int arg2)
     {

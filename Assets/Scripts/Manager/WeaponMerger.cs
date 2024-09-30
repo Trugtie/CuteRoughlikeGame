@@ -1,9 +1,11 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class WeaponMerger : MonoBehaviour
 {
+    public Action<Weapon> OnWeaponMerge;
+
     public static WeaponMerger Instance { get; private set; }
 
     [Header(" Elements ")]
@@ -53,6 +55,19 @@ public class WeaponMerger : MonoBehaviour
 
     public void Merge()
     {
-        Debug.Log("Merge");
+        if (_weaponMergeList.Count < 2)
+        {
+            Debug.Log("Not Enough Weapon To Merge!");
+            return;
+        }
+
+        DestroyImmediate(_weaponMergeList[1].gameObject);
+
+        _weaponMergeList[0].Upgrade();
+
+        Weapon weapon = _weaponMergeList[0];
+        _weaponMergeList.Clear();
+
+        OnWeaponMerge?.Invoke(weapon);
     }
 }
