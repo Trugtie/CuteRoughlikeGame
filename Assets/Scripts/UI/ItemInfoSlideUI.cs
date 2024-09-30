@@ -48,6 +48,9 @@ public class ItemInfoSlideUI : MonoBehaviour
         _recycleButton.onClick.AddListener(() => OnAnyRecycleWeapon?.Invoke(weapon));
 
         _mergeButton.gameObject.SetActive(true);
+        _mergeButton.interactable = WeaponMerger.Instance.CanMerge(weapon);
+        _mergeButton.onClick.RemoveAllListeners();
+        _mergeButton.onClick.AddListener(() => WeaponMerger.Instance.Merge());
     }
 
     public void Configure(ObjectDataSO objectDataSO, Action onCloseButtonAction)
