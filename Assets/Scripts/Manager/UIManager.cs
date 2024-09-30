@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class UIManager : MonoBehaviour, IGameStateListener
     [SerializeField] private GameObject _gameOverUI;
     [SerializeField] private GameObject _weaponSelectionUI;
     [SerializeField] private GameObject _stageCompleteUI;
+    [SerializeField] private GameObject _pauseUI;
 
     [Header(" Settings ")]
     private List<GameObject> panels;
@@ -28,6 +30,28 @@ public class UIManager : MonoBehaviour, IGameStateListener
             _stageCompleteUI,
             _weaponSelectionUI,
         };
+    }
+
+    private void Start()
+    {
+        GameManager.Instance.OnPauseGame += OnPauseGameCallback;
+        GameManager.Instance.OnResumeGame += OnResumeGameCallback;
+    }
+
+    private void OnDestroy()
+    {
+        GameManager.Instance.OnPauseGame -= OnPauseGameCallback;
+        GameManager.Instance.OnResumeGame -= OnResumeGameCallback;
+    }
+
+    private void OnResumeGameCallback()
+    {
+        _pauseUI.GetComponent<PauseUI>().Hide();
+    }
+
+    private void OnPauseGameCallback()
+    {
+        _pauseUI.GetComponent<PauseUI>().Show();
     }
 
     public void GameStateChangedCallback(GameStates gameState)
