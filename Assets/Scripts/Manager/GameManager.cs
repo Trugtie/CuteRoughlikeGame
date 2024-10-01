@@ -55,13 +55,20 @@ public class GameManager : MonoBehaviour
     public void RestartGame()
     {
         SceneManager.LoadScene(0);
+
+        if (IsPauseGame())
+            ResumeGame();
+    }
+
+    private bool IsPauseGame()
+    {
+        return Time.timeScale == 0;
     }
 
     public void PauseGame()
     {
         Time.timeScale = 0;
         OnPauseGame?.Invoke();
-        Debug.Log(OnPauseGame?.GetInvocationList().Length);
     }
 
     public void ResumeGame()

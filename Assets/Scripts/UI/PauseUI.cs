@@ -9,11 +9,20 @@ public class PauseUI : MonoBehaviour
     [Header(" Elements ")]
     [SerializeField] private Button _resumeButton;
     [SerializeField] private Button _menuButton;
+    [SerializeField] private RestartConfirmUI _restartConfirmUI;
 
     private void Awake()
     {
         _resumeButton.onClick.RemoveAllListeners();
         _resumeButton.onClick.AddListener(() => GameManager.Instance.ResumeGame());
+
+        _menuButton.onClick.RemoveAllListeners();
+        _menuButton.onClick.AddListener(() => _restartConfirmUI.Show());
+    }
+
+    private void Start()
+    {
+        Hide();
     }
 
     public void Show()
