@@ -20,18 +20,15 @@ public class PauseUI : MonoBehaviour
         _menuButton.onClick.AddListener(() => _restartConfirmUI.Show());
     }
 
-    private void Start()
-    {
-        Hide();
-    }
-
     public void Show()
     {
+        Debug.Log("Pause show");
         gameObject.SetActive(true);
     }
 
     public void Hide()
     {
+        Debug.Log("Pause Hide");
         gameObject.SetActive(false);
     }
 }
