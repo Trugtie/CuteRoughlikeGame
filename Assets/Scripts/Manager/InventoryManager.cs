@@ -12,6 +12,8 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
 
     [Header(" Elements ")]
     [SerializeField] private Transform _itemsContainer;
+    [SerializeField] private Transform _pauseItemsContainer;
+
     [SerializeField] private ItemContainerUI _itemContainerUIPrefab;
 
     [SerializeField] private PlayerWeapons _playerWeapons;
@@ -31,6 +33,7 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
         ItemInfoSlideUI.OnAnyRecycleObject += OnAnyRecycleObjectCallback;
         ItemInfoSlideUI.OnAnyRecycleWeapon += OnAnyRecycleWeaponCallback;
         WeaponMerger.Instance.OnWeaponMerge += OnWeaponMergeCallback;
+        GameManager.Instance.OnPauseGame += OnPauseGameCallback;
     }
 
     private void OnDestroy()
@@ -39,6 +42,12 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
         ItemInfoSlideUI.OnAnyRecycleObject -= OnAnyRecycleObjectCallback;
         ItemInfoSlideUI.OnAnyRecycleWeapon -= OnAnyRecycleWeaponCallback;
         WeaponMerger.Instance.OnWeaponMerge -= OnWeaponMergeCallback;
+        GameManager.Instance.OnPauseGame += OnPauseGameCallback;
+    }
+
+    private void OnPauseGameCallback()
+    {
+        Configure();
     }
 
     private void OnWeaponMergeCallback(Weapon weapon)
@@ -78,7 +87,8 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
 
     private void Configure()
     {
-        ClearItemsChildTransform();
+        ClearItemsChildTransform(_itemsContainer);
+        ClearItemsChildTransform(_pauseItemsContainer);
 
         Weapon[] weapons = _playerWeapons.GetWeapons();
         ObjectDataSO[] objects = _playerObjects.Objects.ToArray();
@@ -87,12 +97,18 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
         {
             ItemContainerUI instance = Instantiate(_itemContainerUIPrefab, _itemsContainer);
             instance.Configure(weapon, () => ShowItemInfoContainer(weapon));
+
+            ItemContainerUI pauseInstance = Instantiate(_itemContainerUIPrefab, _pauseItemsContainer);
+            pauseInstance.Configure(weapon, null);
         }
 
         foreach (ObjectDataSO objectData in objects)
         {
             ItemContainerUI instance = Instantiate(_itemContainerUIPrefab, _itemsContainer);
             instance.Configure(objectData, () => ShowItemInfoContainer(objectData));
+
+            ItemContainerUI pauseInstance = Instantiate(_itemContainerUIPrefab, _pauseItemsContainer);
+            pauseInstance.Configure(objectData, null);
         }
     }
 
@@ -106,9 +122,9 @@ public class InventoryManager : MonoBehaviour, IGameStateListener
         OnShowObjectItemInfo?.Invoke(objectDataSO);
     }
 
-    private void ClearItemsChildTransform()
+    private void ClearItemsChildTransform(Transform containerTransform)
     {
-        foreach (Transform child in _itemsContainer)
+        foreach (Transform child in containerTransform)
         {
             Destroy(child.gameObject);
         }
