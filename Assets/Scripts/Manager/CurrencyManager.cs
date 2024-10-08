@@ -20,6 +20,21 @@ public class CurrencyManager : MonoBehaviour
             Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        Candy.OnAnyCandyCollected += CandyCollectedCallback;
+    }
+
+    private void OnDestroy()
+    {
+        Candy.OnAnyCandyCollected -= CandyCollectedCallback;
+    }
+
+    private void CandyCollectedCallback(Candy candy)
+    {
+        AddCurrency(1);
+    }
+
     [Button]
     private void Add500Coin()
     {

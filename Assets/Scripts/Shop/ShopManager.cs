@@ -24,10 +24,11 @@ public class ShopManager : MonoBehaviour, IGameStateListener
 
     [field: SerializeField] public int RerollPrice { get; private set; }
 
-    [Header(" Debugs ")]
-    [SerializeField] private bool isNotRandomWeapon;
     [MinValue(0), MaxValue(6)]
     [SerializeField] private int _minWeaponToAdd;
+
+    [Header(" Debugs ")]
+    [SerializeField] private bool isAllWeapon;
 
     private void Awake()
     {
@@ -110,14 +111,14 @@ public class ShopManager : MonoBehaviour, IGameStateListener
             itemsToDestroy.RemoveAt(0);
         }
 
-        int _amoutOfSpawnItemToAdd = _amoutOfSpawnItem - _spawnItemContainerPosition.childCount;
+        int amoutOfSpawnItemToAdd = _amoutOfSpawnItem - _spawnItemContainerPosition.childCount;
 
-        int weaponItemToAdd = Random.Range(Mathf.Min(_minWeaponToAdd, _amoutOfSpawnItemToAdd), _amoutOfSpawnItemToAdd);
+        int weaponItemToAdd = Random.Range(Mathf.Min(_minWeaponToAdd, amoutOfSpawnItemToAdd), amoutOfSpawnItemToAdd);
 
-        if (isNotRandomWeapon)
-            weaponItemToAdd = Mathf.Min(_minWeaponToAdd, _amoutOfSpawnItemToAdd);
+        if (isAllWeapon)
+            weaponItemToAdd = Mathf.Min(6, amoutOfSpawnItemToAdd);
 
-        int objectItemToAdd = _amoutOfSpawnItemToAdd - weaponItemToAdd;
+        int objectItemToAdd = amoutOfSpawnItemToAdd - weaponItemToAdd;
 
         for (int i = 0; i < weaponItemToAdd; i++)
         {
