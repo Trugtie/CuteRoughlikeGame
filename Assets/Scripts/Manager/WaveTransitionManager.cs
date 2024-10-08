@@ -178,7 +178,7 @@ public class WaveTransitionManager : MonoBehaviour, IGameStateListener
                 buttonString = $"+{randomValue}%";
                 break;
             case Stats.Dodge:
-                randomValue = Random.Range(1, 10);
+                randomValue = Random.Range(5, 10);
                 buttonString = $"+{randomValue}%";
                 break;
             case Stats.Lifesteal:

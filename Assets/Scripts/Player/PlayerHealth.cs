@@ -76,7 +76,10 @@ public class PlayerHealth : MonoBehaviour, IPlayerStatsDependency
     public void TakeDamge(int damge)
     {
         if (ShouldDodged())
+        {
+            OnDodged?.Invoke(transform.position);
             return;
+        }
 
         float realDamge = damge * Mathf.Clamp(1 - (_armor / 100), 0, 10000);
 
@@ -94,7 +97,6 @@ public class PlayerHealth : MonoBehaviour, IPlayerStatsDependency
 
     private bool ShouldDodged()
     {
-        OnDodged?.Invoke(transform.position);
         return Random.Range(0, 100) < Mathf.Clamp(_dodge, 0, 100);
     }
 
