@@ -3,9 +3,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Tabsil.Sijil;
 
-public class CurrencyManager : MonoBehaviour
+public class CurrencyManager : MonoBehaviour, IWantToBeSaved
 {
+    private const string PREMIUM_CURRENCY = "PremiumCurrency";
+
     public Action OnUpdatedCurrency;
 
     public static CurrencyManager Instance { get; private set; }
@@ -61,10 +64,13 @@ public class CurrencyManager : MonoBehaviour
         OnUpdatedCurrency?.Invoke();
     }
 
-    public void AddPremiumCurrency(int amount)
+    public void AddPremiumCurrency(int amount, bool isSave = true)
     {
         PremiumCurrency += amount;
         OnUpdatedCurrency?.Invoke();
+
+        if (isSave)
+            Save();
     }
 
     public void UseCurrency(int amount)
@@ -85,5 +91,22 @@ public class CurrencyManager : MonoBehaviour
     public bool HasEnoughPremiumCurrency(int price)
     {
         return PremiumCurrency >= price;
+    }
+
+    public void Load()
+    {
+        if (Sijil.TryLoad(this, PREMIUM_CURRENCY, out object premiumCurrencyValue))
+        {
+            AddPremiumCurrency((int)premiumCurrencyValue, false);
+        }
+        else
+        {
+            AddPremiumCurrency(100, false);
+        }
+    }
+
+    public void Save()
+    {
+        Sijil.Save(this, PREMIUM_CURRENCY, PremiumCurrency);
     }
 }
