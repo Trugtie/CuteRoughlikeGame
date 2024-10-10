@@ -5,6 +5,8 @@ public class MenuUI : MonoBehaviour
 {
     [Header(" Elements ")]
     [SerializeField] private Button _startGameBtn;
+    [SerializeField] private Button _characterSelectionBtn;
+    [SerializeField] private CharacterSelectionUI _characterSelectionUI;
 
     private void Start()
     {
@@ -13,5 +15,8 @@ public class MenuUI : MonoBehaviour
         {
             GameManager.Instance.SetState(GameStates.WEAPONSELECTION);
         });
+
+        _characterSelectionBtn.onClick.RemoveAllListeners();
+        _characterSelectionBtn.onClick.AddListener(() => _characterSelectionUI.Show());
     }
 }

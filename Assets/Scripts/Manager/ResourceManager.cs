@@ -7,11 +7,13 @@ public static class ResourceManager
     private const string STATS_ICON_PATH = "Data/StatsIconDataSO";
     private const string OBJECTS_PATH = "Data/ObjectsData";
     private const string WEAPON_PATH = "Data/WeaponsData";
+    private const string CHARACTER_PATH = "Data/CharacterData";
 
     [Header(" Data ")]
     private static StatsIconSO _statsIconSO;
     private static ObjectDataSO[] _objectDatasSO;
     private static WeaponDataSO[] _weaponDatasSO;
+    private static CharacterDataSO[] _characterDatasSO;
 
     public static Sprite GetStatIcon(Stats stat)
     {
@@ -50,6 +52,19 @@ public static class ResourceManager
                 _weaponDatasSO = Resources.LoadAll<WeaponDataSO>(WEAPON_PATH);
 
             return _weaponDatasSO;
+        }
+
+        private set { }
+    }
+
+    public static CharacterDataSO[] Characters
+    {
+        get
+        {
+            if (_characterDatasSO == null)
+                _characterDatasSO = Resources.LoadAll<CharacterDataSO>(CHARACTER_PATH);
+
+            return _characterDatasSO;
         }
 
         private set { }
