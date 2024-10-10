@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,6 +11,7 @@ public class CharacterSelectionUI : MonoBehaviour
     [SerializeField] private Button _backButton;
     [SerializeField] private Transform _characterScrollContentParent;
     [SerializeField] private CharacterButtonUI _characterButtonUIPrefab;
+    [SerializeField] private Image _middleCharacterIcon;
 
     private CharacterDataSO[] _charactersDataSO;
 
@@ -40,7 +42,15 @@ public class CharacterSelectionUI : MonoBehaviour
         {
             CharacterButtonUI characterButtonInstance = Instantiate(_characterButtonUIPrefab, _characterScrollContentParent);
             characterButtonInstance.Configure(_charactersDataSO[i], i);
+
+            characterButtonInstance.CharacterButton.onClick.RemoveAllListeners();
+            characterButtonInstance.CharacterButton.onClick.AddListener(() => SelectCharacterCallback(characterButtonInstance.Index));
         }
+    }
+
+    private void SelectCharacterCallback(int index)
+    {
+        _middleCharacterIcon.sprite = _charactersDataSO[index].CharacterSprite;
     }
 
     private void ClearCharacterButtonScroll()
