@@ -51,7 +51,7 @@ public class CharacterSelectionUI : MonoBehaviour
         for (int i = 0; i < _charactersDataSO.Length; i++)
         {
             CharacterButtonUI characterButtonInstance = Instantiate(_characterButtonUIPrefab, _characterScrollContentParent);
-            characterButtonInstance.Configure(_charactersDataSO[i], i);
+            characterButtonInstance.Configure(_charactersDataSO[i], i, _unlockedList[i]);
 
             characterButtonInstance.CharacterButton.onClick.RemoveAllListeners();
             characterButtonInstance.CharacterButton.onClick.AddListener(() => SelectCharacterCallback(characterButtonInstance.Index));
@@ -78,6 +78,7 @@ public class CharacterSelectionUI : MonoBehaviour
         CurrencyManager.Instance.UsePremiumCurrency(price);
         _unlockedList[_selectedIndex] = true;
         _characterInfoUI.Configure(_charactersDataSO[_selectedIndex], true);
+        _characterScrollContentParent.GetChild(_selectedIndex).GetComponent<CharacterButtonUI>().Unlock();
     }
 
     private void ClearCharacterButtonScroll()
