@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,7 +28,19 @@ public class PlayerStatsManager : MonoBehaviour
 
     private void Start()
     {
+        CharacterSelectionManager.OnSelectedCharacterAction += OnSelectedCharacterActionCallback;
         UpdatePlayerStats();
+    }
+
+    private void OnDestroy()
+    {
+        CharacterSelectionManager.OnSelectedCharacterAction -= OnSelectedCharacterActionCallback;
+    }
+
+    private void OnSelectedCharacterActionCallback(CharacterDataSO characterDataSO)
+    {
+        _characterDataSO = characterDataSO;
+        _baseStats = characterDataSO.BaseStats;
     }
 
     private void InitData()

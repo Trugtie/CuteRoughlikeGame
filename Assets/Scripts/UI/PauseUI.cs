@@ -22,13 +22,11 @@ public class PauseUI : MonoBehaviour
 
     public void Show()
     {
-        Debug.Log("Pause show");
         gameObject.SetActive(true);
     }
 
     public void Hide()
     {
-        Debug.Log("Pause Hide");
         gameObject.SetActive(false);
     }
 }

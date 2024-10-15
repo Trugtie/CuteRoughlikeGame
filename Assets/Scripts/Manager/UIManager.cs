@@ -14,6 +14,7 @@ public class UIManager : MonoBehaviour, IGameStateListener
     [SerializeField] private GameObject _weaponSelectionUI;
     [SerializeField] private GameObject _stageCompleteUI;
     [SerializeField] private GameObject _pauseUI;
+    [SerializeField] private GameObject _characterSelectionUI;
 
     [Header(" Settings ")]
     private List<GameObject> panels;
@@ -29,6 +30,8 @@ public class UIManager : MonoBehaviour, IGameStateListener
             _gameOverUI,
             _stageCompleteUI,
             _weaponSelectionUI,
+            _characterSelectionUI,
+            _pauseUI,
         };
     }
 

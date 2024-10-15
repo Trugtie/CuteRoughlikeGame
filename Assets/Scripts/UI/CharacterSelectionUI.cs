@@ -4,26 +4,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
-using Tabsil;
 
-using Tabsil.Sijil;
-
-public class CharacterSelectionUI : MonoBehaviour, IWantToBeSaved
+public class CharacterSelectionUI : MonoBehaviour
 {
-    private const string UNLOCK_LIST = "UnlockList";
-    private const string LAST_SELECTED_CHARACTER_INDEX = "LastSelectedCharacterSelected";
-
     [Header(" Elements ")]
     [SerializeField] private Button _backButton;
     [SerializeField] private Transform _characterScrollContentParent;
     [SerializeField] private CharacterButtonUI _characterButtonUIPrefab;
     [SerializeField] private Image _middleCharacterIcon;
     [SerializeField] private CharacterInfoUI _characterInfoUI;
-
-    private CharacterDataSO[] _charactersDataSO;
-    private int _selectedIndex;
-    private List<bool> _unlockedList = new List<bool>();
-
 
     private void Awake()
     {
@@ -33,15 +22,18 @@ public class CharacterSelectionUI : MonoBehaviour, IWantToBeSaved
 
     private void Start()
     {
-        SelectCharacterCallback(_selectedIndex);
-
+        InitializeCharacterScrollContent();
+        SelectCharacterCallback(CharacterSelectionManager.Instance.SelectedIndex);
         _characterInfoUI.PurchaseButton.onClick.RemoveAllListeners();
         _characterInfoUI.PurchaseButton.onClick.AddListener(() => PurchaseCallback());
     }
 
     private void InitializeCharacterScrollContent()
     {
-        if (_charactersDataSO.Length <= 0)
+        CharacterDataSO[] charactersDataSO = CharacterSelectionManager.Instance.CharactersDataSO;
+        List<bool> unlockedList = CharacterSelectionManager.Instance.UnlockedList;
+
+        if (charactersDataSO.Length <= 0)
         {
             Debug.LogError("None characters!");
             return;
@@ -49,10 +41,10 @@ public class CharacterSelectionUI : MonoBehaviour, IWantToBeSaved
 
         ClearCharacterButtonScroll();
 
-        for (int i = 0; i < _charactersDataSO.Length; i++)
+        for (int i = 0; i < charactersDataSO.Length; i++)
         {
             CharacterButtonUI characterButtonInstance = Instantiate(_characterButtonUIPrefab, _characterScrollContentParent);
-            characterButtonInstance.Configure(_charactersDataSO[i], i, _unlockedList[i]);
+            characterButtonInstance.Configure(charactersDataSO[i], i, unlockedList[i]);
 
             characterButtonInstance.CharacterButton.onClick.RemoveAllListeners();
             characterButtonInstance.CharacterButton.onClick.AddListener(() => SelectCharacterCallback(characterButtonInstance.Index));
@@ -61,17 +53,18 @@ public class CharacterSelectionUI : MonoBehaviour, IWantToBeSaved
 
     private void SelectCharacterCallback(int index)
     {
-        _selectedIndex = index;
+        CharacterDataSO characterSelectedDataSO = CharacterSelectionManager.Instance.SelectCharacter(index);
+
         _characterInfoUI.PurchaseButton.interactable = true;
-        _middleCharacterIcon.sprite = _charactersDataSO[index].CharacterSprite;
-        _characterInfoUI.Configure(_charactersDataSO[index], _unlockedList[_selectedIndex]);
+        _middleCharacterIcon.sprite = CharacterSelectionManager.Instance.CharactersDataSO[index].CharacterSprite;
 
-        Save();
+        bool isSelectedCharacterUnlocked = CharacterSelectionManager.Instance.UnlockedList[index];
+        _characterInfoUI.Configure(characterSelectedDataSO, isSelectedCharacterUnlocked);
 
-        if (_unlockedList[_selectedIndex])
+        if (isSelectedCharacterUnlocked)
             return;
 
-        bool canBuy = CurrencyManager.Instance.PremiumCurrency >= _charactersDataSO[index].PurchasePrice;
+        bool canBuy = CurrencyManager.Instance.PremiumCurrency >= characterSelectedDataSO.PurchasePrice;
         _characterInfoUI.PurchaseButton.interactable = canBuy;
 
 
@@ -79,12 +72,10 @@ public class CharacterSelectionUI : MonoBehaviour, IWantToBeSaved
 
     private void PurchaseCallback()
     {
-        int price = _charactersDataSO[_selectedIndex].PurchasePrice;
-        CurrencyManager.Instance.UsePremiumCurrency(price);
-        _unlockedList[_selectedIndex] = true;
-        _characterInfoUI.Configure(_charactersDataSO[_selectedIndex], true);
-        _characterScrollContentParent.GetChild(_selectedIndex).GetComponent<CharacterButtonUI>().Unlock();
-        Save();
+        CharacterDataSO characterPurchaseDataSO = CharacterSelectionManager.Instance.PurchaseCharacter();
+
+        _characterInfoUI.Configure(characterPurchaseDataSO, true);
+        _characterScrollContentParent.GetChild(CharacterSelectionManager.Instance.SelectedIndex).GetComponent<CharacterButtonUI>().Unlock();
     }
 
     private void ClearCharacterButtonScroll()
@@ -103,29 +94,5 @@ public class CharacterSelectionUI : MonoBehaviour, IWantToBeSaved
     private void Hide()
     {
         gameObject.SetActive(false);
-    }
-
-    public void Load()
-    {
-        _charactersDataSO = ResourceManager.Characters;
-
-        for (int i = 0; i < _charactersDataSO.Length; i++)
-            _unlockedList.Add(i == 0);
-
-        if (Sijil.TryLoad(this, UNLOCK_LIST, out object unlockListObject))
-        {
-            _unlockedList = (List<bool>)unlockListObject;
-        }
-
-        InitializeCharacterScrollContent();
-
-        if (Sijil.TryLoad(this, LAST_SELECTED_CHARACTER_INDEX, out object lastSelectedCharacterIndexObject))
-            _selectedIndex = (int)lastSelectedCharacterIndexObject;
-    }
-
-    public void Save()
-    {
-        Sijil.Save(this, UNLOCK_LIST, _unlockedList);
-        Sijil.Save(this, LAST_SELECTED_CHARACTER_INDEX, _selectedIndex);
     }
 }
