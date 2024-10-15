@@ -11,6 +11,7 @@ using Tabsil.Sijil;
 public class CharacterSelectionUI : MonoBehaviour, IWantToBeSaved
 {
     private const string UNLOCK_LIST = "UnlockList";
+    private const string LAST_SELECTED_CHARACTER_INDEX = "LastSelectedCharacterSelected";
 
     [Header(" Elements ")]
     [SerializeField] private Button _backButton;
@@ -32,7 +33,7 @@ public class CharacterSelectionUI : MonoBehaviour, IWantToBeSaved
 
     private void Start()
     {
-        _characterInfoUI.Configure(_charactersDataSO[0], true);
+        SelectCharacterCallback(_selectedIndex);
 
         _characterInfoUI.PurchaseButton.onClick.RemoveAllListeners();
         _characterInfoUI.PurchaseButton.onClick.AddListener(() => PurchaseCallback());
@@ -65,11 +66,15 @@ public class CharacterSelectionUI : MonoBehaviour, IWantToBeSaved
         _middleCharacterIcon.sprite = _charactersDataSO[index].CharacterSprite;
         _characterInfoUI.Configure(_charactersDataSO[index], _unlockedList[_selectedIndex]);
 
+        Save();
+
         if (_unlockedList[_selectedIndex])
             return;
 
         bool canBuy = CurrencyManager.Instance.PremiumCurrency >= _charactersDataSO[index].PurchasePrice;
         _characterInfoUI.PurchaseButton.interactable = canBuy;
+
+
     }
 
     private void PurchaseCallback()
@@ -113,10 +118,14 @@ public class CharacterSelectionUI : MonoBehaviour, IWantToBeSaved
         }
 
         InitializeCharacterScrollContent();
+
+        if (Sijil.TryLoad(this, LAST_SELECTED_CHARACTER_INDEX, out object lastSelectedCharacterIndexObject))
+            _selectedIndex = (int)lastSelectedCharacterIndexObject;
     }
 
     public void Save()
     {
         Sijil.Save(this, UNLOCK_LIST, _unlockedList);
+        Sijil.Save(this, LAST_SELECTED_CHARACTER_INDEX, _selectedIndex);
     }
 }
