@@ -4,9 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
+using Tabsil;
 
-public class CharacterSelectionUI : MonoBehaviour
+using Tabsil.Sijil;
+
+public class CharacterSelectionUI : MonoBehaviour, IWantToBeSaved
 {
+    private const string UNLOCK_LIST = "UnlockList";
+
     [Header(" Elements ")]
     [SerializeField] private Button _backButton;
     [SerializeField] private Transform _characterScrollContentParent;
@@ -18,22 +23,17 @@ public class CharacterSelectionUI : MonoBehaviour
     private int _selectedIndex;
     private List<bool> _unlockedList = new List<bool>();
 
+
     private void Awake()
     {
-        _charactersDataSO = ResourceManager.Characters;
-
-        for (int i = 0; i < _charactersDataSO.Length; i++)
-            _unlockedList.Add(i == 0);
-
         _backButton.onClick.RemoveAllListeners();
         _backButton.onClick.AddListener(Hide);
     }
 
     private void Start()
     {
-        InitializeCharacterScrollContent();
-
         _characterInfoUI.Configure(_charactersDataSO[0], true);
+
         _characterInfoUI.PurchaseButton.onClick.RemoveAllListeners();
         _characterInfoUI.PurchaseButton.onClick.AddListener(() => PurchaseCallback());
     }
@@ -79,6 +79,7 @@ public class CharacterSelectionUI : MonoBehaviour
         _unlockedList[_selectedIndex] = true;
         _characterInfoUI.Configure(_charactersDataSO[_selectedIndex], true);
         _characterScrollContentParent.GetChild(_selectedIndex).GetComponent<CharacterButtonUI>().Unlock();
+        Save();
     }
 
     private void ClearCharacterButtonScroll()
@@ -97,5 +98,25 @@ public class CharacterSelectionUI : MonoBehaviour
     private void Hide()
     {
         gameObject.SetActive(false);
+    }
+
+    public void Load()
+    {
+        _charactersDataSO = ResourceManager.Characters;
+
+        for (int i = 0; i < _charactersDataSO.Length; i++)
+            _unlockedList.Add(i == 0);
+
+        if (Sijil.TryLoad(this, UNLOCK_LIST, out object unlockListObject))
+        {
+            _unlockedList = (List<bool>)unlockListObject;
+        }
+
+        InitializeCharacterScrollContent();
+    }
+
+    public void Save()
+    {
+        Sijil.Save(this, UNLOCK_LIST, _unlockedList);
     }
 }
