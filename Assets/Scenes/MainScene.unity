@@ -2155,6 +2155,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 164338525}
   m_CullTransparentMesh: 1
+--- !u!1 &165111948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 165111949}
+  - component: {fileID: 165111950}
+  m_Layer: 0
+  m_Name: Character Seletion Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &165111949
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165111948}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 730275881}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &165111950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165111948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 89b664d2b3f1bba48a78d71a1daee127, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &166779594
 GameObject:
   m_ObjectHideFlags: 0
@@ -9799,6 +9843,7 @@ Transform:
   - {fileID: 139730598}
   - {fileID: 2012500759}
   - {fileID: 1191628963}
+  - {fileID: 165111949}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &733882402
@@ -10108,6 +10153,7 @@ MonoBehaviour:
   _startGameBtn: {fileID: 1609236349}
   _characterSelectionBtn: {fileID: 1139782253}
   _characterSelectionUI: {fileID: 1652246944}
+  _characterIcon: {fileID: 616037658}
 --- !u!1001 &754693704
 PrefabInstance:
   m_ObjectHideFlags: 0

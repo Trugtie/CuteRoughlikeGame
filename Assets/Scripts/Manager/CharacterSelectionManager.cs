@@ -23,8 +23,6 @@ public class CharacterSelectionManager : MonoBehaviour, IWantToBeSaved
             Instance = this;
         else
             Destroy(gameObject);
-
-        UnlockedList = new List<bool>();
     }
 
     public CharacterDataSO SelectCharacter(int index)
@@ -32,7 +30,8 @@ public class CharacterSelectionManager : MonoBehaviour, IWantToBeSaved
         SelectedIndex = index;
         Save();
 
-        OnSelectedCharacterAction?.Invoke(CharactersDataSO[index]);
+        if (UnlockedList[index])
+            OnSelectedCharacterAction?.Invoke(CharactersDataSO[index]);
 
         return CharactersDataSO[index];
     }
@@ -50,6 +49,8 @@ public class CharacterSelectionManager : MonoBehaviour, IWantToBeSaved
     public void Load()
     {
         CharactersDataSO = ResourceManager.Characters;
+
+        UnlockedList = new List<bool>();
 
         for (int i = 0; i < CharactersDataSO.Length; i++)
             UnlockedList.Add(i == 0);

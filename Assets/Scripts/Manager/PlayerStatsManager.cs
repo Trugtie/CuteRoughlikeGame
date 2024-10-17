@@ -41,6 +41,8 @@ public class PlayerStatsManager : MonoBehaviour
     {
         _characterDataSO = characterDataSO;
         _baseStats = characterDataSO.BaseStats;
+
+        UpdatePlayerStats();
     }
 
     private void InitData()

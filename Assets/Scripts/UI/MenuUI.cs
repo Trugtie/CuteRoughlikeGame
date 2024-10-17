@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,6 +8,7 @@ public class MenuUI : MonoBehaviour
     [SerializeField] private Button _startGameBtn;
     [SerializeField] private Button _characterSelectionBtn;
     [SerializeField] private CharacterSelectionUI _characterSelectionUI;
+    [SerializeField] private Image _characterIcon;
 
     private void Start()
     {
@@ -18,5 +20,17 @@ public class MenuUI : MonoBehaviour
 
         _characterSelectionBtn.onClick.RemoveAllListeners();
         _characterSelectionBtn.onClick.AddListener(() => _characterSelectionUI.Show());
+
+        CharacterSelectionManager.OnSelectedCharacterAction += OnSelectedCharacterActionCallback;
+    }
+
+    private void OnDestroy()
+    {
+        CharacterSelectionManager.OnSelectedCharacterAction -= OnSelectedCharacterActionCallback;
+    }
+
+    private void OnSelectedCharacterActionCallback(CharacterDataSO characterDataSO)
+    {
+        _characterIcon.sprite = characterDataSO.CharacterSprite;
     }
 }
