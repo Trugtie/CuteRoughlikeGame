@@ -2829,6 +2829,7 @@ GameObject:
   - component: {fileID: 1368351868000181596}
   - component: {fileID: 7119728471813250952}
   - component: {fileID: 4884927129655694351}
+  - component: {fileID: 6713171414680588429}
   m_Layer: 5
   m_Name: Take Button
   m_TagString: Untagged
@@ -2953,6 +2954,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0, g: 0.3109493, b: 0.49056602, a: 1}
   m_EffectDistance: {x: 3, y: -3}
   m_UseGraphicAlpha: 1
+--- !u!114 &6713171414680588429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5377225412521195922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378b4cd51ee5c7c408f813354c1dd7b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scaleVector: {x: 1.1, y: 0.9}
+  _durationTime: 0.6
 --- !u!1 &5618490984225000863
 GameObject:
   m_ObjectHideFlags: 0
@@ -3125,6 +3140,7 @@ GameObject:
   - component: {fileID: 7163499231502088511}
   - component: {fileID: 5823955933982168941}
   - component: {fileID: 1524910446649080995}
+  - component: {fileID: 7018149245545551110}
   m_Layer: 5
   m_Name: Recycle Button
   m_TagString: Untagged
@@ -3249,6 +3265,20 @@ MonoBehaviour:
   m_EffectColor: {r: 0.29133824, g: 0.23633854, b: 0.4433962, a: 1}
   m_EffectDistance: {x: 3, y: -3}
   m_UseGraphicAlpha: 1
+--- !u!114 &7018149245545551110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6006029902230690090}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 378b4cd51ee5c7c408f813354c1dd7b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _scaleVector: {x: 1.1, y: 0.9}
+  _durationTime: 0.6
 --- !u!1 &6015361032711291020
 GameObject:
   m_ObjectHideFlags: 0
