@@ -15375,6 +15375,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1683716249320390674, guid: 0a84c1045337d694094d5860405262e8, type: 3}
   m_PrefabInstance: {fileID: 1183557706}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1183557708 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4394502449813362038, guid: 0a84c1045337d694094d5860405262e8, type: 3}
+  m_PrefabInstance: {fileID: 1183557706}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1191628962
 GameObject:
   m_ObjectHideFlags: 0
@@ -16549,6 +16560,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1683716249320390674, guid: 0a84c1045337d694094d5860405262e8, type: 3}
   m_PrefabInstance: {fileID: 1345286484}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1345286486 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4394502449813362038, guid: 0a84c1045337d694094d5860405262e8, type: 3}
+  m_PrefabInstance: {fileID: 1345286484}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1350714359
 GameObject:
   m_ObjectHideFlags: 0
@@ -23955,6 +23977,8 @@ MonoBehaviour:
   _backButton: {fileID: 1140141969}
   _sfxButton: {fileID: 1142142817}
   _musicButton: {fileID: 57731232}
+  _policyButton: {fileID: 1345286486}
+  _helpButton: {fileID: 1183557708}
   _onButtonColor: {r: 0.011764706, g: 1, b: 0, a: 1}
   _offButtonColor: {r: 0.29411766, g: 0.29411766, b: 0.29411766, a: 1}
 --- !u!1 &1919310994

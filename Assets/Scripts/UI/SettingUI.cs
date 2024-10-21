@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.UI;
 
 public class SettingUI : MonoBehaviour
@@ -11,12 +12,24 @@ public class SettingUI : MonoBehaviour
     [SerializeField] private Button _backButton;
     [SerializeField] private Button _sfxButton;
     [SerializeField] private Button _musicButton;
+    [SerializeField] private Button _policyButton;
+    [SerializeField] private Button _helpButton;
 
     [Header(" Settings ")]
     [SerializeField] private Color _onButtonColor;
     [SerializeField] private Color _offButtonColor;
 
     private void Awake()
+    {
+        SetupButton();
+    }
+
+    private void Start()
+    {
+        InitSetting();
+    }
+
+    private void SetupButton()
     {
         _backButton.onClick.RemoveAllListeners();
         _backButton.onClick.AddListener(Hide);
@@ -27,11 +40,30 @@ public class SettingUI : MonoBehaviour
         _musicButton.onClick.RemoveAllListeners();
         _musicButton.onClick.AddListener(musicButtonClickCallback);
 
+        _policyButton.onClick.RemoveAllListeners();
+        _policyButton.onClick.AddListener(policyButtonClickCallback);
+
+        _helpButton.onClick.RemoveAllListeners();
+        _helpButton.onClick.AddListener(helpButtonClickCallback);
     }
 
-    private void Start()
+    private void helpButtonClickCallback()
     {
-        InitSetting();
+        string email = "wongamedev@gmail.com";
+        string subject = MyEscapeURL("Help!");
+        string body = MyEscapeURL("Help me with this error...");
+
+        Application.OpenURL("mailto:" + email + "?subject=" + subject + "&body=" + body);
+    }
+
+    private string MyEscapeURL(string s)
+    {
+        return UnityWebRequest.EscapeURL(s).Replace("+", "%20");
+    }
+
+    private void policyButtonClickCallback()
+    {
+        Application.OpenURL("https://www.tiktok.com/@wongamedev");
     }
 
     private void musicButtonClickCallback()
