@@ -14,6 +14,10 @@ public class SettingUI : MonoBehaviour
     [SerializeField] private Button _musicButton;
     [SerializeField] private Button _policyButton;
     [SerializeField] private Button _helpButton;
+    [SerializeField] private Button _credistButton;
+
+    [Header(" Sub Panels ")]
+    [SerializeField] private CredistPanelUI _credistPanelUI;
 
     [Header(" Settings ")]
     [SerializeField] private Color _onButtonColor;
@@ -45,6 +49,14 @@ public class SettingUI : MonoBehaviour
 
         _helpButton.onClick.RemoveAllListeners();
         _helpButton.onClick.AddListener(helpButtonClickCallback);
+
+        _credistButton.onClick.RemoveAllListeners();
+        _credistButton.onClick.AddListener(credistButtonCallback);
+    }
+
+    private void credistButtonCallback()
+    {
+        _credistPanelUI.Show();
     }
 
     private void helpButtonClickCallback()
