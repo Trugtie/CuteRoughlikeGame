@@ -328,6 +328,7 @@ GameObject:
   - component: {fileID: 4415224917860752270}
   - component: {fileID: 1090133422889643625}
   - component: {fileID: 605763004828956630}
+  - component: {fileID: 589533167316894712}
   m_Layer: 5
   m_Name: Cash Container
   m_TagString: Untagged
@@ -421,3 +422,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cashText: {fileID: 2062476092022267887}
+--- !u!114 &589533167316894712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6786065394026644448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33c42e64ca9612a42a44145e1784dad9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _delayTime: 0.6
