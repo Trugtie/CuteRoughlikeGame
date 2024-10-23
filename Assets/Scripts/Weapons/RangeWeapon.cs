@@ -7,6 +7,8 @@ using UnityEngine.Pool;
 
 public class RangeWeapon : Weapon
 {
+    public static Action OnAnyShoot;
+
     [Header("Elements")]
     [SerializeField] private Transform _shootStartPosition;
     [SerializeField] private Bullet _bullet;
@@ -53,6 +55,8 @@ public class RangeWeapon : Weapon
         Vector2 toEnemyCLosestDirection = ((Vector2)(_enemyClosest.transform.position - _shootStartPosition.position)).normalized;
         Bullet bullet = _rangeBulletPool.Get();
         bullet.SetTargetDirection(toEnemyCLosestDirection);
+
+        OnAnyShoot?.Invoke();
     }
 
     public override void UpdatePlayerStats(PlayerStatsManager playerStatsManager)
