@@ -1,7 +1,6 @@
-using CandyCoded.HapticFeedback;
 using UnityEngine;
 
-public class HapstickFeedback : MonoBehaviour
+public class HapticFeedback : MonoBehaviour
 {
     private void Start()
     {
@@ -15,6 +14,6 @@ public class HapstickFeedback : MonoBehaviour
 
     private void Vibrate()
     {
-        HapticFeedback.LightFeedback();
+        CandyCoded.HapticFeedback.HapticFeedback.LightFeedback();
     }
 }
