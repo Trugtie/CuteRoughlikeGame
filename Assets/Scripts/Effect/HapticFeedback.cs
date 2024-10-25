@@ -14,6 +14,6 @@ public class HapticFeedback : MonoBehaviour
 
     private void Vibrate()
     {
-        CandyCoded.HapticFeedback.HapticFeedback.LightFeedback();
+        CandyCoded.HapticFeedback.HapticFeedback.MediumFeedback();
     }
 }

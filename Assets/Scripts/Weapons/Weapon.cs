@@ -11,6 +11,8 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
         Attack
     }
 
+    public static Action<WeaponDataSO> OnAnyAttackSound;
+
     [field: SerializeField] public WeaponDataSO WeaponDataSO { get; private set; }
 
     [Header("Elements")]
@@ -85,6 +87,9 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
         _attackTimer = 0f;
         _enemiesAttackedList.Clear();
         _animator.speed = 1f / _attackDelay;
+
+        if (this is MeleeWeapon)
+            OnAnyAttackSound?.Invoke(WeaponDataSO);
     }
 
     private void Attacking()

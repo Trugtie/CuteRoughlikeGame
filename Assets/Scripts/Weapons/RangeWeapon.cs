@@ -8,6 +8,7 @@ using UnityEngine.Pool;
 public class RangeWeapon : Weapon
 {
     public static Action OnAnyShoot;
+    public static Action<WeaponDataSO> OnAnyShootSound;
 
     [Header("Elements")]
     [SerializeField] private Transform _shootStartPosition;
@@ -57,6 +58,7 @@ public class RangeWeapon : Weapon
         bullet.SetTargetDirection(toEnemyCLosestDirection);
 
         OnAnyShoot?.Invoke();
+        OnAnyShootSound?.Invoke(WeaponDataSO);
     }
 
     public override void UpdatePlayerStats(PlayerStatsManager playerStatsManager)
