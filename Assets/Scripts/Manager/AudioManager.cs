@@ -17,12 +17,19 @@ public class AudioManager : MonoBehaviour
     {
         Weapon.OnAnyAttackSound += OnAnyAttackSoundCallback;
         RangeWeapon.OnAnyShootSound += OnAnyShootSoundCallback;
+        SettingManager.Instance.OnSFXStateChanged += OnSFXStateChangedCallback;
     }
 
     private void OnDestroy()
     {
         Weapon.OnAnyAttackSound -= OnAnyAttackSoundCallback;
         RangeWeapon.OnAnyShootSound -= OnAnyShootSoundCallback;
+        SettingManager.Instance.OnSFXStateChanged -= OnSFXStateChangedCallback;
+    }
+
+    private void OnSFXStateChangedCallback(bool isSFXOn)
+    {
+        _audioSrc.mute = !isSFXOn;
     }
 
     private void OnAnyShootSoundCallback(WeaponDataSO weaponDataSO)

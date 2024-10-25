@@ -40,7 +40,8 @@ public class DamgeTextSpawnManager : MonoBehaviour
 
     private void OnRealeaseDamgeText(DamgeText damgeText)
     {
-        damgeText.gameObject.SetActive(false);
+        if (damgeText != null)
+            damgeText.gameObject.SetActive(false);
     }
 
 

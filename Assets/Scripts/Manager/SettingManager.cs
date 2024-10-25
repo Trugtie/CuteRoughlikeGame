@@ -25,6 +25,12 @@ public class SettingManager : MonoBehaviour, IWantToBeSaved
             Destroy(gameObject);
     }
 
+    private void Start()
+    {
+        OnSFXStateChanged?.Invoke(SFXState);
+        OnMusicStateChanged?.Invoke(MusicState);
+    }
+
     public void SetSFXState()
     {
         SFXState = !SFXState;
