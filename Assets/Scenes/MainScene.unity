@@ -5013,6 +5013,10 @@ MonoBehaviour:
   _weaponDatasSO:
   - {fileID: 11400000, guid: df015402091d6aa44803fcce52ebce40, type: 2}
   - {fileID: 11400000, guid: dded283f91eb1014d8734b27820b8741, type: 2}
+  - {fileID: 11400000, guid: cfecccf5c795e7741bc48f84968abc74, type: 2}
+  - {fileID: 11400000, guid: 1b782941cd00d8447b47ff63d7856cbe, type: 2}
+  - {fileID: 11400000, guid: 82b9a1e0cff1dad469c4123c8c7944d2, type: 2}
+  - {fileID: 11400000, guid: fada52a8f6b82f04cb62ec5cc395ab34, type: 2}
 --- !u!1 &329109877
 GameObject:
   m_ObjectHideFlags: 0
