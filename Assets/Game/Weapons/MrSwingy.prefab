@@ -162,7 +162,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6084f7b01e898c46a0af5fc56d68b3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <WeaponDataSO>k__BackingField: {fileID: 11400000, guid: fada52a8f6b82f04cb62ec5cc395ab34, type: 2}
+  <WeaponDataSO>k__BackingField: {fileID: 11400000, guid: 82b9a1e0cff1dad469c4123c8c7944d2, type: 2}
   _weaponRange: 3
   _rotationSpeed: 10
   _enemyLayer:
