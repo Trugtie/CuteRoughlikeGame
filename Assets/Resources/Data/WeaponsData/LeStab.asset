@@ -16,6 +16,7 @@ MonoBehaviour:
   <WeaponSprite>k__BackingField: {fileID: 21300000, guid: e260fcef0dd7ae847bb70df83762c267, type: 3}
   <PurchasePrice>k__BackingField: 110
   <Prefab>k__BackingField: {fileID: 6215719476187148641, guid: adf75406763ead745ab0678cfd718e89, type: 3}
+  <WeaponAnimOveride>k__BackingField: {fileID: 22100000, guid: 3ff5e7c784017f143847498851462b37, type: 2}
   <AttackSound>k__BackingField: {fileID: 8300000, guid: c673fb9cf3e24d443b75f2de39c6fb01, type: 3}
   attack: 10
   attackSpeed: 1

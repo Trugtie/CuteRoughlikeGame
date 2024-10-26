@@ -196,4 +196,4 @@ MonoBehaviour:
   _canDamgeLayer:
     serializedVersion: 2
     m_Bits: 8
-  _flySpeed: 300
+  _flySpeed: 400

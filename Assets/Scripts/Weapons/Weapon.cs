@@ -44,6 +44,11 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
         _animator = GetComponent<Animator>();
         _weaponState = WeaponState.Idle;
         SetEnemyClosetWithMinDistance(_weaponRange);
+
+        if (_animator != null && WeaponDataSO.WeaponAnimOveride != null)
+        {
+            _animator.runtimeAnimatorController = WeaponDataSO.WeaponAnimOveride;
+        }
     }
 
     private void Update()
