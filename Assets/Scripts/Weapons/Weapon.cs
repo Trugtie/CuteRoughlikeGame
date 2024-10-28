@@ -104,7 +104,6 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
 
     public void StopAttack()
     {
-        Debug.Log("Stop attack");
         SetEnemyClosetWithMinDistance(_weaponRange);
         _weaponState = WeaponState.Idle;
         _enemiesAttackedList.Clear();

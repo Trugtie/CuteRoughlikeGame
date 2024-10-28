@@ -58,7 +58,7 @@ public class Bullet : MonoBehaviour
     private void MoveToTarget()
     {
         transform.right = _targetDirection;
-        _bulletRb.velocity = _targetDirection * _flySpeed * Time.deltaTime;
+        _bulletRb.linearVelocity = _targetDirection * _flySpeed * Time.deltaTime;
     }
 
     public void Reload()
@@ -66,7 +66,7 @@ public class Bullet : MonoBehaviour
         _iDamgedable = null;
         _collider.enabled = true;
         transform.position = _shootingPosition.position;
-        _bulletRb.velocity = Vector2.zero;
+        _bulletRb.linearVelocity = Vector2.zero;
     }
 
     public void Configue(Transform shootingPosition, int damge, bool isCriticalHit, ObjectPool<Bullet> pool)

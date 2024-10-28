@@ -34,8 +34,8 @@ public class PlayerController : MonoBehaviour, IPlayerStatsDependency, IGameStat
 
     private void Move()
     {
-        _playerRb.velocity = _joystick.GetMoveVector() * MoveSpeed * Time.deltaTime;
-        PlayerRbVelocityMagnitude = _playerRb.velocity.magnitude;
+        _playerRb.linearVelocity = _joystick.GetMoveVector() * MoveSpeed * Time.deltaTime;
+        PlayerRbVelocityMagnitude = _playerRb.linearVelocity.magnitude;
     }
 
     public void UpdatePlayerStats(PlayerStatsManager playerStatsManager)
@@ -50,6 +50,6 @@ public class PlayerController : MonoBehaviour, IPlayerStatsDependency, IGameStat
     public void GameStateChangedCallback(GameStates gameState)
     {
         if (gameState != GameStates.GAMEPLAY)
-            _playerRb.velocity = Vector2.zero;
+            _playerRb.linearVelocity = Vector2.zero;
     }
 }

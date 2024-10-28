@@ -11,7 +11,7 @@ public class ExpBarUI : MonoBehaviour
 
     private void Awake()
     {
-        _playerExp = FindObjectOfType<PlayerExp>();
+        _playerExp = FindFirstObjectByType<PlayerExp>();
         UpdateVisual();
     }
 
