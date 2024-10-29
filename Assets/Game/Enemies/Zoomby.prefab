@@ -840,7 +840,6 @@ GameObject:
   - component: {fileID: 8979533427819804772}
   - component: {fileID: 4531794199066047632}
   - component: {fileID: 7841940986267944957}
-  - component: {fileID: 4211624838682715459}
   m_Layer: 3
   m_Name: Zoomby
   m_TagString: Untagged
@@ -970,19 +969,8 @@ MonoBehaviour:
   _gizmos: 0
   _healthBar: {fileID: 5813289061497465797}
   _healthText: {fileID: 3914051390900196008}
---- !u!114 &4211624838682715459
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4818968795448020025}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5bea2f21d799b344a2cdab4b4ce1347, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _moveSpeed: 0
+  _maxIdleDuration: 3
+  _moveSpeed: 3
 --- !u!1 &5683270339545866947
 GameObject:
   m_ObjectHideFlags: 0

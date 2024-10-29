@@ -1,7 +1,6 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(EnemyMovement))]
 public abstract class Enemy : MonoBehaviour, IDamgedable
 {
     public static Action<Vector2, int, bool> OnAnyHit;
