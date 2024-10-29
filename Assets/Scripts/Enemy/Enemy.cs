@@ -6,6 +6,7 @@ public abstract class Enemy : MonoBehaviour, IDamgedable
 {
     public static Action<Vector2, int, bool> OnAnyHit;
     public static Action<Vector2> OnAnyPassAway;
+    protected Action onSpawnSequenceCompleted;
 
     [Header("Components")]
     protected EnemyMovement _enemyMovement;
@@ -17,8 +18,8 @@ public abstract class Enemy : MonoBehaviour, IDamgedable
 
     [Header("Settings")]
     [SerializeField] protected float _playerDetectionRadius;
-    [SerializeField] private int _maxHealth;
-    private int _health;
+    [SerializeField] protected int _maxHealth;
+    protected int _health;
 
     [Header("Spawn Indicator")]
     [SerializeField] private SpriteRenderer _spriteRenderer;
@@ -70,7 +71,11 @@ public abstract class Enemy : MonoBehaviour, IDamgedable
     {
         _enemyCollider.enabled = true;
         SpawnIndicatorRenderToggle(false);
-        _enemyMovement.SetPlayer(_player);
+
+        if (_enemyMovement != null)
+            _enemyMovement.SetPlayer(_player);
+
+        onSpawnSequenceCompleted?.Invoke();
     }
 
     protected void PassAway()
