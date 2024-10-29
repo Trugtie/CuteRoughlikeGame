@@ -43,7 +43,7 @@ public class WaveManager : MonoBehaviour, IGameStateListener
         _timer = 0;
 
         for (int i = 0; i < _waves[waveIndex].segments.Count; i++)
-            _localCounters.Add(1);
+            _localCounters.Add(0);
 
         _isTimerOn = true;
 
@@ -74,6 +74,9 @@ public class WaveManager : MonoBehaviour, IGameStateListener
             {
                 Instantiate(currentSegment.enemyPrefab, GetSpawnPosition(), Quaternion.identity, transform);
                 _localCounters[i]++;
+
+                if (currentSegment.spawnOnlyOne)
+                    _localCounters[i] += Mathf.Infinity;
             }
         }
 
@@ -149,4 +152,5 @@ public struct WaveSegment
     [MinMaxSlider(0, 100)] public Vector2 tStartEndPercent;
     public int spawnFrequence;
     public GameObject enemyPrefab;
+    public bool spawnOnlyOne;
 }
