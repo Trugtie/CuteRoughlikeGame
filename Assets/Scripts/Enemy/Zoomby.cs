@@ -163,6 +163,12 @@ public class Zoomby : Enemy
         OnStartIdle?.Invoke();
     }
 
+    protected override void PassAway()
+    {
+        OnBossPassAway?.Invoke(transform.position);
+        PassAwayAfterWave();
+    }
+
     private void UpdateVisual()
     {
         float healthValue = (float)_health / _maxHealth;

@@ -5,6 +5,7 @@ public abstract class Enemy : MonoBehaviour, IDamgedable
 {
     public static Action<Vector2, int, bool> OnAnyHit;
     public static Action<Vector2> OnAnyPassAway;
+    public static Action<Vector2> OnBossPassAway;
     protected Action onSpawnSequenceCompleted;
 
     [Header("Components")]
@@ -78,7 +79,7 @@ public abstract class Enemy : MonoBehaviour, IDamgedable
         onSpawnSequenceCompleted?.Invoke();
     }
 
-    protected void PassAway()
+    protected virtual void PassAway()
     {
         OnAnyPassAway?.Invoke(transform.position);
         PassAwayAfterWave();

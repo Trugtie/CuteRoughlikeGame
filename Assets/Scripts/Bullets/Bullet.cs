@@ -17,6 +17,7 @@ public class Bullet : MonoBehaviour
 
     [Header("Settings")]
     [SerializeField] private float _flySpeed;
+    [SerializeField] private float _angularRotateSpeed;
     private int _damge;
     private bool _isCriticalHit;
 
@@ -59,6 +60,7 @@ public class Bullet : MonoBehaviour
     {
         transform.right = _targetDirection;
         _bulletRb.linearVelocity = _targetDirection * _flySpeed * Time.deltaTime;
+        _bulletRb.AddTorque(_angularRotateSpeed * Time.fixedDeltaTime);
     }
 
     public void Reload()
@@ -67,6 +69,10 @@ public class Bullet : MonoBehaviour
         _collider.enabled = true;
         transform.position = _shootingPosition.position;
         _bulletRb.linearVelocity = Vector2.zero;
+        _bulletRb.angularVelocity = 0;
+
+        LeanTween.cancel(gameObject);
+        LeanTween.delayedCall(gameObject, 5f, () => { _bulletPool.Release(this); });
     }
 
     public void Configue(Transform shootingPosition, int damge, bool isCriticalHit, ObjectPool<Bullet> pool)
@@ -81,6 +87,11 @@ public class Bullet : MonoBehaviour
     public void SetTargetDirection(Vector3 direction)
     {
         _targetDirection = direction;
+
+        if (MathF.Abs(direction.x + 1) < 0.01f)
+        {
+            direction.y += 0.1f;
+        }
     }
 
     public void DestroyBullet()

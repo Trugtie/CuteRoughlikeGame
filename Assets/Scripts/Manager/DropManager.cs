@@ -41,6 +41,7 @@ public class DropManager : MonoBehaviour
     private void Start()
     {
         Enemy.OnAnyPassAway += EnemyPassAwayCallBack;
+        Enemy.OnBossPassAway += OnBossPassAwayCallback;
         Cash.OnAnyCashCollected += CashReleaseCallback;
         Candy.OnAnyCandyCollected += CandyReleaseCallback;
         Chest.OnAnyChestCollected += ChestReleaseCallback;
@@ -49,6 +50,7 @@ public class DropManager : MonoBehaviour
     private void OnDestroy()
     {
         Enemy.OnAnyPassAway -= EnemyPassAwayCallBack;
+        Enemy.OnBossPassAway += OnBossPassAwayCallback;
         Cash.OnAnyCashCollected -= CashReleaseCallback;
         Candy.OnAnyCandyCollected -= CandyReleaseCallback;
         Chest.OnAnyChestCollected -= ChestReleaseCallback;
@@ -82,6 +84,11 @@ public class DropManager : MonoBehaviour
         }
     }
 
+    private void OnBossPassAwayCallback(Vector2 dropPosition)
+    {
+        DropChest(dropPosition);
+    }
+
     private bool TryGetChest(Vector2 dropPosition)
     {
         int random = Random.Range(0, 101);
@@ -91,10 +98,15 @@ public class DropManager : MonoBehaviour
         if (!isDropChest)
             return false;
 
-        Chest chest = _chestPool.Get();
-        chest.transform.position = dropPosition;
+        DropChest(dropPosition);
 
         return true;
+    }
+
+    private void DropChest(Vector2 dropPosition)
+    {
+        Chest chest = _chestPool.Get();
+        chest.transform.position = dropPosition;
     }
 
     private void CandyReleaseCallback(Candy candy)
