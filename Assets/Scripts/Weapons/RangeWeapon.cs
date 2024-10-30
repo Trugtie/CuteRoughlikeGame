@@ -53,7 +53,7 @@ public class RangeWeapon : Weapon
     {
         if (_enemyClosest == null) return;
 
-        Vector2 toEnemyCLosestDirection = ((Vector2)(_enemyClosest.transform.position - _shootStartPosition.position)).normalized;
+        Vector2 toEnemyCLosestDirection = ((Vector2)(_enemyClosest.GetCenterPoint() - _shootStartPosition.position)).normalized;
         Bullet bullet = _rangeBulletPool.Get();
         bullet.SetTargetDirection(toEnemyCLosestDirection);
 

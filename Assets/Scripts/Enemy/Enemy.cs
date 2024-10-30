@@ -12,6 +12,7 @@ public abstract class Enemy : MonoBehaviour, IDamgedable
 
     [Header("Elements")]
     [SerializeField] private Transform _damgeTextSpawnPosition;
+    [SerializeField] private Transform _centerPoint;
     protected Player _player;
     private CircleCollider2D _enemyCollider;
 
@@ -111,6 +112,11 @@ public abstract class Enemy : MonoBehaviour, IDamgedable
 
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, _playerDetectionRadius);
+    }
+
+    public Vector3 GetCenterPoint()
+    {
+        return _centerPoint.position;
     }
 
     protected virtual void TryAttack()

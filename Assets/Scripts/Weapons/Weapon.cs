@@ -117,7 +117,7 @@ public abstract class Weapon : MonoBehaviour, IPlayerStatsDependency
 
         if (_enemyClosest != null)
         {
-            lookAtDirection = (_enemyClosest.transform.position - transform.position).normalized;
+            lookAtDirection = (_enemyClosest.GetCenterPoint() - transform.position).normalized;
             transform.up = lookAtDirection;
         }
 
