@@ -3,9 +3,16 @@ using Random = UnityEngine.Random;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using NUnit.Framework;
+using Unity.VisualScripting;
 
+[RequireComponent(typeof(RangeEnemyAttack))]
 public class Zoomby : Enemy
 {
+    public Action OnStartIdle;
+    public Action OnStartAttacking;
+    public Action OnStartMoving;
+
     [Header(" Health Bar ")]
     [SerializeField] private Slider _healthBar;
     [SerializeField] private TextMeshProUGUI _healthText;
@@ -27,9 +34,14 @@ public class Zoomby : Enemy
     [SerializeField] private float _moveSpeed;
     private Vector2 _targetPosition;
 
+    [Header(" Attacking State ")]
+    private int _attackCounter;
+    private RangeEnemyAttack _rangeEnemyAttack;
+
     private void Awake()
     {
         base.Awake();
+        _rangeEnemyAttack = GetComponent<RangeEnemyAttack>();
         _state = State.None;
     }
 
@@ -82,14 +94,15 @@ public class Zoomby : Enemy
         Debug.Log("Start Moving State");
         _state = State.Moving;
         _targetPosition = GetRandomMovePosition();
+        OnStartMoving?.Invoke();
     }
 
     private Vector2 GetRandomMovePosition()
     {
         Vector2 targetPosition = Vector2.zero;
 
-        targetPosition.x = Mathf.Clamp(targetPosition.x, -19, 19);
-        targetPosition.y = Mathf.Clamp(targetPosition.y, -9, 16);
+        targetPosition.x = Random.Range(-19, 19);
+        targetPosition.y = Random.Range(-9, 16);
 
         return targetPosition;
     }
@@ -107,6 +120,16 @@ public class Zoomby : Enemy
     private void StartAttacking()
     {
         Debug.Log("Start Attacking State");
+        _state = State.Attacking;
+        _attackCounter = 0;
+        OnStartAttacking?.Invoke();
+    }
+
+    public void Attack()
+    {
+        Vector2 direction = Quaternion.Euler(0, 0, -45 * _attackCounter) * Vector2.up;
+        _rangeEnemyAttack.ShootToDirection(direction);
+        _attackCounter++;
     }
 
     private void ManageAttackingState()
@@ -132,11 +155,12 @@ public class Zoomby : Enemy
         StartIdleState();
     }
 
-    private void StartIdleState()
+    public void StartIdleState()
     {
         Debug.Log("Start Idle State");
         _state = State.Idle;
         _idleDuration = Random.Range(1f, _maxIdleDuration);
+        OnStartIdle?.Invoke();
     }
 
     private void UpdateVisual()
