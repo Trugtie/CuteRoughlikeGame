@@ -91,7 +91,6 @@ public class Zoomby : Enemy
 
     private void StartMovingState()
     {
-        Debug.Log("Start Moving State");
         _state = State.Moving;
         _targetPosition = GetRandomMovePosition();
         OnStartMoving?.Invoke();
@@ -119,7 +118,6 @@ public class Zoomby : Enemy
 
     private void StartAttacking()
     {
-        Debug.Log("Start Attacking State");
         _state = State.Attacking;
         _attackCounter = 0;
         OnStartAttacking?.Invoke();
@@ -157,7 +155,6 @@ public class Zoomby : Enemy
 
     public void StartIdleState()
     {
-        Debug.Log("Start Idle State");
         _state = State.Idle;
         _idleDuration = Random.Range(1f, _maxIdleDuration);
         OnStartIdle?.Invoke();

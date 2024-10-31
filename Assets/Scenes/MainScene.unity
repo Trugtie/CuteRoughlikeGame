@@ -13259,12 +13259,6 @@ MonoBehaviour:
   _player: {fileID: 1523450296}
   _waveDuration: 60
   _waves:
-  - name: Wave 03
-    segments:
-    - tStartEndPercent: {x: 0, y: 1}
-      spawnFrequence: 5
-      enemyPrefab: {fileID: 4818968795448020025, guid: 1fa7009642041f14eaede1174a83475f, type: 3}
-      spawnOnlyOne: 1
   - name: Wave 01
     segments:
     - tStartEndPercent: {x: 0, y: 34}
@@ -13285,6 +13279,12 @@ MonoBehaviour:
       spawnFrequence: 5
       enemyPrefab: {fileID: 4673443629682434060, guid: 641b843fb4ca0e64bb9020ecd9e8b1d3, type: 3}
       spawnOnlyOne: 0
+  - name: Wave 03
+    segments:
+    - tStartEndPercent: {x: 0, y: 1}
+      spawnFrequence: 5
+      enemyPrefab: {fileID: 4818968795448020025, guid: 1fa7009642041f14eaede1174a83475f, type: 3}
+      spawnOnlyOne: 1
 --- !u!1 &958290164
 GameObject:
   m_ObjectHideFlags: 0
