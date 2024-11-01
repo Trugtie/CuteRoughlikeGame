@@ -118,8 +118,11 @@ public class WaveManager : MonoBehaviour, IGameStateListener
         Vector2 offset = spawnDirection.normalized * UnityEngine.Random.Range(6, 10);
         Vector2 targetPosition = (Vector2)_player.transform.position + offset;
 
-        targetPosition.x = Mathf.Clamp(targetPosition.x, -Constants.arenaSize.x, Constants.arenaSize.x);
-        targetPosition.y = Mathf.Clamp(targetPosition.y, -Constants.arenaSize.y, Constants.arenaSize.y);
+        if (!GameManager.Instance.IsUseInfinityMap)
+        {
+            targetPosition.x = Mathf.Clamp(targetPosition.x, -Constants.arenaSize.x, Constants.arenaSize.x);
+            targetPosition.y = Mathf.Clamp(targetPosition.y, -Constants.arenaSize.y, Constants.arenaSize.y);
+        }
 
         return targetPosition;
     }

@@ -16,8 +16,11 @@ public class CameraController : MonoBehaviour
         Vector3 targetPos = _target.position;
         targetPos.z = _zOffset;
 
-        targetPos.x = Mathf.Clamp(targetPos.x, -_clampMinMaxXY.x, _clampMinMaxXY.x);
-        targetPos.y = Mathf.Clamp(targetPos.y, -_clampMinMaxXY.y, _clampMinMaxXY.y);
+        if (!GameManager.Instance.IsUseInfinityMap)
+        {
+            targetPos.x = Mathf.Clamp(targetPos.x, -_clampMinMaxXY.x, _clampMinMaxXY.x);
+            targetPos.y = Mathf.Clamp(targetPos.y, -_clampMinMaxXY.y, _clampMinMaxXY.y);
+        }
 
         transform.position = targetPos;
     }

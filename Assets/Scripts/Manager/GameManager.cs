@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public Action OnPauseGame;
     public Action OnResumeGame;
 
+    [field: SerializeField] public bool IsUseInfinityMap { get; private set; }
+
     public static GameManager Instance { get; private set; }
 
     private void Awake()
